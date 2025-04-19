@@ -14,7 +14,14 @@ public class GearList {
 
     public GearList() {}
 
-    public GearList(int item_id, String item_name, String category, String description, int weight_lbs, BigDecimal weight_oz, BigDecimal price, int trail_id) {
+    public GearList(int item_id,
+                    String item_name,
+                    String category,
+                    String description,
+                    int weight_lbs,
+                    BigDecimal weight_oz,
+                    BigDecimal price,
+                    int trail_id) {
         this.item_id = item_id;
         this.item_name = item_name;
         this.category = category;
@@ -24,6 +31,23 @@ public class GearList {
         this.price = price;
         this.trail_id = trail_id;
     }
+
+    public GearList(String item_name,
+                    String category,
+                    String description,
+                    int weight_lbs,
+                    BigDecimal weight_oz,
+                    BigDecimal price,
+                    int trail_id) {
+        this.item_name = item_name;
+        this.category = category;
+        this.description = description;
+        this.weight_lbs = weight_lbs;
+        this.weight_oz = weight_oz;
+        this.price = price;
+        this.trail_id = trail_id;
+    }
+
     public int getItem_id() {
         return item_id;
     }

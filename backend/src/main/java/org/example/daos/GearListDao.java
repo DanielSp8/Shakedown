@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.List;
 
 @Component
@@ -45,8 +45,66 @@ public class GearListDao {
     }
 
     /**
+     * Update a specific gear item in the gear list.
+     *  To do this, I'll update all the fields in the row, by using its getters.
+     *   If the rowsAffected = 0, then it did not properly update, and will send an error message.
+     *    On the frontend--I'll use a screen wherein the user accesses all the field info,
+     *     editing the one(s) they want to update.
+     *      This will send the gearItem constructor to the backend, thus:  here we are!
+     */
+    public GearList updateGearItem (GearList gearItem){
+        String sql = """
+                UPDATE gear_lists SET item_name = ?, category = ?, description = ?, weight_lbs = ?, weight_oz = ?, price = ?,\s
+                trail_id = ? WHERE item_id = ?;""";
+
+        int rowsAffected = jdbcTemplate.update(sql,
+                gearItem.getItem_name(),
+                gearItem.getCategory(),
+                gearItem.getDescription(),
+                gearItem.getWeight_lbs(),
+                gearItem.getWeight_oz(),
+                gearItem.getPrice(),
+                gearItem.getTrail_id(),
+                gearItem.getItem_id());
+
+        if (rowsAffected == 0) {
+            return null;
+        } else {
+            return gearItem;
+        }
+    }
+
+    /**
+     *  This function adds a single gear item to a specific gear list.
+     *   On the frontend, I'll need a place for the user to enter in new data for this,
+     *    which will submit to the backend, and thus:  here we are!
+     */
+    public GearList addGearItem(GearList gearItem) {
+        String sql = """
+                INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, trail_id) VALUES (?, ?, ?, ?, ?, ?, ?);
+                """;
+
+        int rowsAffected = jdbcTemplate.update(sql,
+                gearItem.getItem_name(),
+                gearItem.getCategory(),
+                gearItem.getDescription(),
+                gearItem.getWeight_lbs(),
+                gearItem.getWeight_oz(),
+                gearItem.getPrice(),
+                gearItem.getTrail_id()
+        );
+
+        if (rowsAffected == 0) {
+            return null;
+        } else {
+            return gearItem;
+        }
+    }
+
+
+    /**
      * Create a new gear list,
-     * and return it by its trailId reference.
+     *  and return it by its trailId reference.
      */
     @Transactional
     public List<GearList> batchInsertGearListItems(final List<GearList> gearList) {
@@ -79,3 +137,4 @@ public class GearListDao {
         );
     }
 }
+

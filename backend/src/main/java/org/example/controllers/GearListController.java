@@ -26,9 +26,23 @@ public class GearListController {
         return gearListDao.getGearListByTrailId(trail_id);
     }
 
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.OK)
+    public GearList updateGearItem (@RequestBody GearList gearItem) {
+        return gearListDao.updateGearItem(gearItem);
+    }
+
+    @PutMapping("/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public GearList addGearItem (@RequestBody GearList gearItem) {
+        return gearListDao.addGearItem(gearItem);
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/batch-insert")
     public List<GearList> createGearList(@RequestBody List<GearList> gearItems) {
         return gearListDao.batchInsertGearListItems(gearItems);
     }
+
+
 }

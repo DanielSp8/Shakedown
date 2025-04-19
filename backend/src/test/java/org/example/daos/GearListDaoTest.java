@@ -103,9 +103,73 @@ class GearListDaoTest {
         assertEquals("Backpack", rows.get(1).get("category"));
     }
 
+    @Test
+    @Order(5)
+    @DisplayName("Verifying update of a single gear item in the gear_lists table.")
+    void updateGearItem() {
+        GearList gearItem = new GearList(1, """
+                Fly Creek 2 Person 3 Season Tent""", "Shelter",
+                "The Fly Creek HV UL Solution Dye Two-Person Tent still maintains the ultralight weight that minimalist backpackers look for, but Big Agnes redesigned it with a higher volume to give a comfier sleeping space.",
+                1, new BigDecimal("15.00"), new BigDecimal("279.96"), 1);
+
+        // update the price of the item to verify update.
+        gearItem.setPrice(new BigDecimal("150.00"));
+        BigDecimal expectedPrice = new BigDecimal("150.00");
+
+        String sql = """
+                UPDATE gear_lists SET item_name = ?, category = ?, description = ?, weight_lbs = ?, weight_oz = ?, price = ?,\s
+                trail_id = ? WHERE item_id = ?;""";
+        int rowsAffected = jdbcTemplate.update(sql,
+                gearItem.getItem_name(),
+                gearItem.getCategory(),
+                gearItem.getDescription(),
+                gearItem.getWeight_lbs(),
+                gearItem.getWeight_oz(),
+                gearItem.getPrice(),
+                gearItem.getTrail_id(),
+                gearItem.getItem_id());
+
+        BigDecimal actualPrice = gearItem.getPrice();
+        // Verify the price changed.
+        assertEquals(0, actualPrice.compareTo(expectedPrice));
+        // Verify the number of rows changed:
+        assertEquals(1, rowsAffected);
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Insert a new gear item, then verify it was added correctly.")
+    void addGearItemAndFetchItem() {
+        String sql = """
+                INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, trail_id) VALUES (?, ?, ?, ?, ?, ?, ?);
+                """;
+
+        jdbcTemplate.update(sql,
+                "Small Candle", "Emergencies", "A small candle to help start a fire in wet and difficult circumstances.", 0, new BigDecimal("2.50"), new BigDecimal("3.99"), 1
+        );
+
+        String fetchSql = "SELECT * FROM gear_lists WHERE item_name = ?;";
+        GearList fetchedObject = jdbcTemplate.queryForObject(fetchSql, (resultSet, rowNum) -> new GearList(
+                resultSet.getInt("item_id"),
+                resultSet.getString("item_name"),
+                resultSet.getString("category"),
+                resultSet.getString("description"),
+                resultSet.getInt("weight_lbs"),
+                resultSet.getBigDecimal("weight_oz"),
+                resultSet.getBigDecimal("price"),
+                resultSet.getInt("trail_id")),
+                "Small Candle");
+
+        assertNotNull(fetchedObject);
+        assertEquals("Small Candle", fetchedObject.getItem_name());
+        assertEquals("Emergencies", fetchedObject.getCategory());
+        assertEquals(new BigDecimal("3.99"), fetchedObject.getPrice());
+    }
+
     @AfterEach
     void tearDown() {
         jdbcTemplate.execute("DROP TABLE gear_lists");
     }
+
 
 }
