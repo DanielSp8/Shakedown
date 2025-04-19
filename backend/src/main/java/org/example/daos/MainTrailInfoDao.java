@@ -3,9 +3,11 @@ package org.example.daos;
 import org.example.exceptions.DaoException;
 import org.example.models.MainTrailInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -52,21 +54,29 @@ public class MainTrailInfoDao {
     }
 
     /**
-     * Create a new Main Trail Info,
-     *  and return it by its trail_id reference.
+     * Create new Main Trail Info,
+     *  and return it.
      */
-//    public MainTrailInfo createMainTrailInfo(MainTrailInfo mainTrailInfo) {
-//        String sql = "INSERT INTO main_trail_info (trail_id, trail_name, description, location, difficulty, total_miles, food_pickups, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-//        try {
-//            int trailId = mainTrailInfo.getTrail_id();
-//            jdbcTemplate.update(sql, mainTrailInfo.getTrail_id(), mainTrailInfo.getTrail_name(), mainTrailInfo.getDescription(), mainTrailInfo.getLocation(), mainTrailInfo.getDifficulty(), mainTrailInfo.getTotal_miles(), mainTrailInfo.getFood_pickups(), mainTrailInfo.getUsername());
-//            return <MainTrailInfo> getMainTrailInfoByTrailId(trailId);
-//        } catch (EmptyResultDataAccessException e) {
-//            throw new DaoException("Failed to create a new main trail list.");
-//        }
-//
-//
-//    }
+    public MainTrailInfo createMainTrailInfo(MainTrailInfo mainTrailInfo) {
+        try {
+            String sql = "INSERT INTO main_trail_info (trail_name, description, location, difficulty, total_miles, food_pickups, username) VALUES (?, ?, ?, ?, ?, ?, ?);";
+            jdbcTemplate.update(sql,
+                    mainTrailInfo.getTrail_name(),
+                    mainTrailInfo.getDescription(),
+                    mainTrailInfo.getLocation(),
+                    mainTrailInfo.getDifficulty(),
+                    mainTrailInfo.getTotal_miles(),
+                    mainTrailInfo.getFood_pickups(),
+                    mainTrailInfo.getUsername()
+            );
+
+            return mainTrailInfo;
+        } catch (DataAccessException e) {
+            throw new DaoException("Failed to create a new main trail list.");
+        }
+
+
+    }
 
 
     private MainTrailInfo mapToMainTrailInfo(ResultSet resultSet, int rowNumber) throws SQLException {

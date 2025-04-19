@@ -31,9 +31,9 @@ public class MainTrailInfoController {
         return mainTrailInfoDao.getMainTrailInfoByTrailId(trailId);
     }
 
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping
-//    public MainTrailInfo createMainTrailInfo(@RequestBody MainTrailInfo mainTrailInfo) {
-//        return mainTrailInfoDao.createMainTrailInfo(mainTrailInfo);
-//    }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public MainTrailInfo createMainTrailInfo(@RequestBody MainTrailInfo mainTrailInfo) {
+        return mainTrailInfoDao.createMainTrailInfo(mainTrailInfo);
+    }
 }
