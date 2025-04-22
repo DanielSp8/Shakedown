@@ -1,0 +1,17 @@
+@font-face {
+    font-family: "Frijole";
+    src: url("../fonts/Frijole-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.rugged-title{
+    font-family: "Frijole", sans-serif;
+    font-size: 32px;
+    letter-spacing: 7px;
+}
+
+.error-message{
+    font-size: 22px;
+    color: red;
+}

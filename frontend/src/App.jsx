@@ -1,12 +1,24 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AuthPage from "./Components/AuthPage";
+import Dashboard from "./Components/Dashboard";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/css/fonts.css";
+import "./assets/css/styles.css";
 
 function App() {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        {/* <p> tag is a placeholder, You'll need to change the tag/component type later*/}
-        <p className="navbar-brand ms-4 nav-link">You've got this!</p>
-      </nav>
+      <Router>
+        <Routes>
+          <Route path="/" element={<AuthPage />} />
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+        </Routes>
+      </Router>
       <hr />
     </div>
   );
