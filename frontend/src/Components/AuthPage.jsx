@@ -27,9 +27,12 @@ export default function AuthPage() {
               <h2 className="card-title mb-4 text-center">
                 {showLogin ? "Login" : "Sign Up"}
               </h2>
-              <h2 className="card-title mb-4 text-center rugged-title">
+              <h2 className="card-title mb-2 text-center rugged-title">
                 Shakedown
               </h2>
+              <p className="fs-5 mb-5 fst-italic text-center">
+                The gear planner for backpacking.
+              </p>
               {showLogin ? <LoginForm /> : <SignUpForm />}
             </div>
           </div>
