@@ -7,6 +7,7 @@ import {
   faUser,
   faHiking,
   faCampground,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Dashboard() {
@@ -14,31 +15,53 @@ export default function Dashboard() {
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div className="container">
-          <div className="row">
-            <div className="col">
-              <NavLink to="/dashboard/home" className="navbar-brand">
-                <FontAwesomeIcon icon={faHome} className="me-2" /> Home
+          <ul className="navbar-nav navbar-brand">
+            <li className="nav-item">
+              <NavLink
+                to="/dashboard/home"
+                className="nav-link animate menu-item"
+              >
+                <FontAwesomeIcon icon={faHome} className="me-1" />
+                Home
               </NavLink>
-            </div>
-            <div className="col">
-              <NavLink to="/dashboard/profile" className="navbar-brand">
-                <FontAwesomeIcon icon={faUser} className="me-2" />
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/dashboard/profile"
+                className="nav-link animate menu-item"
+              >
+                <FontAwesomeIcon icon={faUser} className="me-1" />
                 Profile
               </NavLink>
-            </div>
-            <div className="col">
-              <NavLink to="/dashboard/trails" className="navbar-brand">
-                <FontAwesomeIcon icon={faCampground} className="me-2" />
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/dashboard/trails"
+                className="nav-link animate menu-item"
+              >
+                <FontAwesomeIcon icon={faCampground} className="me-1" />
                 Trails
               </NavLink>
-            </div>
-            <div className="col">
-              <NavLink to="/dashboard/backpack" className="navbar-brand">
-                <FontAwesomeIcon icon={faHiking} className="me-2" />
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/dashboard/backpack"
+                className="nav-link animate menu-item"
+              >
+                <FontAwesomeIcon icon={faHiking} className="me-1" />
                 Gear List
               </NavLink>
-            </div>
-          </div>
+            </li>
+          </ul>
+
+          <ul className="navbar-nav navbar-brand">
+            <li className="nav-item ms-auto">
+              <NavLink to="/" className="nav-link animate menu-item">
+                <FontAwesomeIcon icon={faSignOutAlt} className="me-1" />
+                Logout
+              </NavLink>
+            </li>
+          </ul>
         </div>
       </nav>
 
