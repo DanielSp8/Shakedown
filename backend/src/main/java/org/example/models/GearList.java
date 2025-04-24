@@ -32,6 +32,7 @@ public class GearList {
         this.trail_id = trail_id;
     }
 
+    // Constructor for creating a new gear item in the list
     public GearList(String item_name,
                     String category,
                     String description,

@@ -44,5 +44,10 @@ public class GearListController {
         return gearListDao.batchInsertGearListItems(gearItems);
     }
 
+    @DeleteMapping("/{item_id}")
+    public int deleteGearItem (@PathVariable int item_id) {
+        return gearListDao.deleteGearItem(item_id);
+    }
+
 
 }

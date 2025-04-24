@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -135,6 +134,15 @@ public class GearListDao {
                 resultSet.getBigDecimal("price"),
                 resultSet.getInt("trail_id")
         );
+    }
+
+
+    /**
+     *  Remove a gear item from its gear list by its id.
+     */
+    public int deleteGearItem(int item_id) {
+        String sql = "DELETE FROM gear_lists WHERE item_id = ?;";
+        return jdbcTemplate.update(sql, item_id);
     }
 }
 

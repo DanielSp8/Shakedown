@@ -32,7 +32,11 @@ CREATE TABLE main_trail_info (
     difficulty VARCHAR(10),
     total_miles DECIMAL(6,2),
     food_pickups BOOLEAN,
-    username VARCHAR(255)
+    username VARCHAR(255),
+    
+    FOREIGN KEY (username) REFERENCES users(username)
+		ON DELETE SET NULL
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE gear_lists (
