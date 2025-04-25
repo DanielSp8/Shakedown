@@ -42,4 +42,9 @@ public class MainTrailInfoController {
     public MainTrailInfo updateTrail(@RequestBody MainTrailInfo trailToUpdate) {
         return mainTrailInfoDao.updateMainTrail(trailToUpdate);
     }
+
+    @DeleteMapping("/{item_id}")
+    public int deleteTrail (@PathVariable int item_id) {
+        return mainTrailInfoDao.deleteMainTrail(item_id);
+    }
 }

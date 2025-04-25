@@ -136,11 +136,24 @@ class MainTrailInfoDaoTest {
         assertNotEquals(existingTrailObject.getDescription(), updatedTrail.getDescription());
     }
 
+    @Test
+    @Order(8)
+    @DisplayName("Delete a trail by its trail_id; verify its success")
+    void deleteMainTrailByIdSuccess() {
+        int rowsAffected = mainTrailInfoDao.deleteMainTrail(1);
+        assertEquals(1, rowsAffected);
+    }
+
+    @Test
+    @Order(9)
+    @DisplayName("Attempt to delete a trail that doesn't exist")
+    void deleteNonExistentTrail() {
+        int rowsAffected = mainTrailInfoDao.deleteMainTrail(5001);
+        assertEquals(0, rowsAffected);
+    }
+
     @AfterEach
     void tearDown() {
         jdbcTemplate.execute("DROP TABLE main_trail_info");
     }
-
-
-
 }

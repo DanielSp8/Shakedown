@@ -90,6 +90,7 @@ public class MainTrailInfoDao {
         }
     }
 
+
     private MainTrailInfo mapToMainTrailInfo(ResultSet resultSet, int rowNumber) throws SQLException {
         return new MainTrailInfo(
                 resultSet.getInt("trail_id"),
@@ -101,5 +102,10 @@ public class MainTrailInfoDao {
                 resultSet.getBoolean("food_pickups"),
                 resultSet.getString("username")
         );
+    }
+
+    public int deleteMainTrail(int trailId) {
+        String sql = "DELETE FROM main_trail_info WHERE trail_id = ?;";
+        return jdbcTemplate.update(sql, trailId);
     }
 }
