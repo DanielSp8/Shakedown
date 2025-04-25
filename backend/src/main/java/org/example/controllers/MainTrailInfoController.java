@@ -17,16 +17,16 @@ public class MainTrailInfoController {
     private MainTrailInfoDao mainTrailInfoDao;
 
     @GetMapping
-    public List<MainTrailInfo> getAllTrails() {
-        return mainTrailInfoDao.getMainTrailLists();
+    public List<MainTrailInfo> getAllMainTrails() {
+        return mainTrailInfoDao.getAllMainTrails();
     }
 
-    @GetMapping("/username/{username}")
+    @GetMapping("/{username}")
     public List<MainTrailInfo> getMainTrailInfoByUsername(@PathVariable String username) {
         return mainTrailInfoDao.getMainTrailInfoByUsername(username);
     }
 
-    @GetMapping("/trailid/{trailId}")
+    @GetMapping("/{trailId}")
     public List<MainTrailInfo> getMainTrailInfoByTrailId(@PathVariable int trailId) {
         return mainTrailInfoDao.getMainTrailInfoByTrailId(trailId);
     }
@@ -34,6 +34,12 @@ public class MainTrailInfoController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public MainTrailInfo createMainTrailInfo(@RequestBody MainTrailInfo mainTrailInfo) {
-        return mainTrailInfoDao.createMainTrailInfo(mainTrailInfo);
+        return mainTrailInfoDao.createMainTrail(mainTrailInfo);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping
+    public MainTrailInfo updateTrail(@RequestBody MainTrailInfo trailToUpdate) {
+        return mainTrailInfoDao.updateMainTrail(trailToUpdate);
     }
 }

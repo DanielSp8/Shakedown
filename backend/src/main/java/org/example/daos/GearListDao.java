@@ -54,7 +54,7 @@ public class GearListDao {
     public GearList updateGearItem (GearList gearItem){
         String sql = """
                 UPDATE gear_lists SET item_name = ?, category = ?, description = ?, weight_lbs = ?, weight_oz = ?, price = ?,\s
-                trail_id = ? WHERE item_id = ?;""";
+                trail_id = ?, username = ? WHERE item_id = ?;""";
 
         int rowsAffected = jdbcTemplate.update(sql,
                 gearItem.getItem_name(),
@@ -64,6 +64,7 @@ public class GearListDao {
                 gearItem.getWeight_oz(),
                 gearItem.getPrice(),
                 gearItem.getTrail_id(),
+                gearItem.getUsername(),
                 gearItem.getItem_id());
 
         if (rowsAffected == 0) {
@@ -76,11 +77,11 @@ public class GearListDao {
     /**
      *  This function adds a single gear item to a specific gear list.
      *   On the frontend, I'll need a place for the user to enter in new data for this,
-     *    which will submit to the backend, and thus:  here we are!
+     *    which will submit here:
      */
     public GearList addGearItem(GearList gearItem) {
         String sql = """
-                INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, trail_id) VALUES (?, ?, ?, ?, ?, ?, ?);
+                INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, trail_id, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
                 """;
 
         int rowsAffected = jdbcTemplate.update(sql,
@@ -90,7 +91,8 @@ public class GearListDao {
                 gearItem.getWeight_lbs(),
                 gearItem.getWeight_oz(),
                 gearItem.getPrice(),
-                gearItem.getTrail_id()
+                gearItem.getTrail_id(),
+                gearItem.getUsername()
         );
 
         if (rowsAffected == 0) {
@@ -100,14 +102,13 @@ public class GearListDao {
         }
     }
 
-
     /**
      * Create a new gear list,
      *  and return it by its trailId reference.
      */
     @Transactional
     public List<GearList> batchInsertGearListItems(final List<GearList> gearList) {
-        String sql = "INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, trail_id) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, trail_id, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         jdbcTemplate.batchUpdate(sql, gearList, 100,
                 (PreparedStatement ps, GearList gear) -> {
                     ps.setString(1, gear.getItem_name());
@@ -117,6 +118,7 @@ public class GearListDao {
                     ps.setBigDecimal(5, gear.getWeight_oz());
                     ps.setBigDecimal(6, gear.getPrice());
                     ps.setInt(7, gear.getTrail_id());
+                    ps.setString(8, gear.getUsername());
                 }
             );
         return gearList;
@@ -132,7 +134,8 @@ public class GearListDao {
                 resultSet.getInt("weight_lbs"),
                 resultSet.getBigDecimal("weight_oz"),
                 resultSet.getBigDecimal("price"),
-                resultSet.getInt("trail_id")
+                resultSet.getInt("trail_id"),
+                resultSet.getString("username")
         );
     }
 

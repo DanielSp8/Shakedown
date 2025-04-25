@@ -14,6 +14,16 @@ public class MainTrailInfo {
 
     public MainTrailInfo() {}
 
+    public MainTrailInfo(String trail_name, String description,String location, String difficulty, BigDecimal total_miles, Boolean food_pickups, String username) {
+        this.trail_name = trail_name;
+        this.description = description;
+        this.location = location;
+        this.difficulty = difficulty;
+        this.total_miles = total_miles;
+        this.food_pickups = food_pickups;
+        this.username = username;
+    };
+
     public MainTrailInfo(int trail_id, String trail_name, String description, String location, String difficulty, BigDecimal total_miles, Boolean food_pickups, String username) {
         this.trail_id = trail_id;
         this.trail_name = trail_name;
