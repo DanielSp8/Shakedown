@@ -1,6 +1,5 @@
 package org.example.daos;
 
-import org.example.models.GearList;
 import org.example.models.MainTrailInfo;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

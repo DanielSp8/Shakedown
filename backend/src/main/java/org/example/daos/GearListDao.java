@@ -4,6 +4,7 @@ import org.example.models.GearList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +41,14 @@ public class GearListDao {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
 
+    public List<GearList> getGearListByUsername(String username) {
+        try {
+            return jdbcTemplate.query("SELECT * FROM gear_lists WHERE username = ?;", this::mapToGearList, username);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     /**
@@ -147,5 +155,7 @@ public class GearListDao {
         String sql = "DELETE FROM gear_lists WHERE item_id = ?;";
         return jdbcTemplate.update(sql, item_id);
     }
+
+
 }
 

@@ -21,12 +21,12 @@ public class MainTrailInfoController {
         return mainTrailInfoDao.getAllMainTrails();
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public List<MainTrailInfo> getMainTrailInfoByUsername(@PathVariable String username) {
         return mainTrailInfoDao.getMainTrailInfoByUsername(username);
     }
 
-    @GetMapping("/{trailId}")
+    @GetMapping("/trail/{trailId}")
     public List<MainTrailInfo> getMainTrailInfoByTrailId(@PathVariable int trailId) {
         return mainTrailInfoDao.getMainTrailInfoByTrailId(trailId);
     }
