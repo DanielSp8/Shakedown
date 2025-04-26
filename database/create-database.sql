@@ -61,6 +61,9 @@ CREATE TABLE gear_lists (
 INSERT INTO main_trail_info (trail_id, trail_name, description, location, difficulty, total_miles, food_pickups, username)
 	VALUES (1, 'Appalachian Trail', 'A long, adventurous thru-hike, spanning beautiful views and places!', 'Georgia to Maine', 'hard', 2194, true, 'admin');
     
+INSERT INTO main_trail_info (trail_id, trail_name, description, location, difficulty, total_miles, food_pickups, username)
+	VALUES (2, 'Hidden Pond', 'A secluded and precious place', 'Ocala, Florida', 'easy', 3.5, false, 'user');
+
 INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, trail_id, username)
 	VALUES ('Fly Creek 2 Person 3 Season Tent', 'Shelter', 'The Fly Creek HV UL Solution Dye Two-Person Tent still maintains the ultralight weight that minimalist backpackers look for, but Big Agnes redesigned it with a higher volume to give a comfier sleeping space.', 
 			1, 15, 279.96, 1, 'admin'),
@@ -130,4 +133,7 @@ INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz,
             0, 2, 25.95, 1, 'admin'),
             ('The DirtSaw Deuce Trowel', 'Hygiene', 'This trowel has an updated design that makes it faster and easier to create the perfect hole in rocky, rooty ground.',
             0, .9, 23.95, 1, 'admin');
+            
+INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, trail_id, username)
+	VALUES ('Hennesy Hammock', 'Shelter', 'This is a mix of a tent and hammock.  Lightweight and mixes it up a bit!', 1, .5, 0, 2, 'user');
             

@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import org.example.daos.GearListDao;
+import org.example.daos.UserDao;
 import org.example.models.GearList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,16 +40,22 @@ public class GearListController {
         return gearListDao.updateGearItem(gearItem);
     }
 
-    @PutMapping("/add")
+
+//    Updates a gear list per the username and checks the role logged in:
+    // It's likely I'll remove this function sometime soon.  --Why add a single gear item??
+
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public GearList addGearItem (@RequestBody GearList gearItem) {
+    public GearList addGearItem (Principal principal, @RequestBody GearList gearItem) {
+        String username = principal.getName();
         return gearListDao.addGearItem(gearItem);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/batch-insert")
-    public List<GearList> createGearList(@RequestBody List<GearList> gearItems) {
-        return gearListDao.batchInsertGearListItems(gearItems);
+    public List<GearList> createGearList(Principal principal, @RequestBody List<GearList> gearItems) {
+        String username = principal.getName();
+        return gearListDao.batchInsertGearListItems(gearItems, username);
     }
 
     @DeleteMapping("/{item_id}")

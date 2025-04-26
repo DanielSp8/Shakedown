@@ -95,13 +95,15 @@ class GearListDaoTest {
     @DisplayName("Checking update of multiple items into gear_lists")
     void batchInsertGearListItems() {
         // Create a list to insert into test table
+        String username = "user";
         List<GearList> newItems = List.of(
-                new GearList(0, "Decatur Backpack", "Backpack", "A great backpack I currently own.", 1, new BigDecimal("3.4"), new BigDecimal("0"), 2, "admin"),
-                new GearList(0, "Hennessy Hammock", "Shelter", "A tent/hammock I sometimes use.", 1, new BigDecimal("2.5"), new BigDecimal("0"), 2, "admin"),
-                new GearList(0, "Marmot Sleeping Bag", "Sleep System", "An older sleeping bag I currently own.  It still has some use in it.", 2, new BigDecimal("5"), new BigDecimal(0), 2, "admin")
+                new GearList("Decatur Backpack", "Backpack", "A great backpack I currently own.", 1, new BigDecimal("3.4"), new BigDecimal("0"), 2, username),
+                new GearList("Hennessy Hammock", "Shelter", "A tent/hammock I sometimes use.", 1, new BigDecimal("2.5"), new BigDecimal("0"),2, username),
+                new GearList("Marmot Sleeping Bag", "Sleep System", "An older sleeping bag I currently own.  It still has some use in it.", 2, new BigDecimal("5"), new BigDecimal(0), 2, username)
         );
 
-        List<GearList> insertedItems = gearListDao.batchInsertGearListItems(newItems);
+        List<GearList> insertedItems = gearListDao.batchInsertGearListItems(newItems, username);
+
 
         assertEquals(newItems.size(), insertedItems.size());
         }

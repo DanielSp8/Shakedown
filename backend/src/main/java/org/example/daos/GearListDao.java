@@ -4,7 +4,6 @@ import org.example.models.GearList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -115,7 +114,7 @@ public class GearListDao {
      *  and return it by its trailId reference.
      */
     @Transactional
-    public List<GearList> batchInsertGearListItems(final List<GearList> gearList) {
+    public List<GearList> batchInsertGearListItems(final List<GearList> gearList, String username) {
         String sql = "INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, trail_id, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         jdbcTemplate.batchUpdate(sql, gearList, 100,
                 (PreparedStatement ps, GearList gear) -> {
@@ -126,7 +125,7 @@ public class GearListDao {
                     ps.setBigDecimal(5, gear.getWeight_oz());
                     ps.setBigDecimal(6, gear.getPrice());
                     ps.setInt(7, gear.getTrail_id());
-                    ps.setString(8, gear.getUsername());
+                    ps.setString(8, username);
                 }
             );
         return gearList;
