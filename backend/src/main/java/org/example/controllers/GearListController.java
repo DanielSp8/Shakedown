@@ -1,7 +1,6 @@
 package org.example.controllers;
 
 import org.example.daos.GearListDao;
-import org.example.daos.UserDao;
 import org.example.models.GearList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +23,8 @@ public class GearListController {
         return gearListDao.getGearLists();
     }
 
+
+    // Change this route; needs to use the backpackId (backpack_id field) now.
     @GetMapping(path = "/gear/{trail_id}")
     public List<GearList> getGearListByTrailId(@PathVariable int trail_id) {
         return gearListDao.getGearListByTrailId(trail_id);
@@ -34,17 +35,15 @@ public class GearListController {
         return gearListDao.getGearListByUsername(principal.getName());
     }
 
-    @PutMapping("/update")
+    @PutMapping(path="/update")
     @ResponseStatus(HttpStatus.OK)
     public GearList updateGearItem (@RequestBody GearList gearItem) {
         return gearListDao.updateGearItem(gearItem);
     }
 
-
 //    Updates a gear list per the username and checks the role logged in:
     // It's likely I'll remove this function sometime soon.  --Why add a single gear item??
-
-    @PostMapping("/add")
+    @PostMapping(path="/add")
     @ResponseStatus(HttpStatus.CREATED)
     public GearList addGearItem (Principal principal, @RequestBody GearList gearItem) {
         String username = principal.getName();
@@ -52,15 +51,15 @@ public class GearListController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/batch-insert")
+    @PostMapping(path="/batch-insert")
     public List<GearList> createGearList(Principal principal, @RequestBody List<GearList> gearItems) {
         String username = principal.getName();
         return gearListDao.batchInsertGearListItems(gearItems, username);
     }
 
-    @DeleteMapping("/{item_id}")
-    public int deleteGearItem (@PathVariable int item_id) {
-        return gearListDao.deleteGearItem(item_id);
+    @DeleteMapping(path="/{itemId}")
+    public int deleteGearItem (@PathVariable int itemId) {
+        return gearListDao.deleteGearItem(itemId);
     }
 
 

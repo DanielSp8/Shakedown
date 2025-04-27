@@ -35,11 +35,7 @@ public class GearListDao {
      *
      */
     public List<GearList> getGearListByTrailId(int id) {
-        try {
-            return jdbcTemplate.query("SELECT * FROM gear_lists WHERE trail_id = ?;", this::mapToGearList, id);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+        return jdbcTemplate.query("SELECT * FROM gear_lists WHERE trail_id = ?;", this::mapToGearList, id);
     }
 
     public List<GearList> getGearListByUsername(String username) {
@@ -150,9 +146,9 @@ public class GearListDao {
     /**
      *  Remove a gear item from its gear list by its id.
      */
-    public int deleteGearItem(int item_id) {
+    public int deleteGearItem(int itemId) {
         String sql = "DELETE FROM gear_lists WHERE item_id = ?;";
-        return jdbcTemplate.update(sql, item_id);
+        return jdbcTemplate.update(sql, itemId);
     }
 
 
