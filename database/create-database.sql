@@ -49,7 +49,7 @@ CREATE TABLE gear_lists (
 		ON DELETE CASCADE
 );
 
-INSERT INTO backpacks (backpack_name, owner_username, location, trip_date)
+INSERT INTO backpacks (backpack_name, owner_username, location, _trip_date)
 	VALUES ('AT-Thru Hike', 'admin', 'Georgia to Maine','2026-09-03'),
 		('Hidden Pond', 'user', 'Ocala, Florida', '2026-08-13');
 
@@ -124,7 +124,7 @@ INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz,
             0, .9, 23.95, 1);
 
 INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, backpack_id)
-	VALUES ('Hennesy Hammock', 'Shelter', 'This is a mix of a tend a hammock.  Lightweight and mixes it up!', 1, .5, 0, 2),
+	VALUES ('Hennesy Hammock', 'Shelter', 'This is a mix of a tent and a hammock.  Lightweight and mixes it up!', 1, .5, 0, 2),
 			('40 Degree Marmot Sleeping Bag', 'Sleeping', 'This is an old, but good sleeping bag I own', 2, 10, 0, 2),
             ('Therma-a-Rest Sleeping Pad', 'Sleeping', 'Great for a more comfortable night sleep!', 2, 7, 120, 2),
             ('Deuter Backpack', 'Backpack', 'A great backpack I own, comfortable and durable.', 1, 9, 0, 2),
@@ -154,6 +154,6 @@ INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz,
             ('Underwear', 'Clothing', 'Tight-fitting to help prevent chaffing.  Comfort is a must!', 0, 2, 0, 2),
             ('Spork', 'Cooking and Eating', 'Remember this helpful utensil...', 0, .7, 0, 2),
             ('Stuff Sack', 'Miscellaneous', 'Useful for hanging smellables in a bear bag', 0, 4.5, 0, 2), 
-            ('Ultralight/Watertight .3 Medical Kit', 'Emergencies', 'Ideal for backpackking', 0, 2.6, 10.95, 2);
+            ('Ultralight/Watertight .3 Medical Kit', 'Emergencies', 'Ideal for backpacking', 0, 2.6, 10.95, 2);
             
             

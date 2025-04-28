@@ -59,15 +59,14 @@ public class GearListDao {
     }
 
     /**
-     *
      * @param gearItem object for updating a specific gear list item
      * @return null if no update or the gearItem object passed in
      */
 
     public GearList updateGearItem (GearList gearItem){
         String sql = """
-                UPDATE gear_lists SET item_name = ?, category = ?, description = ?, weight_lbs = ?, weight_oz = ?, price = ?\s
-                WHERE backpack_id = ?;""";
+                UPDATE gear_lists SET item_name = ?, category = ?, description = ?, weight_lbs = ?, weight_oz = ?, price = ?, backpack_id = ?\s
+                WHERE item_id = ?;""";
 
         int rowsAffected = jdbcTemplate.update(sql,
                 gearItem.getItemName(),
@@ -76,7 +75,8 @@ public class GearListDao {
                 gearItem.getWeightLbs(),
                 gearItem.getWeightOz(),
                 gearItem.getPrice(),
-                gearItem.getBackpackId());
+                gearItem.getBackpackId(),
+                gearItem.getItemId());
 
         if (rowsAffected == 0) {
             return null;

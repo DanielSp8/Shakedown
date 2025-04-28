@@ -25,7 +25,7 @@ public class GearListController {
 
 
     @GetMapping("/gear/{backpackId}")
-    public List<GearList> getGearListByTrailId(@PathVariable int backpackId) {
+    public List<GearList> getGearListByBackpackId(@PathVariable int backpackId) {
         return gearListDao.getGearListByBackpackId(backpackId);
     }
 

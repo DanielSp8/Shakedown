@@ -65,7 +65,6 @@ class BackpackControllerTest {
     void getBackpacksByUserName() throws Exception {
         Backpack backpackOne = new Backpack(1, "European Adventures", "Danielson", "Europe", java.sql.Date.valueOf("2027-05-12"));
         Backpack backpackTwo = new Backpack(2, "African Safari", "Danielson", "Tanzania", java.sql.Date.valueOf("2025-04-28"));
-
         Backpack otherUserBackpack = new Backpack(3, "Surfing Backpack", "user", "Fiji", java.sql.Date.valueOf("2026-06-22"));
         List<Backpack> theseBackpacks = Arrays.asList(backpackOne, backpackTwo);
 
