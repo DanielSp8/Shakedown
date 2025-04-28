@@ -18,57 +18,65 @@ public class GearListDao {
 
     private final JdbcTemplate jdbcTemplate;
 
+    /**
+     *
+     * @param dataSource object that holds database connection information
+     */
     @Autowired
     public GearListDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     /**
-     * Get all gear lists.
+     *
+     * @return List of all gear that matches the item_id
      */
     public List<GearList> getGearLists() {
         return jdbcTemplate.query("SELECT * FROM gear_lists ORDER BY item_id;", this::mapToGearList);
     }
 
     /**
-     * Get a gear list, referenced by its trail_id.
      *
+     * @param backpackId references the backpack in which the gear is for
+     * @return List with the gear from a specific backpackId
      */
-    public List<GearList> getGearListByTrailId(int id) {
-        return jdbcTemplate.query("SELECT * FROM gear_lists WHERE trail_id = ?;", this::mapToGearList, id);
+
+    public List<GearList> getGearListByBackpackId(int backpackId) {
+        return jdbcTemplate.query("SELECT * FROM gear_lists WHERE backpack_id = ?;", this::mapToGearList, backpackId);
     }
 
-    public List<GearList> getGearListByUsername(String username) {
+    /**
+     *
+     * @param category holds the type of gear item it is
+     * @return List with all the specific category passed in
+     */
+    public List<GearList> getGearListByCategory(String category) {
         try {
-            return jdbcTemplate.query("SELECT * FROM gear_lists WHERE username = ?;", this::mapToGearList, username);
+            return jdbcTemplate.query("SELECT * FROM gear_lists WHERE category = ?;", this::mapToGearList, category);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
     /**
-     * Update a specific gear item in the gear list.
-     *  To do this, I'll update all the fields in the row, by using its getters.
-     *   If the rowsAffected = 0, then it did not properly update, and will send an error message.
-     *    On the frontend--I'll use a screen wherein the user accesses all the field info,
-     *     editing the one(s) they want to update.
-     *      This will send the gearItem constructor to the backend, thus:  here we are!
+     *
+     * @param gearItem object for updating a specific gear list item
+     * @return null if no update or the gearItem object passed in
      */
+
     public GearList updateGearItem (GearList gearItem){
         String sql = """
-                UPDATE gear_lists SET item_name = ?, category = ?, description = ?, weight_lbs = ?, weight_oz = ?, price = ?,\s
-                trail_id = ?, username = ? WHERE item_id = ?;""";
+                UPDATE gear_lists SET item_name = ?, category = ?, description = ?, weight_lbs = ?, weight_oz = ?, price = ?\s
+                WHERE backpack_id = ?;""";
 
         int rowsAffected = jdbcTemplate.update(sql,
-                gearItem.getItem_name(),
+                gearItem.getItemName(),
                 gearItem.getCategory(),
                 gearItem.getDescription(),
-                gearItem.getWeight_lbs(),
-                gearItem.getWeight_oz(),
+                gearItem.getWeightLbs(),
+                gearItem.getWeightOz(),
                 gearItem.getPrice(),
-                gearItem.getTrail_id(),
-                gearItem.getUsername(),
-                gearItem.getItem_id());
+                gearItem.getBackpackId());
 
         if (rowsAffected == 0) {
             return null;
@@ -78,56 +86,34 @@ public class GearListDao {
     }
 
     /**
-     *  This function adds a single gear item to a specific gear list.
-     *   On the frontend, I'll need a place for the user to enter in new data for this,
-     *    which will submit here:
-     */
-    public GearList addGearItem(GearList gearItem) {
-        String sql = """
-                INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, trail_id, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-                """;
-
-        int rowsAffected = jdbcTemplate.update(sql,
-                gearItem.getItem_name(),
-                gearItem.getCategory(),
-                gearItem.getDescription(),
-                gearItem.getWeight_lbs(),
-                gearItem.getWeight_oz(),
-                gearItem.getPrice(),
-                gearItem.getTrail_id(),
-                gearItem.getUsername()
-        );
-
-        if (rowsAffected == 0) {
-            return null;
-        } else {
-            return gearItem;
-        }
-    }
-
-    /**
-     * Create a new gear list,
-     *  and return it by its trailId reference.
+     *
+     * @param gearList object(s) holding multiple gear list items and their information
+     * @return List with the gearList(s) which were passed in
      */
     @Transactional
-    public List<GearList> batchInsertGearListItems(final List<GearList> gearList, String username) {
-        String sql = "INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, trail_id, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    public List<GearList> batchInsertGearListItems(final List<GearList> gearList) {
+        String sql = "INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, backpack_id) VALUES (?, ?, ?, ?, ?, ?, ?);";
         jdbcTemplate.batchUpdate(sql, gearList, 100,
                 (PreparedStatement ps, GearList gear) -> {
-                    ps.setString(1, gear.getItem_name());
+                    ps.setString(1, gear.getItemName());
                     ps.setString(2, gear.getCategory());
                     ps.setString(3, gear.getDescription());
-                    ps.setInt(4, gear.getWeight_lbs());
-                    ps.setBigDecimal(5, gear.getWeight_oz());
+                    ps.setInt(4, gear.getWeightLbs());
+                    ps.setBigDecimal(5, gear.getWeightOz());
                     ps.setBigDecimal(6, gear.getPrice());
-                    ps.setInt(7, gear.getTrail_id());
-                    ps.setString(8, username);
+                    ps.setInt(7, gear.getBackpackId());
                 }
             );
         return gearList;
     }
 
-
+    /**
+     *
+     * @param resultSet object that holds data retrieved from SQL query
+     * @param rowNumber integer for the row number being processed
+     * @return a gearList object that has been retrieved from SQL
+     * @throws SQLException covers errors that could happen with dealing with the database
+     */
     private GearList mapToGearList(ResultSet resultSet, int rowNumber) throws SQLException {
         return new GearList(
                 resultSet.getInt("item_id"),
@@ -137,20 +123,19 @@ public class GearListDao {
                 resultSet.getInt("weight_lbs"),
                 resultSet.getBigDecimal("weight_oz"),
                 resultSet.getBigDecimal("price"),
-                resultSet.getInt("trail_id"),
-                resultSet.getString("username")
+                resultSet.getInt("backpack_id")
         );
     }
 
 
     /**
-     *  Remove a gear item from its gear list by its id.
+     *
+     * @param itemId the specific id for the gear list item to be deleted
+     * @return an integer: 0 if nothing deleted; 1 if delete successful.
      */
     public int deleteGearItem(int itemId) {
         String sql = "DELETE FROM gear_lists WHERE item_id = ?;";
         return jdbcTemplate.update(sql, itemId);
     }
-
-
 }
 

@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 
 import java.util.Arrays;
@@ -23,7 +25,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BackpackController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -100,14 +102,52 @@ class BackpackControllerTest {
 
 
     @Test
-    void updateBackpack() {
+    @Order(4)
+    @DisplayName("PUT /api/backpacks/update returns backpack object on success or null if not updated")
+    void updateBackpack() throws Exception {
+        Backpack updateBackpack = new Backpack(1, "Philmont 2027", "Danielson", "New Mexico", java.sql.Date.valueOf("2027-06-03"));
+        
+        when(backpackDao.updateBackpack(any(Backpack.class), eq("Danielson"))).thenReturn(updateBackpack);
+        
+        mockMvc.perform(put("/api/backpacks/update")
+                .principal(() -> "Danielson")
+                        .content(objectMapper.writeValueAsString(updateBackpack))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.backpackName").value("Philmont 2027"))
+                .andExpect(jsonPath("$.location").value("New Mexico"))
+                .andExpect(jsonPath("$.backpackId").value(1));
     }
 
     @Test
-    void addBackpack() {
+    @Order(5)
+    @DisplayName("CREATE /api/backpacks/add returns the backpack entered")
+    void addBackpack() throws Exception {
+        Backpack createdBackpack = new Backpack("Philmont 2026", "Daniel", "New Mexico", java.sql.Date.valueOf("2026-05-01"));
+
+        when(backpackDao.addBackpack(any(Backpack.class), eq("Daniel"))).thenReturn(createdBackpack);
+
+        mockMvc.perform(post("/api/backpacks/add")
+                .principal(() -> "Daniel")
+                .content(objectMapper.writeValueAsString(createdBackpack))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.backpackName").value("Philmont 2026"))
+                .andExpect(jsonPath("$.ownerUsername").value("Daniel"))
+                .andExpect(jsonPath("$.location").value("New Mexico"));
+
     }
 
     @Test
-    void deleteBackpack() {
+    @Order(6)
+    @DisplayName("DELETE /api/backpacks/{backpackId}/ returns 1 for success")
+    void deleteBackpack() throws Exception {
+        int backpackId = 1;
+
+        when(backpackDao.deleteBackpack(backpackId)).thenReturn(1);
+
+        mockMvc.perform(delete("/api/backpacks/{backpackId}", backpackId))
+                .andExpect(status().isOk())
+                .andExpect(content().string("1"));
     }
 }

@@ -3,72 +3,67 @@ package org.example.models;
 import java.math.BigDecimal;
 
 public class GearList {
-    private int item_id;
-    private String item_name;
+    private int itemId;
+    private String itemName;
     private String category;
     private String description;
-    private int weight_lbs;
-    private BigDecimal weight_oz;
+    private int weightLbs;
+    private BigDecimal weightOz;
     private BigDecimal price;
-    private int trail_id;
-    private String username;
+    private int backpackId;
 
 
     public GearList() {}
 
-    public GearList(int item_id,
-                    String item_name,
+    public GearList(int itemId,
+                    String itemName,
                     String category,
                     String description,
-                    int weight_lbs,
-                    BigDecimal weight_oz,
+                    int weightLbs,
+                    BigDecimal weightOz,
                     BigDecimal price,
-                    int trail_id,
-                    String username) {
-        this.item_id = item_id;
-        this.item_name = item_name;
+                    int backpackId) {
+        this.itemId = itemId;
+        this.itemName = itemName;
         this.category = category;
         this.description = description;
-        this.weight_lbs = weight_lbs;
-        this.weight_oz = weight_oz;
+        this.weightLbs = weightLbs;
+        this.weightOz = weightOz;
         this.price = price;
-        this.trail_id = trail_id;
-        this.username = username;
+        this.backpackId = backpackId;
     }
 
     // Constructor for creating a new gear item in the list
-    public GearList(String item_name,
+    public GearList(String itemName,
                     String category,
                     String description,
-                    int weight_lbs,
-                    BigDecimal weight_oz,
+                    int weightLbs,
+                    BigDecimal weightOz,
                     BigDecimal price,
-                    int trail_id,
-                    String username) {
-        this.item_name = item_name;
+                    int backpackId) {
+        this.itemName = itemName;
         this.category = category;
         this.description = description;
-        this.weight_lbs = weight_lbs;
-        this.weight_oz = weight_oz;
+        this.weightLbs = weightLbs;
+        this.weightOz = weightOz;
         this.price = price;
-        this.trail_id = trail_id;
-        this.username = username;
+        this.backpackId = backpackId;
     }
 
-    public int getItem_id() {
-        return item_id;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setItem_id(int item_id) {
-        this.item_id = item_id;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
-    public String getItem_name() {
-        return item_name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setItem_name(String item_name) {
-        this.item_name = item_name;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getCategory() {
@@ -87,20 +82,20 @@ public class GearList {
         this.description = description;
     }
 
-    public int getWeight_lbs() {
-        return weight_lbs;
+    public int getWeightLbs() {
+        return weightLbs;
     }
 
-    public void setWeight_lbs(int weight_lbs) {
-        this.weight_lbs = weight_lbs;
+    public void setWeightLbs(int weightLbs) {
+        this.weightLbs = weightLbs;
     }
 
-    public BigDecimal getWeight_oz() {
-        return weight_oz;
+    public BigDecimal getWeightOz() {
+        return weightOz;
     }
 
-    public void setWeight_oz(BigDecimal weight_oz) {
-        this.weight_oz = weight_oz;
+    public void setWeightOz(BigDecimal weightOz) {
+        this.weightOz = weightOz;
     }
 
     public BigDecimal getPrice() {
@@ -111,19 +106,11 @@ public class GearList {
         this.price = price;
     }
 
-    public int getTrail_id() {
-        return trail_id;
+    public int getBackpackId() {
+        return backpackId;
     }
 
-    public void setTrail_id(int trail_id) {
-        this.trail_id = trail_id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setBackpackId(int backpackId) {
+        this.backpackId = backpackId;
     }
 }

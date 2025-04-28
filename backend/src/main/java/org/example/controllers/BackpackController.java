@@ -43,7 +43,7 @@ public class BackpackController {
         return backpack;
     }
 
-    @PutMapping(path="/update")
+    @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
     public Backpack updateBackpack(@RequestBody Backpack backpack, Principal principal) {
         String username = principal.getName();
@@ -54,14 +54,14 @@ public class BackpackController {
      * Needed:  A method that updates ANY backpack (if the user's role is admin):
      */
 
-    @PostMapping(path="/add")
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Backpack addBackpack (Principal principal, @RequestBody Backpack backpack) {
+    public Backpack addBackpack (@RequestBody Backpack backpack, Principal principal) {
         String username = principal.getName();
         return backpackDao.addBackpack(backpack, username);
     }
 
-    @DeleteMapping(path="/{backpackId}")
+    @DeleteMapping("/{backpackId}")
     public int deleteBackpack (@PathVariable int backpackId) {
         return backpackDao.deleteBackpack(backpackId);
     }
