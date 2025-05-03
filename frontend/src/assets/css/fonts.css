@@ -7,9 +7,45 @@
 
 .rugged-title{
     font-family: "Frijole", sans-serif;
-    font-size: 32px;
+    font-size: 42px;
     letter-spacing: 7px;
 }
+
+.special-title-with-blue-shadow {
+    text-shadow: 1px 1px 2px black,
+                0 0 1em blue,
+                0 0 0.2em blue;
+    color: white;
+}
+
+.special-text-with-darkblue-shadow {
+    text-shadow: 1px 1px 1px black,
+                0 0 1em blue,
+                0 0 0.2em blue;
+    color: darkblue;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.button-shadow {
+    text-shadow: 1px 1px 1px black,
+                0 0 1em blue,
+                0 0 0.2em blue;
+    font-family: "Frijole", sans-serif;    
+}
+
+.subTitle{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.large-title{
+    font-size: 40px;
+}
+
+.text-spacing {
+    letter-spacing: .35rem;
+
+}
+
 
 .error-message{
     font-size: 22px;

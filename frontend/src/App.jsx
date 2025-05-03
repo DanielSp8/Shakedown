@@ -6,7 +6,7 @@ import Dashboard from "./Components/Dashboard";
 import Home from "./Components/Home";
 import Profile from "./Components/Profile";
 import Backpack from "./Components/Backpack";
-import Trails from "./Components/Trails";
+import Search from "./Components/Search";
 import NotFound from "./Components/NotFound";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -24,8 +24,8 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="home" element={<Home />} />
               <Route path="profile" element={<Profile />} />
-              <Route path="trails" element={<Trails />} />
               <Route path="backpack" element={<Backpack />} />
+              <Route path="search" element={<Search />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Route>

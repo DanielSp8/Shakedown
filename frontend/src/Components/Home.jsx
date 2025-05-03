@@ -1,7 +1,11 @@
+import AppTitle from "./AppTitle";
+import Carousel from "./Carousel";
+
 export default function Home() {
   return (
-    <div>
-      <p>This is the home page of this app.</p>
+    <div className="d-flex flex-column center-scene">
+      <AppTitle />
+      <Carousel />
     </div>
   );
 }
