@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatCurrency } from "./currency";
 
 export default function Backpack() {
   const [loading, setLoading] = useState(true);
@@ -128,7 +129,7 @@ export default function Backpack() {
                   <td>{val.description}</td>
                   <td>{val.weightLbs}</td>
                   <td>{val.weightOz}</td>
-                  <td>{val.price}</td>
+                  <td>{formatCurrency(val.price)}</td>
                   <td>
                     <button type="button" className="btn btn-danger">
                       Delete
