@@ -10,6 +10,7 @@ public class GearList {
     private int weightLbs;
     private BigDecimal weightOz;
     private BigDecimal price;
+    private Boolean privateValue;
     private int backpackId;
 
 
@@ -22,6 +23,7 @@ public class GearList {
                     int weightLbs,
                     BigDecimal weightOz,
                     BigDecimal price,
+                    Boolean privateValue,
                     int backpackId) {
         this.itemId = itemId;
         this.itemName = itemName;
@@ -30,6 +32,7 @@ public class GearList {
         this.weightLbs = weightLbs;
         this.weightOz = weightOz;
         this.price = price;
+        this.privateValue = privateValue;
         this.backpackId = backpackId;
     }
 
@@ -40,6 +43,7 @@ public class GearList {
                     int weightLbs,
                     BigDecimal weightOz,
                     BigDecimal price,
+                    Boolean privateValue,
                     int backpackId) {
         this.itemName = itemName;
         this.category = category;
@@ -47,6 +51,7 @@ public class GearList {
         this.weightLbs = weightLbs;
         this.weightOz = weightOz;
         this.price = price;
+        this.privateValue = privateValue;
         this.backpackId = backpackId;
     }
 
@@ -104,6 +109,14 @@ public class GearList {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Boolean getPrivateValue() {
+        return privateValue;
+    }
+
+    public void setPrivateValue(Boolean privateValue) {
+        this.privateValue = privateValue;
     }
 
     public int getBackpackId() {

@@ -35,11 +35,10 @@ public class GearListController {
         return gearListDao.updateGearItem(gearItem);
     }
 
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/batch-insert")
-    public List<GearList> createGearList(Principal principal, @RequestBody List<GearList> gearItems) {
-        String username = principal.getName();
-        return gearListDao.batchInsertGearListItems(gearItems);
+    public GearList createGearItem (@RequestBody GearList gearItem) {
+        return gearListDao.addGearItem(gearItem);
     }
 
     @DeleteMapping("/{itemId}")

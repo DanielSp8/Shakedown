@@ -61,7 +61,7 @@ public class BackpackDao {
                 resultSet.getString("backpack_name"),
                 resultSet.getString("owner_username"),
                 resultSet.getString("location"),
-                resultSet.getDate("trip_date")
+                resultSet.getBoolean("private_value")
         );
     }
 
@@ -75,13 +75,13 @@ public class BackpackDao {
     public Backpack updateBackpack(Backpack backpack, String username) {
         String sql = """
                 UPDATE backpacks SET backpack_name = ?, owner_username = ?, location = ?,
-                 trip_date = ? WHERE backpack_id = ?;""";
+                 private_value = ? WHERE backpack_id = ?;""";
 
         int rowsAffected = jdbcTemplate.update(sql,
                 backpack.getBackpackName(),
                 username,
                 backpack.getLocation(),
-                backpack.getTripDate(),
+                backpack.getPrivateValue(),
                 backpack.getBackpackId());
 
         if (rowsAffected == 0) {
@@ -101,14 +101,14 @@ public class BackpackDao {
      */
     public Backpack addBackpack(Backpack backpack, String username) {
         String sql = """
-                INSERT INTO backpacks (backpack_name, owner_username, location, trip_date)
+                INSERT INTO backpacks (backpack_name, owner_username, location, private_value)
                 VALUES (?, ?, ?, ?);""";
 
         int rowsAffected = jdbcTemplate.update(sql,
                 backpack.getBackpackName(),
                 username,
                 backpack.getLocation(),
-                backpack.getTripDate());
+                backpack.getPrivateValue());
 
         if (rowsAffected == 0) {
             return null;
