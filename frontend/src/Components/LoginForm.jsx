@@ -32,6 +32,7 @@ export default function LoginForm() {
       const data = await response.json();
 
       if (response.ok) {
+        console.log(`data.token: ${data.token}`);
         localStorage.setItem("token", data.token);
         navigate("/dashboard");
       } else {
