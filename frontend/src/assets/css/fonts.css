@@ -11,14 +11,14 @@
     letter-spacing: 7px;
 }
 
-.special-title-with-blue-shadow {
+.special-title-with-shadow {
     text-shadow: 1px 1px 2px black,
                 0 0 1em darkgreen,
                 0 0 0.2em darkgreen;
     color: white;
 }
 
-.special-text-with-darkblue-shadow {
+.special-text-with-shadow {
     text-shadow: 1px 1px 1px black,
                 0 0 1em darkgreen,
                 0 0 0.2em darkgreen;
@@ -26,11 +26,17 @@
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+.user-fields{
+    text-shadow: 1px 1px 1px black,
+                0 0 1em black,
+                0 0 0.2em darkgreen;
+                color: black;
+}
+
 .button-shadow {
     text-shadow: 1px 1px 1px black,
                 0 0 1em blue,
                 0 0 0.2em blue;
-    font-family: "Frijole", sans-serif;    
 }
 
 .subTitle{

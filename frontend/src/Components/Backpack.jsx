@@ -69,14 +69,14 @@ export default function Backpack() {
   if (!displayGear) {
     return (
       <div>
-        <table>
+        <table className="table table-striped">
           <thead>
             <tr>
-              <th></th>
-              <th>Backpack Name</th>
-              <th>Location</th>
-              <th>User</th>
-              <th></th>
+              <th scope="col"></th>
+              <th scope="col">Backpack Name</th>
+              <th scope="col">Location</th>
+              <th scope="col">User</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -101,17 +101,17 @@ export default function Backpack() {
   } else if (displayGear) {
     return (
       <div>
-        <table>
+        <table className="table table-striped">
           <thead>
             <tr>
-              <th></th>
-              <th>Item</th>
-              <th>Category</th>
-              <th>Description</th>
-              <th>Weight (in lbs)</th>
-              <th>Weight (in oz)</th>
-              <th>Price</th>
-              <th></th>
+              <th scope="col"></th>
+              <th scope="col">Item</th>
+              <th scope="col">Category</th>
+              <th scope="col">Description</th>
+              <th scope="col">Weight (in lbs)</th>
+              <th scope="col">Weight (in oz)</th>
+              <th scope="col">Price</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>

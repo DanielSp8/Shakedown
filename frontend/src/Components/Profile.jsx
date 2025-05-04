@@ -100,16 +100,15 @@ export default function Profile() {
       <AppTitle />
       <div className="d-flex flex-column justify-content-center align-items-center">
         <div className="card border-dark rounded p-2 shadow-lg half-size-width justify-content-center align-items-center">
-          <p className="card-title special-title-with-blue-shadow large-title subTitle text-spacing">
+          <p className="card-title special-title-with-shadow large-title subTitle text-spacing">
             Profile
           </p>
           <div className="card-body text-center">
-            <div className="fs-3 special-title-with-blue-shadow text-spacing">
-              Username:{" "}
-              <p className="special-text-with-darkblue-shadow">{username}</p>
+            <div className="fs-3 special-title-with-shadow text-spacing">
+              Username: <p className="user-fields">{username}</p>
             </div>
-            <div className="fs-3 drop-some special-title-with-blue-shadow text-spacing">
-              Role: <p className="special-text-with-darkblue-shadow">{role}</p>
+            <div className="fs-3 drop-some special-title-with-shadow text-spacing">
+              Role: <p className="user-fields">{role}</p>
             </div>
           </div>
         </div>
@@ -121,7 +120,7 @@ export default function Profile() {
         >
           <label
             htmlFor="inputPassword6"
-            className="fs-5 me-2 special-title-with-blue-shadow"
+            className="fs-5 me-2 special-title-with-shadow"
           >
             Change Password:
           </label>
