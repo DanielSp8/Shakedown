@@ -13,16 +13,16 @@
 
 .special-title-with-blue-shadow {
     text-shadow: 1px 1px 2px black,
-                0 0 1em blue,
-                0 0 0.2em blue;
+                0 0 1em darkgreen,
+                0 0 0.2em darkgreen;
     color: white;
 }
 
 .special-text-with-darkblue-shadow {
     text-shadow: 1px 1px 1px black,
-                0 0 1em blue,
-                0 0 0.2em blue;
-    color: darkblue;
+                0 0 1em darkgreen,
+                0 0 0.2em darkgreen;
+    color: white;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -45,7 +45,6 @@
     letter-spacing: .35rem;
 
 }
-
 
 .error-message{
     font-size: 22px;

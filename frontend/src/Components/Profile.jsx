@@ -82,10 +82,8 @@ export default function Profile() {
       });
 
       const data = await response.json();
-      console.log("data: ", data);
     } catch (err) {
       setError("Network error!");
-      console.log("Fetch error:", err);
     }
   };
 
