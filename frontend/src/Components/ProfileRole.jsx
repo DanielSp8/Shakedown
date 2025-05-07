@@ -14,7 +14,7 @@ export default function ProfileRole() {
   }
 
   return (
-    <div className="card-body text-center">
+    <div className="container">
       {data[0] == "ADMIN" ? <AdminProfile /> : <UserProfile />}
     </div>
   );

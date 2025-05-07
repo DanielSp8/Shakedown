@@ -27,10 +27,7 @@
 }
 
 .user-fields{
-    text-shadow: 1px 1px 1px black,
-                0 0 1em black,
-                0 0 0.2em darkgreen;
-                color: black;
+    color: black;
 }
 
 .button-shadow {
@@ -48,7 +45,7 @@
 }
 
 .text-spacing {
-    letter-spacing: .35rem;
+    letter-spacing: .15rem;
 
 }
 

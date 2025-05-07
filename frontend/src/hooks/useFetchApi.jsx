@@ -38,6 +38,6 @@ export default function useFetchApi(url, method = "GET", body = null) {
     };
 
     fetchData();
-  }, [url, method, JSON.stringify(body)]);
+  }, [url, method, body]);
   return { data, loading, error };
 }

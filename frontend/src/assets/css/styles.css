@@ -5,7 +5,11 @@
 }
 
 .drop-some {
-    margin-top: 1rem;
+    margin-top: .2rem;
+}
+
+.bring-up-some{
+    margin-top:-2.3rem;
 }
 
 .form-bring-down {
