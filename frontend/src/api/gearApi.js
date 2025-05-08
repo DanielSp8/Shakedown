@@ -6,13 +6,12 @@ export async function displayGearList({
   setError,
 }) {
   setLoading(true);
-  const token = localStorage.getItem("token");
   try {
     const response = await fetch(`/api/gearlists/gear/${backpackId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     if (!response.ok) {

@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import "../assets/css/navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -44,7 +43,7 @@ export default function Dashboard() {
 
             <li className="nav-item">
               <NavLink
-                to="/dashboard/backpack"
+                to="/dashboard/backpacks"
                 className="nav-link animate menu-item"
               >
                 <FontAwesomeIcon icon={faHiking} className="me-1" />

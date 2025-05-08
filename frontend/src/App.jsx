@@ -1,11 +1,10 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthPage from "./Components/AuthPage";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Dashboard from "./Components/Dashboard";
 import Home from "./Components/Home";
 import Profile from "./Components/Profile";
-import Backpack from "./Components/Backpack";
+import Backpacks from "./Components/Backpacks";
 import Search from "./Components/Search";
 import NotFound from "./Components/NotFound";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -24,7 +23,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="home" element={<Home />} />
               <Route path="profile" element={<Profile />} />
-              <Route path="backpack" element={<Backpack />} />
+              <Route path="backpacks" element={<Backpacks />} />
               <Route path="search" element={<Search />} />
               <Route path="*" element={<NotFound />} />
             </Route>

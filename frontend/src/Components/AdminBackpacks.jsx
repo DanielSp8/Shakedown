@@ -1,5 +1,3 @@
-import { displayGearList } from "../api/gearApi";
-
 /* eslint-disable react/prop-types */
 export default function AdminBackpacks({ backpacks, displayGearList }) {
   return (
