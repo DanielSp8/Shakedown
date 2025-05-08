@@ -6,15 +6,13 @@ export default function useFetchApi(url, method = "GET", body = null) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
     const fetchData = async () => {
       try {
         const options = {
           method,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         };
 
