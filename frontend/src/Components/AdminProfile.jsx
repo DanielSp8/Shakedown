@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 import UserCardElement from "./UserCardElement";
 
 export default function AdminProfile() {
-  const { data, loading, error } = useFetchApi("/api/users");
+  const { fetchData, data, loading, error } = useFetchApi();
+
+  useEffect(() => {
+    fetchData("/api/users");
+  }, [fetchData]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -14,7 +19,7 @@ export default function AdminProfile() {
 
   return (
     <div>
-      {data.map((val, key) => {
+      {data?.map((val, key) => {
         return (
           <div key={key}>
             <UserCardElement username={val.username} />

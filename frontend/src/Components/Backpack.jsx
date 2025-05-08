@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { formatCurrency } from "./currency";
+import { formatCurrency } from "../helpers/currency";
 
 export default function Backpack() {
   const [loading, setLoading] = useState(true);

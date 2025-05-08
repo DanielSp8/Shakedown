@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 import AdminProfile from "./AdminProfile";
 import UserProfile from "./UserProfile";
 
 export default function ProfileRole() {
-  const { data, loading, error } = useFetchApi("/api/profile/roles");
+  const { fetchData, data, loading, error } = useFetchApi();
+
+  useEffect(() => {
+    fetchData("/api/profile/roles");
+  }, [fetchData]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -15,7 +20,7 @@ export default function ProfileRole() {
 
   return (
     <div className="container">
-      {data[0] == "ADMIN" ? <AdminProfile /> : <UserProfile />}
+      {data?.[0] == "ADMIN" ? <AdminProfile /> : <UserProfile />}
     </div>
   );
 }

@@ -1,7 +1,12 @@
+import { useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 
 export default function Profile() {
-  const { data, loading, error } = useFetchApi("/api/profile");
+  const { fetchData, data, loading, error } = useFetchApi();
+
+  useEffect(() => {
+    fetchData("/api/profile");
+  }, [fetchData]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -14,7 +19,7 @@ export default function Profile() {
   return (
     <div className="card border-dark rounded shadow-lg bring-up-some">
       <div className="card-body">
-        <div className="fs-3 user-fields">Username: {data.username}</div>
+        <div className="fs-3 user-fields">Username: {data?.username}</div>
       </div>
     </div>
   );

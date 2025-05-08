@@ -10,6 +10,5 @@ export default function Profile() {
       <ProfileUsername />
       <ProfileRole />
     </div>
-    
   );
 }
