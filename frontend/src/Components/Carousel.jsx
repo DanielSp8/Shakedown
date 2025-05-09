@@ -43,20 +43,6 @@ export default function Carousel() {
     backpacking19,
   ]);
 
-  function goToPrevious() {
-    if (currentImageIndex == 0) {
-      setCurrentImageIndex(18);
-    } else {
-      setCurrentImageIndex(currentImageIndex - 1);
-    }
-  }
-
-  function goToNext() {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
-  }
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>

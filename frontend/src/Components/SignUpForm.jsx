@@ -34,8 +34,8 @@ export default function SignUpForm() {
       if (!response.ok) throw new Error("Registration failed.");
 
       const data = await response.json();
-      localStorage.setItem("token", data.token);
-      navigate("/dashboard");
+      localStorage.setItem("token", data.accessToken.token);
+      navigate("/dashboard/home");
     } catch (err) {
       setError(err.message);
     }

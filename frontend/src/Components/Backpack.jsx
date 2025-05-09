@@ -9,18 +9,14 @@ export default function Backpack({ setDisplayGear, setSelectedBackpackId }) {
     fetchData(`/api/backpacks`);
   }, [fetchData]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <div>Loading...</div>;
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (error) return <div>{error}</div>;
 
   const handleShowGearClick = (backpackId) => {
     setSelectedBackpackId(backpackId);
     setDisplayGear(true);
-  }
+  };
   return (
     <div>
       <table className="table table-striped">

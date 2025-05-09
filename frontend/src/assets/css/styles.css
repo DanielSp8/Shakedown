@@ -8,6 +8,10 @@
     margin-top: .2rem;
 }
 
+.drop-more{
+    margin-top: .5rem;
+}
+
 .bring-up-some{
     margin-top:-2.3rem;
 }
@@ -57,4 +61,8 @@
 #backpacksButton{
     display: block;
     margin: 0 auto;
+}
+
+.user-card{
+    width: 18rem;
 }

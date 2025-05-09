@@ -9,16 +9,11 @@ export default function UserCardElement({ username }) {
     fetchData(`/api/users/${username}/roles`, "GET");
   }, [fetchData, username]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <div>Loading...</div>;
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="card border-dark rounded shadow-lg row">
       <div className="row">
         <div className="card-body">
           <div className="card-title">{username}</div>
@@ -28,9 +23,7 @@ export default function UserCardElement({ username }) {
               <li key={index}>{item}</li>
             ))}
           </ul>
-          <ul>{/* AddRoleToUser */}</ul>
         </div>
       </div>
-    </div>
   );
 }

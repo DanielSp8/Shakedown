@@ -10,13 +10,9 @@ export default function ProfileRole() {
     fetchData("/api/profile/roles");
   }, [fetchData]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <div>Loading...</div>;
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="container">

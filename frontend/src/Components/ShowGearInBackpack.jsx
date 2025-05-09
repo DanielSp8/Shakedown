@@ -14,6 +14,18 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
 
   if (error) return <div>{error}</div>;
 
+  const totalWeightLbs = Array.isArray(data)
+    ? data.reduce((acc, val) => acc + (val.weightLbs || 0), 0)
+    : 0;
+  const totalWeightOz = Array.isArray(data)
+    ? data.reduce((acc, val) => acc + (val.weightOz || 0), 0)
+    : 0;
+  const totalPrice = Array.isArray(data)
+    ? data.reduce((acc, val) => acc + parseFloat(val.price || 0), 0)
+    : 0;
+
+  const totalWeightInPounds = totalWeightLbs + totalWeightOz / 16;
+
   return (
     <div>
       <table className="table table-striped">
@@ -30,7 +42,6 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
           </tr>
         </thead>
         <tbody>
-          {console.log("data: ", data)}
           {data?.map((val, key) => {
             return (
               <tr key={key}>
@@ -54,6 +65,19 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
             );
           })}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="4">
+              <strong>Total Weight and Remaining Cost of Backpack</strong>
+            </td>
+            <td colSpan="2">
+              <strong>{totalWeightInPounds.toFixed(2)} lbs</strong>
+            </td>
+            <td>
+              <strong>{formatCurrency(totalPrice)}</strong>
+            </td>
+          </tr>
+        </tfoot>
       </table>
       <button
         id="backpacksButton"

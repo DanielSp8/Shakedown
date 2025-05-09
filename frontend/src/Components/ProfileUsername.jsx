@@ -8,13 +8,9 @@ export default function Profile() {
     fetchData("/api/profile");
   }, [fetchData]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <div>Loading...</div>;
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="card border-dark rounded shadow-lg bring-up-some">
