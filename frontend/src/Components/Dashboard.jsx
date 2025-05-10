@@ -1,5 +1,4 @@
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
-import "../assets/css/navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,

@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/css/fonts.css";
 import "./assets/css/styles.css";
+import "./assets/css/navbar.css";
 
 function App() {
   return (
