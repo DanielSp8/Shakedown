@@ -36,8 +36,6 @@ export default function Backpack({
           </tr>
         </thead>
         <tbody>
-          {console.log("Right here:")}
-          {console.log(typeof onSuccess)}
           {data?.map((val, key) => {
             return (
               <tr key={key}>

@@ -1,14 +1,22 @@
 /* eslint-disable react/prop-types */
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { formatCurrency } from "../helpers/currency";
 import useFetchApi from "../hooks/useFetchApi";
+import AddGearButton from "./AddGearButton";
+import UpdateGearButton from "./UpdateGearButton";
+import DeleteGearItemButton from "./DeleteGearItemButton";
 
 export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
+  const [refreshKey, setRefreshKey] = useState(0);
   const { fetchData, data, loading, error } = useFetchApi();
+
+  const triggerRefresh = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
 
   useEffect(() => {
     fetchData(`/api/gearlists/gear/${backpackId}`);
-  }, [fetchData, backpackId]);
+  }, [fetchData, backpackId, refreshKey]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -28,6 +36,7 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
 
   return (
     <div>
+      <AddGearButton backpackId={backpackId} onSuccess={triggerRefresh} />
       <table className="table table-striped">
         <thead>
           <tr>
@@ -46,9 +55,18 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
             return (
               <tr key={key}>
                 <td>
-                  <button type="button" className="btn btn-info">
-                    Update
-                  </button>
+                  <UpdateGearButton
+                    itemId={val?.itemId}
+                    itemName={val?.itemName}
+                    category={val?.category}
+                    description={val?.description}
+                    weightLbs={val?.weightLbs}
+                    weightOz={val?.weightOz}
+                    price={val?.price}
+                    backpackId={val?.backpackId}
+                    privateValue={val?.privateValue}
+                    onSuccess={triggerRefresh}
+                  />
                 </td>
                 <td>{val.itemName}</td>
                 <td>{val.category}</td>
@@ -57,9 +75,11 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
                 <td>{val.weightOz}</td>
                 <td>{formatCurrency(val.price)}</td>
                 <td>
-                  <button type="button" className="btn btn-danger">
-                    Delete
-                  </button>
+                  <DeleteGearItemButton
+                    itemId={val.itemId}
+                    itemName={val.itemName}
+                    onSuccess={triggerRefresh}
+                  />
                 </td>
               </tr>
             );

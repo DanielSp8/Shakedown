@@ -8,6 +8,8 @@ export default function Modal({
   onClose,
   title,
   fields = null,
+  backpackId = null,
+  itemId = null,
   url,
   method,
   onSuccess,
@@ -32,6 +34,9 @@ export default function Modal({
     if (method === "DELETE") {
       await fetchData(url, method);
     } else if (formData) {
+      // This is for adding or updating
+      console.log("method: ", method);
+      console.log("formData: ", formData);
       await fetchData(url, method, formData);
     }
     if (!error) {
@@ -45,12 +50,20 @@ export default function Modal({
   useEffect(() => {
     if (isOpen && fields?.length) {
       const initialData = {};
+
+      if (itemId) {
+        initialData["itemId"] = itemId;
+      }
+      if (backpackId) {
+        initialData["backpackId"] = backpackId;
+      }
+
       fields.forEach((field) => {
         initialData[field] = field === "privateValue" ? false : "";
       });
       setFormData(initialData);
     }
-  }, [isOpen, fields]);
+  }, [isOpen, fields, itemId, backpackId]);
 
   if (!isOpen) return null;
 

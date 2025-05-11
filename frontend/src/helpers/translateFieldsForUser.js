@@ -6,15 +6,15 @@ export function translateFieldsForUser(fieldName) {
       return "Location";
     case "privateValue":
       return "Keep Private?";
-    case "item_name":
+    case "itemName":
       return "Name of Item";
     case "category":
       return "Category";
     case "description":
       return "Description";
-    case "weight_lbs":
+    case "weightLbs":
       return "Weight (in lbs)";
-    case "weight_oz":
+    case "weightOz":
       return "Weight (in oz)";
     case "price":
       return "Price";

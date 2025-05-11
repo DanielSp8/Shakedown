@@ -2,23 +2,19 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 
-export default function DeleteBackpackButton({
-  backpackName,
-  backpackId,
-  onSuccess,
-}) {
+export default function DeleteGearItemButton({ itemId, itemName, onSuccess }) {
   const [modal, setModal] = useState(false);
 
   return (
     <>
       <button className="btn btn-danger" onClick={() => setModal(true)}>
-        Delete Backpack
+        Delete Item
       </button>
       <Modal
         isOpen={modal}
         onClose={() => setModal(false)}
-        title={`Remove backpack ${backpackName}?`}
-        url={`/api/backpacks/${backpackId}`}
+        title={`Remove item ${itemName} from backpack?`}
+        url={`/api/gearlists/${itemId}`}
         method={"DELETE"}
         onSuccess={onSuccess}
       />
