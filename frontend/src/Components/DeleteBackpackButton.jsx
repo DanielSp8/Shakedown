@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import Modal from "./ConfirmDeleteModal";
 
 export default function DeleteBackpackButton({
   backpackName,
@@ -14,7 +14,7 @@ export default function DeleteBackpackButton({
       <button className="btn btn-danger" onClick={() => setModal(true)}>
         Delete Backpack
       </button>
-      <ConfirmDeleteModal
+      <Modal
         isOpen={modal}
         onClose={() => setModal(false)}
         title={`Remove backpack ${backpackName}?`}

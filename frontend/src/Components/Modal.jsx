@@ -29,7 +29,6 @@ export default function Modal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("formData:", formData);
     if (method === "DELETE") {
       await fetchData(url, method);
     } else if (formData) {
@@ -59,50 +58,66 @@ export default function Modal({
     <div className="modal-overlay">
       <div className="modal-content border border-dark rounded shadow p-4">
         <label className="modal-title">{title}</label>
-        <form className="drop-more" onSubmit={handleSubmit}>
-          {fields?.map((field) => (
-            <div key={field} className="form-group">
-              <label>{translateFieldsForUser(field)}</label>
-              {field === "privateValue" ? (
-                <input
-                  type="checkbox"
-                  checked={formData[field] || false}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      [field]: e.target.checked,
-                    }))
-                  }
-                  className="form-check-input ms-2"
-                />
-              ) : (
-                <input
-                  type="text"
-                  value={formData[field] || ""}
-                  onChange={(e) => handleChange(field, e.target.value)}
-                  className="form-control"
-                  required
-                />
-              )}
-            </div>
-          ))}
+        {(method === "DELETE" && (
           <div className="d-flex justify-content-between mt-3">
             <button
-              type="submit"
-              className="btn btn-primary w-20 me-2"
+              className="btn btn-danger w-20 me-2"
               disabled={loading}
+              onClick={handleSubmit}
             >
-              Submit
+              Delete
             </button>
             {error && <p className="text-danger">{error}</p>}
-            <button
-              className="btn btn-secondary w-20 me-2"
-              onClick={clearAndClose}
-            >
+            <button className="btn btn-secondary w-20 me-2" onClick={onClose}>
               Cancel
             </button>
           </div>
-        </form>
+        )) || (
+          <form className="drop-more" onSubmit={handleSubmit}>
+            {fields?.map((field) => (
+              <div key={field} className="form-group">
+                <label>{translateFieldsForUser(field)}</label>
+                {field === "privateValue" ? (
+                  <input
+                    type="checkbox"
+                    checked={formData[field] || false}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        [field]: e.target.checked,
+                      }))
+                    }
+                    className="form-check-input ms-2"
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    value={formData[field] || ""}
+                    onChange={(e) => handleChange(field, e.target.value)}
+                    className="form-control"
+                    required
+                  />
+                )}
+              </div>
+            ))}
+            <div className="d-flex justify-content-between mt-3">
+              <button
+                type="submit"
+                className="btn btn-primary w-20 me-2"
+                disabled={loading}
+              >
+                Submit
+              </button>
+              {error && <p className="text-danger">{error}</p>}
+              <button
+                className="btn btn-secondary w-20 me-2"
+                onClick={clearAndClose}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );
