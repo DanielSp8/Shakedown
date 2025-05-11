@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Backpack from "./Backpack";
+import AddBackpackButton from "./AddBackpackButton";
 import ShowGearInBackpack from "./ShowGearInBackpack";
 
 export default function Backpacks() {
@@ -9,6 +10,7 @@ export default function Backpacks() {
   if (!displayGear) {
     return (
       <>
+        <AddBackpackButton />
         <Backpack
           setDisplayGear={setDisplayGear}
           setSelectedBackpackId={setSelectedBackpackId}

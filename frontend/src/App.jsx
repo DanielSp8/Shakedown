@@ -12,6 +12,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/css/fonts.css";
 import "./assets/css/styles.css";
 import "./assets/css/navbar.css";
+import "./assets/css/modal.css";
 
 function App() {
   return (

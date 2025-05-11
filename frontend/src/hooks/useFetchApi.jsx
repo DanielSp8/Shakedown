@@ -5,7 +5,7 @@ export default function useFetchApi() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchData = useCallback(async (URL, method = "GET", body = "null") => {
+  const fetchData = useCallback(async (URL, method = "GET", body = null) => {
     setLoading(true);
     setError(null);
     setData(null);
