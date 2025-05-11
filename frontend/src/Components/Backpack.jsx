@@ -1,13 +1,19 @@
 /* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
+import DeleteBackpackButton from "./DeleteBackpackButton";
 
-export default function Backpack({ setDisplayGear, setSelectedBackpackId }) {
+export default function Backpack({
+  setDisplayGear,
+  setSelectedBackpackId,
+  refreshKey,
+  onSuccess,
+}) {
   const { fetchData, data, loading, error } = useFetchApi();
 
   useEffect(() => {
     fetchData(`/api/backpacks`);
-  }, [fetchData]);
+  }, [fetchData, refreshKey]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -30,17 +36,29 @@ export default function Backpack({ setDisplayGear, setSelectedBackpackId }) {
           </tr>
         </thead>
         <tbody>
+          {console.log("Right here:")}
+          {console.log(typeof onSuccess)}
           {data?.map((val, key) => {
             return (
               <tr key={key}>
                 <td>
-                  <button onClick={() => handleShowGearClick(val?.backpackId)}>
+                  <button
+                    className="btn btn-info"
+                    onClick={() => handleShowGearClick(val?.backpackId)}
+                  >
                     Show Gear
                   </button>
                 </td>
                 <td>{val?.backpackName}</td>
                 <td>{val?.location}</td>
                 <td>{val?.ownerUsername}</td>
+                <td>
+                  <DeleteBackpackButton
+                    backpackName={val?.backpackName}
+                    backpackId={val?.backpackId}
+                    onSuccess={onSuccess}
+                  />
+                </td>
               </tr>
             );
           })}

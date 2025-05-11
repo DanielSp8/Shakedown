@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import Modal from "./Modal";
 
-export default function AddBackpackButton() {
+export default function AddBackpackButton({onSuccess}) {
   const [modal, setModal] = useState(false);
 
   return (
@@ -16,6 +17,7 @@ export default function AddBackpackButton() {
         fields={["backpackName", "location", "privateValue"]}
         url={"/api/backpacks/add"}
         method={"POST"}
+        onSuccess={onSuccess}
       />
     </>
   );

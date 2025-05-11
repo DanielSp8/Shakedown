@@ -3,7 +3,15 @@ import React, { useState, useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 import { translateFieldsForUser } from "../helpers/translateFieldsForUser";
 
-export default function Modal({ isOpen, onClose, title, fields, url, method }) {
+export default function Modal({
+  isOpen,
+  onClose,
+  title,
+  fields = null,
+  url,
+  method,
+  onSuccess,
+}) {
   const [formData, setFormData] = useState({ privateValue: false });
   const { fetchData, data, loading, error } = useFetchApi();
 
@@ -21,10 +29,18 @@ export default function Modal({ isOpen, onClose, title, fields, url, method }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("formData: ", formData);
-    // console.log("Submitting formData:", JSON.stringify(formData, null, 2));
-    await fetchData(url, method, formData);
-    if (!error) clearAndClose();
+    console.log("formData:", formData);
+    if (method === "DELETE") {
+      await fetchData(url, method);
+    } else if (formData) {
+      await fetchData(url, method, formData);
+    }
+    if (!error) {
+      if (typeof onSuccess === "function") {
+        onSuccess();
+      }
+      clearAndClose();
+    }
   };
 
   useEffect(() => {
