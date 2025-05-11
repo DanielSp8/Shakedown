@@ -1,7 +1,10 @@
+import React from "react";
+import SearchForm from "./SearchForm";
+
 export default function Search() {
   return (
     <div>
-      <p>This page will display the search page.</p>
+      <SearchForm />
     </div>
   );
 }
