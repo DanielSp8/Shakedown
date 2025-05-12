@@ -9,17 +9,22 @@ import DisplaySearchedGearItems from "./DisplaySearchedGearItems";
 export default function SearchForm() {
   const { fetchData, data, loading, error } = useFetchApi();
 
-  const [selectedField, setSelectedField] = useState("Item Name");
+  const [selectedField, setSelectedField] = useState("item_name");
   const [inputSearch, setInputSearch] = useState("");
-  const [sortByValue, setSortByValue] = useState("Item Name");
+  const [sortByValue, setSortByValue] = useState("item_name");
   const [selectedOption, setSelectedOption] = useState("ASC");
+  const [displayTable, setDisplayTable] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const encodedField = encodeURIComponent(selectedField);
-    const encodedInputSearch = encodeURIComponent(inputSearch);
-    const url = `/api/gearlists/searchGear/${encodedField}/${encodedInputSearch}/${sortByValue}/${selectedOption}`;
+    const url = `/api/gearlists/searchGear/${encodeURIComponent(
+      selectedField
+    )}/${encodeURIComponent(inputSearch)}/${encodeURIComponent(
+      sortByValue
+    )}/${encodeURIComponent(selectedOption)}`;
+    console.log("url", url);
     await fetchData(url);
+    setDisplayTable(true);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -60,9 +65,11 @@ export default function SearchForm() {
           Search
         </button>
       </form>
-      {(data?.length === 0 && (
+      {data?.length === 0 ? (
         <div className="drop-some">Sorry, no items matched your search.</div>
-      )) || <DisplaySearchedGearItems data={data} />}
+      ) : (
+        <DisplaySearchedGearItems displayTable={displayTable} data={data} />
+      )}
     </>
   );
 }
