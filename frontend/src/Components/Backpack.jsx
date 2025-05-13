@@ -17,8 +17,6 @@ export default function Backpack({
 
   if (loading) return <div>Loading...</div>;
 
-  if (error) return <div>{error}</div>;
-
   const handleShowGearClick = (backpackId) => {
     setSelectedBackpackId(backpackId);
     setDisplayGear(true);
@@ -62,6 +60,7 @@ export default function Backpack({
           })}
         </tbody>
       </table>
+      {error && <div>{error}: Please try again</div>}
     </div>
   );
 }

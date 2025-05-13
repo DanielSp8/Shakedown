@@ -3,15 +3,13 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import AppTitle from "../Components/AppTitle.jsx";
 
-describe("AppTitle", () => {
-  describe("rendering", () => {
-    it("Should render a title and subtitle", () => {
-      render(<AppTitle />);
+describe("rendering AppTitle", () => {
+  it("Should render a title and subtitle", () => {
+    render(<AppTitle />);
 
-      expect(screen.getByText("Shakedown")).toBeInTheDocument();
-      expect(
-        screen.getByText("The gear planner for backpacking")
-      ).toBeInTheDocument();
-    });
+    expect(screen.getByText("Shakedown")).toBeInTheDocument();
+    expect(
+      screen.getByText("The gear planner for backpacking")
+    ).toBeInTheDocument();
   });
 });

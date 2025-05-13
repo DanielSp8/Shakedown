@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 import UserCardElement from "./UserCardElement";
 
@@ -10,8 +10,6 @@ export default function AdminProfile() {
   }, [fetchData]);
 
   if (loading) return <div>Loading...</div>;
-
-  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="d-flex flex-wrap gap-3 drop-more">
@@ -31,6 +29,7 @@ export default function AdminProfile() {
             >
               Add Role
             </button>
+            if (error) return <div>Error: {error}</div>;
           </div>
         );
       })}

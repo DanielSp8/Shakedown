@@ -20,8 +20,7 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
 
   if (loading) return <div>Loading...</div>;
 
-  if (error) return <div>{error}</div>;
-
+  // Place this in a helper function on its own:
   const totalWeightLbs = Array.isArray(data)
     ? data.reduce((acc, val) => acc + (val.weightLbs || 0), 0)
     : 0;
@@ -50,6 +49,11 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
             <th scope="col"></th>
           </tr>
         </thead>
+        {error && (
+          <div>
+            {error}: There is likely a server error. Please try again...
+          </div>
+        )}
         <tbody>
           {data?.map((val, key) => {
             return (
