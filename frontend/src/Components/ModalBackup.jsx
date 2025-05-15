@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 import { translateFieldsForUser } from "../helpers/translateFieldsForUser";
-import InputBox from "./InputBox";
 
 export default function Modal({
   isOpen,
@@ -32,7 +31,6 @@ export default function Modal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // This is for deleting
     if (method === "DELETE") {
       await fetchData(url, method);
     } else if (formData) {
@@ -40,7 +38,7 @@ export default function Modal({
       await fetchData(url, method, formData);
     }
     if (!error) {
-      // Verify that onSuccess function is reliable
+      // This line of code isn't necessary...
       if (typeof onSuccess === "function") {
         onSuccess();
       }
@@ -59,9 +57,8 @@ export default function Modal({
         initialData["backpackId"] = backpackId;
       }
 
-      // Set default values for each field
+      // Clarify what this code does:
       fields.forEach((field) => {
-        // Checkbox field set to false.  All is else set to an empty string
         initialData[field] = field === "privateValue" ? false : "";
       });
       setFormData(initialData);
@@ -74,7 +71,7 @@ export default function Modal({
     <div className="modal-overlay">
       <div className="modal-content border border-dark rounded shadow p-4">
         <label className="modal-title">{title}</label>
-        {method === "DELETE" ? (
+        {(method === "DELETE" && (
           <div className="d-flex justify-content-between mt-3">
             <button
               className="btn btn-danger w-20 me-2"
@@ -88,16 +85,32 @@ export default function Modal({
               Cancel
             </button>
           </div>
-        ) : (
-          <form id="modalForm" className="drop-more" onSubmit={handleSubmit}>
+        )) || (
+          <form className="drop-more" onSubmit={handleSubmit}>
             {fields?.map((field) => (
               <div key={field} className="form-group">
                 <label>{translateFieldsForUser(field)}</label>
-                <InputBox
-                  field={field}
-                  formData={formData}
-                  handleChange={handleChange}
-                />
+                {field === "privateValue" ? (
+                  <input
+                    type="checkbox"
+                    checked={formData[field] || false}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        [field]: e.target.checked,
+                      }))
+                    }
+                    className="form-check-input ms-2"
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    value={formData[field] || ""}
+                    onChange={(e) => handleChange(field, e.target.value)}
+                    className="form-control"
+                    required
+                  />
+                )}
               </div>
             ))}
             <div className="d-flex justify-content-between mt-3">
