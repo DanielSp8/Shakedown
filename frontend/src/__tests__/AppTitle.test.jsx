@@ -4,10 +4,13 @@ import { render, screen } from "@testing-library/react";
 import AppTitle from "../Components/AppTitle.jsx";
 
 describe("rendering AppTitle", () => {
-  it("Should render a title and subtitle", () => {
+  test("Should render title", () => {
     render(<AppTitle />);
 
     expect(screen.getByText("Shakedown")).toBeInTheDocument();
+  });
+  test("Should render subtitle", () => {
+    render(<AppTitle />);
     expect(
       screen.getByText("The gear planner for backpacking")
     ).toBeInTheDocument();

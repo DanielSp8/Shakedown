@@ -20,7 +20,7 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
 
   if (loading) return <div>Loading...</div>;
 
-  // Place this in a helper function on its own:
+  // Place this in a helper function on its own, possibly...
   const totalWeightLbs = Array.isArray(data)
     ? data.reduce((acc, val) => acc + (val.weightLbs || 0), 0)
     : 0;
