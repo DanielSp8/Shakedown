@@ -1,9 +1,12 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState } from "react";
 import Backpack from "./Backpack";
 import AddBackpackButton from "./AddBackpackButton";
 import ShowGearInBackpack from "./ShowGearInBackpack";
+import useFetchApi from "../hooks/useFetchApi";
 
 export default function Backpacks() {
+  const { fetchData, data, loading, error } = useFetchApi();
   const [refreshKey, setRefreshKey] = useState(0);
   const [displayGear, setDisplayGear] = useState(false);
   const [selectedBackpackId, setSelectedBackpackId] = useState(null);
@@ -11,6 +14,10 @@ export default function Backpacks() {
   const triggerRefresh = () => {
     setRefreshKey((prev) => prev + 1);
   };
+
+  {
+    loading && <div>Loading...</div>;
+  }
 
   if (!displayGear) {
     return (
@@ -22,6 +29,7 @@ export default function Backpacks() {
           refreshKey={refreshKey}
           onSuccess={triggerRefresh}
         />
+        {error && <div>Error received: {error}</div>}
       </>
     );
   }
@@ -33,6 +41,7 @@ export default function Backpacks() {
           backpackId={selectedBackpackId}
           setDisplayGear={setDisplayGear}
         />
+        {error && <div>Error received: {error}</div>}
       </>
     );
   }

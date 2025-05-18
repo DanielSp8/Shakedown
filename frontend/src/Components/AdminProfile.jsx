@@ -2,8 +2,11 @@ import React, { useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 import UserCardElement from "./UserCardElement";
 
+
 export default function AdminProfile() {
   const { fetchData, data, loading, error } = useFetchApi();
+
+  function addRoleOnClick(username) {}
 
   useEffect(() => {
     fetchData("/api/users");
@@ -19,17 +22,17 @@ export default function AdminProfile() {
             className="card border-dark rounded shadow-lg user-card"
             key={key}
           >
-            <UserCardElement username={val.username} />
+            <UserCardElement username={val?.username} />
             <button
               type="button"
               className="btn btn-primary"
               onClick={() => {
-                addRoleOnClick(val.username);
+                addRoleOnClick(val?.username);
               }}
             >
               Add Role
             </button>
-            if (error) return <div>Error: {error}</div>;
+            {error && <div>Error: {error}</div>}
           </div>
         );
       })}

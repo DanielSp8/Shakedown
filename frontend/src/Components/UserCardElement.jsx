@@ -11,6 +11,8 @@ export default function UserCardElement({ username }) {
 
   if (loading) return <div>Loading...</div>;
 
+
+  // Move this error expression down to the bottom of this component:
   if (error) return <div>Error: {error}</div>;
 
   return (

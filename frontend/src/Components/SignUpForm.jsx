@@ -23,7 +23,7 @@ export default function SignUpForm() {
     setError("");
 
     try {
-      const response = await fetch("auth/register", {
+      const response = await fetch("api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,8 +34,10 @@ export default function SignUpForm() {
       if (!response.ok) throw new Error("Registration failed.");
 
       const data = await response.json();
-      localStorage.setItem("token", data.accessToken.token);
-      navigate("/dashboard/home");
+      if (response.ok && data.accessToken.token) {
+        localStorage.setItem("token", data.accessToken.token);
+        navigate("/dashboard/home");
+      }
     } catch (err) {
       setError(err.message);
     }

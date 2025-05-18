@@ -5,10 +5,14 @@ import useFetchApi from "../hooks/useFetchApi";
 import AddGearButton from "./AddGearButton";
 import UpdateGearButton from "./UpdateGearButton";
 import DeleteGearItemButton from "./DeleteGearItemButton";
+import useUsername from "../hooks/useUsername";
+import useRole from "../hooks/useRole";
 
 export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
   const [refreshKey, setRefreshKey] = useState(0);
   const { fetchData, data, loading, error } = useFetchApi();
+  const { username } = useUsername();
+  const { role } = useRole();
 
   const triggerRefresh = () => {
     setRefreshKey((prev) => prev + 1);
@@ -20,7 +24,7 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
 
   if (loading) return <div>Loading...</div>;
 
-  // Place this in a helper function on its own, possibly...
+  // These calculations give sum totals; for total weight and total price of items
   const totalWeightLbs = Array.isArray(data)
     ? data.reduce((acc, val) => acc + (val.weightLbs || 0), 0)
     : 0;
@@ -56,37 +60,45 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
         )}
         <tbody>
           {data?.map((val, key) => {
-            return (
-              <tr key={key}>
-                <td>
-                  <UpdateGearButton
-                    itemId={val?.itemId}
-                    itemName={val?.itemName}
-                    category={val?.category}
-                    description={val?.description}
-                    weightLbs={val?.weightLbs}
-                    weightOz={val?.weightOz}
-                    price={val?.price}
-                    backpackId={val?.backpackId}
-                    privateValue={val?.privateValue}
-                    onSuccess={triggerRefresh}
-                  />
-                </td>
-                <td>{val.itemName}</td>
-                <td>{val.category}</td>
-                <td>{val.description}</td>
-                <td>{val.weightLbs}</td>
-                <td>{val.weightOz}</td>
-                <td>{formatCurrency(val.price)}</td>
-                <td>
-                  <DeleteGearItemButton
-                    itemId={val.itemId}
-                    itemName={val.itemName}
-                    onSuccess={triggerRefresh}
-                  />
-                </td>
-              </tr>
-            );
+            // This ternary operator verifies to keep private items private if their
+            //  value is true, and the user logged in doesn't have an ADMIN role
+            if (
+              !val?.privateValue ||
+              role.includes("ADMIN") ||
+              username === val?.ownerUsername
+            ) {
+              return (
+                <tr key={key}>
+                  <td>
+                    <UpdateGearButton
+                      itemId={val?.itemId}
+                      itemName={val?.itemName}
+                      category={val?.category}
+                      description={val?.description}
+                      weightLbs={val?.weightLbs}
+                      weightOz={val?.weightOz}
+                      price={val?.price}
+                      backpackId={val?.backpackId}
+                      privateValue={val?.privateValue}
+                      onSuccess={triggerRefresh}
+                    />
+                  </td>
+                  <td>{val.itemName}</td>
+                  <td>{val.category}</td>
+                  <td>{val.description}</td>
+                  <td>{val.weightLbs}</td>
+                  <td>{val.weightOz}</td>
+                  <td>{formatCurrency(val.price)}</td>
+                  <td>
+                    <DeleteGearItemButton
+                      itemId={val.itemId}
+                      itemName={val.itemName}
+                      onSuccess={triggerRefresh}
+                    />
+                  </td>
+                </tr>
+              );
+            }
           })}
         </tbody>
         <tfoot>

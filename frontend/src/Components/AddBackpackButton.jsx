@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 
-export default function AddBackpackButton({onSuccess}) {
+export default function AddBackpackButton({ onSuccess }) {
   const [modal, setModal] = useState(false);
 
   return (

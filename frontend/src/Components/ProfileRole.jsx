@@ -1,21 +1,14 @@
-import { useEffect } from "react";
-import useFetchApi from "../hooks/useFetchApi";
+import React from "react";
 import AdminProfile from "./AdminProfile";
 import UserProfile from "./UserProfile";
+import useRole from "../hooks/useRole";
 
 export default function ProfileRole() {
-  const { fetchData, data, loading, error } = useFetchApi();
-
-  useEffect(() => {
-    fetchData("/api/profile/roles");
-  }, [fetchData]);
-
-  if (loading) return <div>Loading...</div>;
+  const { role } = useRole();
 
   return (
     <div className="container">
-      {data?.[0] == "ADMIN" ? <AdminProfile /> : <UserProfile />}
-      {error && <div>Error: {error}</div>}
+      {role.includes("ADMIN") ? <AdminProfile /> : <UserProfile />}
     </div>
   );
 }

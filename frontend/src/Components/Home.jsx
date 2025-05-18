@@ -1,3 +1,4 @@
+import React from "react";
 import AppTitle from "./AppTitle";
 import Carousel from "./Carousel";
 import DisplayQuote from "./DisplayQuote";
