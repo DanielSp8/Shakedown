@@ -18,6 +18,8 @@ export function translateFieldsForUser(fieldName) {
       return "Weight (in oz)";
     case "price":
       return "Price";
+    case "Add Role":
+      return "Add Role";
     default:
       return null;
   }

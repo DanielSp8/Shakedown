@@ -1,16 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 import UserCardElement from "./UserCardElement";
-
+import Modal from "./Modal";
+import AddRoleButton from "./AddRoleButton";
 
 export default function AdminProfile() {
+  const [refreshKey, setRefreshKey] = useState(0);
   const { fetchData, data, loading, error } = useFetchApi();
 
-  function addRoleOnClick(username) {}
+  const triggerRefresh = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
 
   useEffect(() => {
     fetchData("/api/users");
-  }, [fetchData]);
+  }, [fetchData, refreshKey]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -23,15 +27,11 @@ export default function AdminProfile() {
             key={key}
           >
             <UserCardElement username={val?.username} />
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => {
-                addRoleOnClick(val?.username);
-              }}
-            >
-              Add Role
-            </button>
+            <AddRoleButton
+              username={val?.username}
+              onSuccess={triggerRefresh}
+            />
+
             {error && <div>Error: {error}</div>}
           </div>
         );
