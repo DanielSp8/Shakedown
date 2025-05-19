@@ -5,37 +5,48 @@ export default function useFetchApi() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchData = useCallback(async (URL, method = "GET", body = null) => {
-    setLoading(true);
-    setError(null);
-    setData(null);
+  const fetchData = useCallback(
+    async (
+      URL,
+      method = "GET",
+      headerContent = "application/json",
+      body = null
+    ) => {
+      setLoading(true);
+      setError(null);
+      setData(null);
 
-    try {
-      const options = {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
+      try {
+        const options = {
+          method,
+          headers: {
+            "Content-Type": headerContent,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        };
 
-      if (body && (method === "POST" || method === "PUT")) {
-        options.body = JSON.stringify(body);
+        // Check of how to post the value (no "" for role add, or stringify others)
+        if (headerContent !== "application/json" && method === "POST") {
+          options.body = body;
+        } else if (body && (method === "POST" || method === "PUT")) {
+          options.body = JSON.stringify(body);
+        }
+
+        const response = await fetch(URL, options);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        const json = await response.json();
+        setData(json);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
-
-      const response = await fetch(URL, options);
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-
-      const json = await response.json();
-      setData(json);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    },
+    []
+  );
 
   return { fetchData, data, loading, error };
 }

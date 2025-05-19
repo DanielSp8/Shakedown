@@ -26,7 +26,10 @@ export default function AdminProfile() {
             className="card border-dark rounded shadow-lg user-card"
             key={key}
           >
-            <UserCardElement username={val?.username} />
+            <UserCardElement
+              username={val?.username}
+              onSuccess={triggerRefresh}
+            />
             <AddRoleButton
               username={val?.username}
               onSuccess={triggerRefresh}

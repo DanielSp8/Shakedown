@@ -22,6 +22,7 @@ export default function AddRoleButton({ username, onSuccess }) {
         field={"Add Role"}
         url={`/api/users/${username}/roles`}
         method={"POST"}
+        headerContent={"text/plain"}
         onSuccess={onSuccess}
       />
     </>
