@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 import UserCardElement from "./UserCardElement";
-import Modal from "./Modal";
 import AddRoleButton from "./AddRoleButton";
+import DeleteUserButton from "./DeleteUserButton";
 
 export default function AdminProfile() {
   const [refreshKey, setRefreshKey] = useState(0);
   const { fetchData, data, loading, error } = useFetchApi();
+  const [showButton, setShowButton] = useState(true);
 
   const triggerRefresh = () => {
+    setShowButton(true);
     setRefreshKey((prev) => prev + 1);
   };
 
@@ -19,23 +21,35 @@ export default function AdminProfile() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="d-flex flex-wrap gap-3 drop-more">
+    <div className="d-flex gap-3 drop-more">
       {data?.map((val, key) => {
         return (
           <div
-            className="card border-dark rounded shadow-lg user-card"
+            className="card border-dark rounded shadow-lg card-fit"
             key={key}
           >
-            <UserCardElement
-              username={val?.username}
-              onSuccess={triggerRefresh}
-            />
-            <AddRoleButton
-              username={val?.username}
-              onSuccess={triggerRefresh}
-            />
+            <div className="card-body">
+              <UserCardElement
+                username={val?.username}
+                onSuccess={triggerRefresh}
+              />
+              <div className="d-flex justify-content-end gap-2 mt-2">
+                <AddRoleButton
+                  setShowButton={setShowButton}
+                  showButton={showButton}
+                  username={val?.username}
+                  onSuccess={triggerRefresh}
+                />
+                <DeleteUserButton
+                  setShowButton={setShowButton}
+                  showButton={showButton}
+                  username={val?.username}
+                  onSuccess={triggerRefresh}
+                />
+              </div>
 
-            {error && <div>Error: {error}</div>}
+              {error && <div className="text-danger">Error: {error}</div>}
+            </div>
           </div>
         );
       })}

@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import AuthPage from "./Components/AuthPage";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Dashboard from "./Components/Dashboard";
@@ -16,23 +17,19 @@ import "./assets/css/modal.css";
 
 function App() {
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<AuthPage />} />
+    <Routes>
+      <Route path="/" element={<AuthPage />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route path="home" element={<Home />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="backpacks" element={<Backpacks />} />
-              <Route path="search" element={<Search />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Route>
-        </Routes>
-      </Router>
-    </>
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="home" element={<Home />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="backpacks" element={<Backpacks />} />
+          <Route path="search" element={<Search />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 

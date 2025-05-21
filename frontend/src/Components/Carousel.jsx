@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import backpacking01 from "../images/backpacking-01.webp";
 import backpacking02 from "../images/backpacking-02.webp";
 import backpacking03 from "../images/backpacking-03.webp";

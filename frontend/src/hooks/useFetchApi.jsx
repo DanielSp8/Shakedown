@@ -25,7 +25,8 @@ export default function useFetchApi() {
           },
         };
 
-        // Check of how to post the value (no "" for role add, or stringify others)
+        // Check of how to post the value (no "" for role add, or stringify some others)
+        //  This is primarily for formatting purposes
         if (headerContent !== "application/json" && method === "POST") {
           options.body = body;
         } else if (body && (method === "POST" || method === "PUT")) {

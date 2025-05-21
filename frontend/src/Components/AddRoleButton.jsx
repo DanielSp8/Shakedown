@@ -2,15 +2,22 @@
 import React, { useState } from "react";
 import RoleModal from "./RoleModal";
 
-export default function AddRoleButton({ username, onSuccess }) {
+export default function AddRoleButton({
+  showButton,
+  setShowButton,
+  username,
+  onSuccess,
+}) {
   const [modal, setModal] = useState(false);
 
   return (
     <>
       <button
-        className="btn btn-primary"
+        className="btn btn-primary btn-sm"
+        style={{ display: showButton ? "inline-block" : "none" }}
         onClick={() => {
           setModal(true);
+          setShowButton(false);
         }}
       >
         Add Role
@@ -24,6 +31,7 @@ export default function AddRoleButton({ username, onSuccess }) {
         method={"POST"}
         headerContent={"text/plain"}
         onSuccess={onSuccess}
+        setShowButton={setShowButton}
       />
     </>
   );

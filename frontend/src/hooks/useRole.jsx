@@ -13,7 +13,6 @@ export default function useRole() {
 
   useEffect(() => {
     if (data) {
-      console.log("data: ", data);
       setRole(data);
     }
   }, [data]);

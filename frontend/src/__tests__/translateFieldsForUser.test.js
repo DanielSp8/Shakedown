@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from "react";
 import { translateFieldsForUser } from "../helpers/translateFieldsForUser";
 
@@ -51,6 +52,11 @@ describe("translateFieldsForUser helper", () => {
   test("price", () => {
     const field = "price";
     const expectedResponse = "Price";
+    expect(translateFieldsForUser(field)).toBe(expectedResponse);
+  });
+  test("Add Role", () => {
+    const field = "Add Role";
+    const expectedResponse = "Add Role";
     expect(translateFieldsForUser(field)).toBe(expectedResponse);
   });
   test("null return", () => {

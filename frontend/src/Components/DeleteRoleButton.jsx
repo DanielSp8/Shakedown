@@ -7,7 +7,10 @@ export default function DeleteRoleButton({ username, role, onSuccess }) {
 
   return (
     <>
-      <button className="btn btn-danger" onClick={() => setModal(true)}>
+      <button
+        className="btn btn-danger btn-sm m-2"
+        onClick={() => setModal(true)}
+      >
         Delete Role
       </button>
       <RoleModal

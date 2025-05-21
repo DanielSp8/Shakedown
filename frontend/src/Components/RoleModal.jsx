@@ -13,12 +13,14 @@ export default function RoleModal({
   method,
   headerContent = null,
   onSuccess,
+  setShowButton,
 }) {
   const { fetchData, data, loading, error } = useFetchApi();
   const [input, setInput] = useState("");
 
   const clearAndClose = () => {
     setInput("");
+    setShowButton(true);
     onClose();
   };
 
@@ -27,8 +29,7 @@ export default function RoleModal({
     if (method === "POST" && field === "Add Role") {
       await fetchData(url, method, headerContent, input);
     }
-    if (method === "DELETE" && title === "Delete Role") {
-      console.log("Here, URL", url);
+    if (method === "DELETE") {
       await fetchData(url, method);
     }
 
@@ -47,16 +48,17 @@ export default function RoleModal({
     <div className="modal-overlay">
       <div className="modal-content border border-dark rounded shadow p-4">
         <label className="modal-title">{title}</label>
-        {method === "DELETE" && title === "Delete Role" ? (
+        {method === "DELETE" ? (
           <div className="d-flex justify-content between mt-3">
-            <label>
-              Delete role: {role} from username: {username}?
-            </label>
-            <button className="btn btn-danger w-10 me-1" onClick={handleSubmit}>
+            <label>{title}</label>
+            <button
+              className="btn btn-danger w-10 me-1 btn-sm"
+              onClick={handleSubmit}
+            >
               Delete
             </button>
             <button
-              className="btn btn-secondary w-10 me-2"
+              className="btn btn-secondary w-10 me-2 btn-sm"
               onClick={clearAndClose}
             >
               Cancel
@@ -74,13 +76,13 @@ export default function RoleModal({
             </label>
             <div>
               <button
-                className="btn btn-primary w-20 me-1"
+                className="btn btn-primary w-20 me-1 btn-sm"
                 onClick={handleSubmit}
               >
                 Submit
               </button>
               <button
-                className="btn btn-secondary w-20 me-2"
+                className="btn btn-secondary w-20 me-2 btn-sm"
                 onClick={clearAndClose}
               >
                 Cancel
