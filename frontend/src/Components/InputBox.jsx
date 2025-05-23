@@ -19,7 +19,7 @@ export default function InputBox({ field, formData, handleChange }) {
       handleChange(field, input);
     }
   };
-
+  
   if (field === "privateValue")
     return (
       <div>

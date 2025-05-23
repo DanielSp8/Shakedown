@@ -9,24 +9,30 @@ export default function RoleModal({
   role,
   title,
   field = null,
+  type = "text",
   url,
   method,
   headerContent = null,
   onSuccess,
-  setShowButton,
+  setShowButton = null,
 }) {
   const { fetchData, data, loading, error } = useFetchApi();
   const [input, setInput] = useState("");
 
   const clearAndClose = () => {
     setInput("");
-    setShowButton(true);
+    if (typeof setShowButton === "function") {
+      setShowButton(true);
+    }
     onClose();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (method === "POST" && field === "Add Role") {
+      await fetchData(url, method, headerContent, input);
+    }
+    if (method === "PUT" && field === "Enter Password") {
       await fetchData(url, method, headerContent, input);
     }
     if (method === "DELETE") {
@@ -70,6 +76,7 @@ export default function RoleModal({
               {field}
               <input
                 name="input"
+                type={type}
                 required
                 onChange={(e) => setInput(e.target.value)}
               />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1747849764316" clover="3.2.0">
-  <project timestamp="1747849764316" name="All files">
-    <metrics statements="342" coveredstatements="91" conditionals="193" coveredconditionals="46" methods="126" coveredmethods="41" elements="661" coveredelements="178" complexity="0" loc="342" ncloc="342" packages="5" files="48" classes="48"/>
+<coverage generated="1747967427695" clover="3.2.0">
+  <project timestamp="1747967427695" name="All files">
+    <metrics statements="338" coveredstatements="107" conditionals="200" coveredconditionals="58" methods="127" coveredmethods="44" elements="665" coveredelements="209" complexity="0" loc="338" ncloc="338" packages="4" files="46" classes="46"/>
     <package name="src">
       <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="App.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\App.jsx">
@@ -14,7 +14,7 @@
       </file>
     </package>
     <package name="src.Components">
-      <metrics statements="275" coveredstatements="75" conditionals="156" coveredconditionals="31" methods="113" coveredmethods="38"/>
+      <metrics statements="281" coveredstatements="91" conditionals="164" coveredconditionals="43" methods="115" coveredmethods="41"/>
       <file name="AddBackpackButton.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\Components\AddBackpackButton.jsx">
         <metrics statements="4" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
         <line num="6" count="6" type="stmt"/>
@@ -173,24 +173,24 @@
         <line num="7" count="1" type="stmt"/>
       </file>
       <file name="InputBox.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\Components\InputBox.jsx">
-        <metrics statements="17" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="15" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="24" count="0" type="stmt"/>
+        <metrics statements="17" coveredstatements="16" conditionals="12" coveredconditionals="12" methods="4" coveredmethods="3"/>
+        <line num="8" count="14" type="stmt"/>
+        <line num="9" count="14" type="stmt"/>
+        <line num="11" count="14" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="15" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="23" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="3" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
-        <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
+        <line num="34" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="8" type="stmt"/>
+        <line num="49" count="3" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
       </file>
       <file name="LoginForm.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\Components\LoginForm.jsx">
         <metrics statements="25" coveredstatements="0" conditionals="10" coveredconditionals="0" methods="7" coveredmethods="0"/>
@@ -267,9 +267,12 @@
         <line num="9" count="0" type="stmt"/>
       </file>
       <file name="ProfileUsername.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\Components\ProfileUsername.jsx">
-        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="5" count="0" type="stmt"/>
+        <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="6" count="0" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
       </file>
       <file name="ProtectedRoute.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\Components\ProtectedRoute.jsx">
         <metrics statements="2" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -286,26 +289,29 @@
         <line num="9" count="0" type="stmt"/>
       </file>
       <file name="RoleModal.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\Components\RoleModal.jsx">
-        <metrics statements="19" coveredstatements="0" conditionals="18" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="18" count="0" type="stmt"/>
+        <metrics statements="22" coveredstatements="0" conditionals="26" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="19" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
         <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
+        <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="25" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="29" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="30" count="0" type="stmt"/>
-        <line num="32" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="32" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="33" count="0" type="stmt"/>
-        <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="37" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="45" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="74" count="0" type="stmt"/>
+        <line num="35" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="38" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="42" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="43" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="51" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
       </file>
       <file name="Search.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\Components\Search.jsx">
         <metrics statements="16" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
@@ -384,9 +390,6 @@
         <line num="14" count="1" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
       </file>
-      <file name="UpdatePassword.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\Components\UpdatePassword.jsx">
-        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      </file>
       <file name="UserCardElement.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\Components\UserCardElement.jsx">
         <metrics statements="6" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
@@ -400,22 +403,6 @@
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-      </file>
-    </package>
-    <package name="src.api">
-      <metrics statements="10" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="gearApi.js" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\api\gearApi.js">
-        <metrics statements="10" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="17" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.helpers">
@@ -455,9 +442,9 @@
       </file>
     </package>
     <package name="src.hooks">
-      <metrics statements="37" coveredstatements="0" conditionals="20" coveredconditionals="0" methods="8" coveredmethods="0"/>
+      <metrics statements="37" coveredstatements="0" conditionals="21" coveredconditionals="0" methods="8" coveredmethods="0"/>
       <file name="useFetchApi.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\hooks\useFetchApi.jsx">
-        <metrics statements="21" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="21" coveredstatements="0" conditionals="15" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
@@ -467,18 +454,18 @@
         <line num="17" count="0" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
-        <line num="30" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="32" count="0" type="cond" truecount="0" falsecount="5"/>
-        <line num="33" count="0" type="stmt"/>
+        <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="cond" truecount="0" falsecount="5"/>
         <line num="36" count="0" type="stmt"/>
-        <line num="37" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="38" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="41" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
         <line num="44" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="52" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
       </file>
       <file name="useRole.jsx" path="C:\Users\DanielSp8\FlexPath\flexpath-final-project\frontend\src\hooks\useRole.jsx">
         <metrics statements="8" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
