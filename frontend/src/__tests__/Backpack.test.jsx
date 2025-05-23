@@ -128,4 +128,23 @@ describe("Backpack", () => {
     expect(setDisplayGear).toHaveBeenCalledWith(true);
     expect(setSelectedBackpackId).toHaveBeenCalledWith(91);
   });
+
+  test("displays the error message, if an error is encountered", () => {
+    mockFetchApi.error = "Failed to load backpacks";
+    mockFetchApi.loading = false;
+    mockFetchApi.data = [];
+
+    render(
+      <Backpack
+        setDisplayGear={setDisplayGear}
+        setSelectedBackpackId={setSelectedBackpackId}
+        refreshKey={0}
+        onSuccess={onSuccess}
+      />
+    );
+
+    expect(
+      screen.getByText(/error: failed to load backpacks. Please try again.../i)
+    ).toBeInTheDocument();
+  });
 });

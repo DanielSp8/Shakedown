@@ -72,9 +72,9 @@ export default function Backpack({
 
             return null;
           })}
-          {error && <div>Error: {error}. Please try again...</div>}
         </tbody>
       </table>
+      {error && <p>Error: {error}. Please try again...</p>}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-const-assign */
 import React, { useState, useEffect } from "react";
 import Dropdown from "./Dropdown";
 import { fieldsToSearch } from "../helpers/fieldsToSearch";
@@ -17,12 +18,21 @@ export default function SearchForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = `/api/gearlists/searchGear/${encodeURIComponent(
-      selectedField
-    )}/${encodeURIComponent(inputSearch)}/${encodeURIComponent(
-      sortByValue
-    )}/${encodeURIComponent(selectedOption)}`;
-    console.log("url", url);
+    let url;
+    // Checks if search item selected is description; if so, use the url for LIKE sql statement
+    if (selectedField === "description") {
+      url = `/api/gearlists/searchGear/description/like/${encodeURIComponent(
+        inputSearch
+      )}/${encodeURIComponent(sortByValue)}/${encodeURIComponent(
+        selectedOption
+      )}`;
+    } else {
+      url = `/api/gearlists/searchGear/${encodeURIComponent(
+        selectedField
+      )}/${encodeURIComponent(inputSearch)}/${encodeURIComponent(
+        sortByValue
+      )}/${encodeURIComponent(selectedOption)}`;
+    }
     await fetchData(url);
     setDisplayTable(true);
   };
@@ -44,6 +54,11 @@ export default function SearchForm() {
           type="text"
           value={inputSearch}
           onChange={(e) => setInputSearch(e.target.value)}
+          placeholder={
+            selectedField === "description"
+              ? "Enter a phrase to search in the descriptions"
+              : "Enter search input"
+          }
           className="form-control"
           required
         />
@@ -64,10 +79,16 @@ export default function SearchForm() {
         </button>
       </form>
       {error && <div>{error}: Please try again...</div>}
-      {data?.length === 0 ? (
-        <div className="drop-some">Sorry, no items matched your search.</div>
-      ) : (
-        <DisplaySearchedGearItems displayTable={displayTable} data={data} />
+      {!error && (
+        <>
+          {data?.length === 0 ? (
+            <div className="drop-some">
+              Sorry, no items matched your search.
+            </div>
+          ) : (
+            <DisplaySearchedGearItems displayTable={displayTable} data={data} />
+          )}
+        </>
       )}
     </>
   );

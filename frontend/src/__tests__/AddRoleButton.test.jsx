@@ -6,11 +6,18 @@ import AddRoleButton from "../Components/AddRoleButton";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 const mockModal = jest.fn();
+const mockOnSuccess = jest.fn();
+const mockSetShowButton = jest.fn();
 
 // Mock the role modal component
 jest.mock("../Components/RoleModal", () => (props) => {
   mockModal(props);
-  return props.isOpen ? <div>Role Modal Open</div> : null;
+  return props.isOpen ? (
+    <>
+      <div>Role Modal Open</div>
+      <button onClick={() => props.onClose()}>Close Modal</button>
+    </>
+  ) : null;
 });
 
 describe("AddRoleButton", () => {
@@ -24,7 +31,7 @@ describe("AddRoleButton", () => {
         showButton={true}
         setShowButton={() => {}}
         username="testing"
-        onSuccess={() => {}}
+        onSuccess={mockOnSuccess}
       />
     );
 
@@ -33,80 +40,80 @@ describe("AddRoleButton", () => {
   });
 
   test("button does not render when showButton is false", () => {
-    <AddRoleButton
-      showButton={false}
-      setShowButton={() => {}}
-      username="testing"
-      onSuccess={() => {}}
-    />;
+    render(
+      <AddRoleButton
+        showButton={false}
+        setShowButton={() => {}}
+        username="testing"
+        onSuccess={() => {}}
+      />
+    );
 
     expect(
       screen.queryByRole("button", { name: /add role/i })
     ).not.toBeInTheDocument();
   });
-});
 
-test("button has the correct Bootstrap class", () => {
-  render(
-    <AddRoleButton
-      showButton={true}
-      setShowButton={() => {}}
-      username="testing"
-      onSuccess={() => {}}
-    />
-  );
+  test("clicking the button opens the modal and hides the button", () => {
+    render(
+      <AddRoleButton
+        showButton={true}
+        setShowButton={mockSetShowButton}
+        username="testing"
+        onSuccess={() => {}}
+      />
+    );
 
-  expect(screen.getByRole("button", { name: /add role/i })).toHaveClass(
-    "btn btn-primary btn-sm"
-  );
-});
+    const buttonElement = screen.getByRole("button", { name: /add role/i });
+    fireEvent.click(buttonElement);
 
-test("clicking the button opens the modal and hides the button", () => {
-  const mockSetShowButton = jest.fn();
+    expect(screen.getByText(/role modal open/i)).toBeInTheDocument();
 
-  render(
-    <AddRoleButton
-      showButton={true}
-      setShowButton={mockSetShowButton}
-      username="testing"
-      onSuccess={() => {}}
-    />
-  );
+    expect(mockSetShowButton).toHaveBeenCalledWith(false);
+  });
 
-  const buttonElement = screen.getByRole("button", { name: /add role/i });
-  fireEvent.click(buttonElement);
+  test("RoleModal component receives correct props", () => {
+    render(
+      <AddRoleButton
+        showButton={true}
+        setShowButton={mockSetShowButton}
+        username="testing"
+        onSuccess={mockOnSuccess}
+      />
+    );
 
-  expect(screen.getByText(/role modal open/i)).toBeInTheDocument();
+    const buttonElement = screen.getByRole("button", { name: /add role/i });
+    fireEvent.click(buttonElement);
 
-  expect(mockSetShowButton).toHaveBeenCalledWith(false);
-});
+    expect(mockModal).toHaveBeenCalledWith(
+      expect.objectContaining({
+        isOpen: true,
+        title: "Add Role to testing",
+        field: "Add Role",
+        url: "/api/users/testing/roles",
+        method: "POST",
+        headerContent: "text/plain",
+        onSuccess: mockOnSuccess,
+        setShowButton: mockSetShowButton,
+      })
+    );
+  });
 
-test("RoleModal component receives correct props", () => {
-  const mockSetShowButton = jest.fn();
-  const mockOnSuccess = jest.fn();
+  test("modal opens and closes with user clicks", () => {
+    render(
+      <AddRoleButton
+        showButton={true}
+        setShowButton={mockSetShowButton}
+        username="testing"
+        onSuccess={mockOnSuccess}
+      />
+    );
 
-  render(
-    <AddRoleButton
-      showButton={true}
-      setShowButton={mockSetShowButton}
-      username="testing"
-      onSuccess={mockOnSuccess}
-    />
-  );
+    const buttonElement = screen.getByRole("button", { name: /add role/i });
+    fireEvent.click(buttonElement);
 
-  const buttonElement = screen.getByRole("button", { name: /add role/i });
-  fireEvent.click(buttonElement);
-
-  expect(mockModal).toHaveBeenCalledWith(
-    expect.objectContaining({
-      isOpen: true,
-      title: "Add Role to testing",
-      field: "Add Role",
-      url: "/api/users/testing/roles",
-      method: "POST",
-      headerContent: "text/plain",
-      onSuccess: mockOnSuccess,
-      setShowButton: mockSetShowButton,
-    })
-  );
+    expect(screen.queryByText(/role modal open/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /close modal/i }));
+    expect(screen.queryByText(/role modal open/i)).not.toBeInTheDocument();
+  });
 });

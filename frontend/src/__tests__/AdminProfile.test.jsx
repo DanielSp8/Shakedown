@@ -2,12 +2,17 @@
 /* eslint-disable react/display-name */
 /* eslint-disable no-undef */
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import AdminProfile from "../Components/AdminProfile";
 
 // Mock other components being used
-jest.mock("../Components/UserCardElement", () => ({ username }) => {
-  <div>UserCard: {username}</div>;
+jest.mock("../Components/UserCardElement", () => ({ username, onSuccess }) => {
+  return (
+    <>
+      <div>UserCard: {username}</div>
+      <button onClick={() => onSuccess()}>Trigger Refresh</button>
+    </>
+  );
 });
 
 jest.mock("../Components/AddRoleButton", () => ({ username }) => (
@@ -63,5 +68,26 @@ describe("AdminProfile", () => {
     expect(
       await screen.findByText(/error: something went wrong/i)
     ).toBeInTheDocument();
+  });
+
+  test("simulate trigger refresh function", () => {
+    render(<AdminProfile />);
+
+    expect(mockFetchApi.fetchData).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByRole("button", { name: /trigger refresh/i }));
+
+    expect(mockFetchApi.fetchData).toHaveBeenCalledTimes(2);
+  });
+
+  test("renders loading indicator...", () => {
+    mockFetchApi.loading = true;
+    mockFetchApi.data = null;
+    mockFetchApi.error = null;
+
+    render(<AdminProfile />);
+
+    expect(screen.getByText(/loading.../i)).toBeInTheDocument();
+    expect(screen.queryByText("AddRoleButton")).not.toBeInTheDocument();
   });
 });

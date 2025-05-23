@@ -5,17 +5,22 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import DeleteUserButton from "../Components/DeleteUserButton";
 
+const mockSetShowButton = jest.fn();
+const mockOnSuccess = jest.fn();
 const mockModal = jest.fn();
-
-// Mock the role modal component
 jest.mock("../Components/RoleModal", () => (props) => {
   mockModal(props);
-  return props.isOpen ? <div>Role Modal Open</div> : null;
+  return props.isOpen ? (
+    <>
+      <div>Delete User Modal</div>
+      <button onClick={() => props.onClose()}>Close Modal</button>
+    </>
+  ) : null;
 });
 
 describe("Delete User Button", () => {
   beforeEach(() => {
-    mockModal.mockClear();
+    jest.clearAllMocks();
   });
 
   test("renders the button when showButton is true", () => {
@@ -63,8 +68,6 @@ describe("Delete User Button", () => {
   });
 
   test("clicking the button opens the modal and hides the button", () => {
-    const mockSetShowButton = jest.fn();
-
     render(
       <DeleteUserButton
         showButton={true}
@@ -77,15 +80,12 @@ describe("Delete User Button", () => {
     const buttonElement = screen.getByRole("button", { name: /delete user/i });
     fireEvent.click(buttonElement);
 
-    expect(screen.getByText(/role modal open/i)).toBeInTheDocument();
+    expect(screen.getByText(/delete user modal/i)).toBeInTheDocument();
 
     expect(mockSetShowButton).toHaveBeenCalledWith(false);
   });
 
   test("RoleModal component receives correct props", () => {
-    const mockSetShowButton = jest.fn();
-    const mockOnSuccess = jest.fn();
-
     render(
       <DeleteUserButton
         showButton={true}
@@ -108,5 +108,21 @@ describe("Delete User Button", () => {
         setShowButton: mockSetShowButton,
       })
     );
+  });
+
+  test("modal opens and closes with user clicks", () => {
+    render(
+      <DeleteUserButton
+        showButton={true}
+        setShowButton={mockSetShowButton}
+        username={"testing"}
+        onSuccess={mockOnSuccess}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /delete user/i }));
+    expect(screen.getByText(/delete user modal/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /close modal/i }));
+    expect(screen.queryByText(/delete user modal/i)).not.toBeInTheDocument();
   });
 });

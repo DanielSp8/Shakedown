@@ -6,8 +6,15 @@ import React from "react";
 import DeleteGearItemButton from "../Components/DeleteGearItemButton";
 import { render, screen, fireEvent } from "@testing-library/react";
 
-jest.mock("../Components/Modal", () => ({ isOpen }) => {
-  return isOpen ? <div>Delete Gear Item Modal</div> : null;
+const mockModal = jest.fn();
+jest.mock("../Components/Modal", () => (props) => {
+  mockModal(props);
+  return props.isOpen ? (
+    <>
+      <div>Delete Gear Item Modal</div>
+      <button onClick={() => props.onClose()}>Close Modal</button>
+    </>
+  ) : null;
 });
 
 describe("DeleteGearItemButton", () => {
@@ -33,5 +40,15 @@ describe("DeleteGearItemButton", () => {
     fireEvent.click(screen.getByRole("button"));
 
     expect(screen.getByText(/delete gear item modal/i)).toBeInTheDocument();
+  });
+  test("modal opens and closes with user clicks", () => {
+    render(<DeleteGearItemButton />);
+
+    fireEvent.click(screen.getByRole("button", { name: /delete item/i }));
+    expect(screen.getByText(/delete gear item modal/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /close modal/i }));
+    expect(
+      screen.queryByText(/delete gear item modal/i)
+    ).not.toBeInTheDocument();
   });
 });

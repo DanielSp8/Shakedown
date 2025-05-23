@@ -5,8 +5,6 @@ import useFetchApi from "../hooks/useFetchApi";
 export default function RoleModal({
   isOpen,
   onClose,
-  username,
-  role,
   title,
   field = null,
   type = "text",

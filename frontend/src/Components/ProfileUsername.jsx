@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import useUsername from "../hooks/useUsername";
 import RoleModal from "./RoleModal";
 
-export default function Profile({ onSuccess }) {
+export default function ProfileUsername({ onSuccess }) {
   const { username } = useUsername();
   const [modal, setModal] = useState(false);
 
@@ -10,7 +11,7 @@ export default function Profile({ onSuccess }) {
     <div className="card border-dark rounded shadow-lg bring-up-some">
       <div className="card-body">
         <div className="fs-3 user-fields">Username: {username}</div>
-        <div className="fs-2">
+        <div className="fs-4">
           <button
             className="btn btn-primary btn-sm"
             onClick={() => setModal(true)}
