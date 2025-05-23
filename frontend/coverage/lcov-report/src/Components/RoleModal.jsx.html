@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">26.08% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/23</span>
+                <span class='fraction'>6/23</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">19.23% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/26</span>
+                <span class='fraction'>5/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>1/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">22.72% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/22</span>
+                <span class='fraction'>5/22</span>
             </div>
         
             
@@ -181,23 +181,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -213,7 +213,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -271,22 +271,22 @@
 import React, { useState, useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >RoleModal(</span>{
+export default function RoleModal({
   isOpen,
   onClose,
   title,
-  field = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span>
-  type = <span class="branch-0 cbranch-no" title="branch not covered" >"text",</span>
+  field = null,
+  type = "text",
   url,
   method,
-  headerContent = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span>
+  headerContent = null,
   onSuccess,
-  setShowButton = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span>
+  setShowButton = null,
 }) {
-  const { fetchData, data, loading, error } = <span class="cstat-no" title="statement not covered" >useFetchApi();</span>
-  const [input, setInput] = <span class="cstat-no" title="statement not covered" >useState("");</span>
+  const { fetchData, data, loading, error } = useFetchApi();
+  const [input, setInput] = useState("");
 &nbsp;
-  const clearAndClose = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+  const clearAndClose = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >    setInput("");</span>
 <span class="cstat-no" title="statement not covered" >    if (typeof setShowButton === "function") {</span>
 <span class="cstat-no" title="statement not covered" >      setShowButton(true);</span>
@@ -294,7 +294,7 @@ export default function <span class="fstat-no" title="function not covered" >Rol
 <span class="cstat-no" title="statement not covered" >    onClose();</span>
   };
 &nbsp;
-  const handleSubmit = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (e) =&gt; {</span>
+  const handleSubmit = <span class="fstat-no" title="function not covered" >as</span>ync (e) =&gt; {
 <span class="cstat-no" title="statement not covered" >    e.preventDefault();</span>
 <span class="cstat-no" title="statement not covered" >    if (method === "POST" &amp;&amp; field === "Add Role") {</span>
 <span class="cstat-no" title="statement not covered" >      await fetchData(url, method, headerContent, input);</span>
@@ -315,7 +315,7 @@ export default function <span class="fstat-no" title="function not covered" >Rol
 <span class="cstat-no" title="statement not covered" >    clearAndClose();</span>
   };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (!isOpen) <span class="cstat-no" title="statement not covered" >return null;</span></span>
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (!isOpen) return null;
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;div className="modal-overlay"&gt;
@@ -376,7 +376,7 @@ export default function <span class="fstat-no" title="function not covered" >Rol
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-23T10:40:57.397Z
+                at 2025-05-23T11:19:04.941Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

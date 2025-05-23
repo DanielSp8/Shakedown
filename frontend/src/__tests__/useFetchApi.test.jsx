@@ -25,4 +25,12 @@ describe("useFetchApi", () => {
     expect(result.current.error).toBeNull();
     expect(result.current.data).toEqual({ message: "Success" });
   });
+
+  test("Response not successful... error", async () => {
+    global.fetch = jest.fn().mockRejectedValue(new Error("Network Error"));
+    const { result } = renderHook(() => useFetchApi());
+
+    await act(() => result.current.fetchData("/api/failure-test"));
+    expect(result.current.error).toBe("Network Error");
+  });
 });
