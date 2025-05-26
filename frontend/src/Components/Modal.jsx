@@ -37,7 +37,6 @@ export default function Modal({
       await fetchData(url, method);
     } else if (formData) {
       // This is for adding or updating
-      console.log("formData: ", formData);
       await fetchData(url, method, "application/json", formData);
     }
     if (!error) {

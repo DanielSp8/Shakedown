@@ -24,9 +24,11 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
   }, [fetchData, backpackId, refreshKey]);
 
   useEffect(() => {
-    if (data) {
+    if (data && data.length > 0) {
       if (data[0]["ownerUsername"] !== username && !role.includes("ADMIN")) {
         setButtonVisible(false);
+      } else {
+        setButtonVisible(true);
       }
     }
   }, [data, username, role]);
