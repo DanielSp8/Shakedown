@@ -28,13 +28,13 @@ class GearListDaoTest {
     void setUp() {
         jdbcTemplate.execute("""
                 CREATE TABLE IF NOT EXISTS gear_lists (item_id INT PRIMARY KEY AUTO_INCREMENT, item_name VARCHAR(100), category VARCHAR(100),\s
-                description TEXT, weight_lbs INT NOT NULL DEFAULT 0, weight_oz DECIMAL(4,2) NOT NULL DEFAULT 0, price DECIMAL(8,2) NOT NULL DEFAULT 0, backpack_id INT)""");
+                description TEXT, weight_lbs INT NOT NULL DEFAULT 0, weight_oz DECIMAL(4,2) NOT NULL DEFAULT 0, price DECIMAL(8,2) NOT NULL DEFAULT 0, private_value BOOLEAN, owner_username VARCHAR(255), backpack_id INT)""");
 
         jdbcTemplate.execute("""
-                INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, backpack_id)\s
+                INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, private_value, owner_username, backpack_id)\s
                 VALUES ('Fly Creek 2 Person 3 Season Tent', 'Shelter',\s
                 'The Fly Creek HV UL Solution Dye Two-Person Tent still maintains the ultralight weight that minimalist backpackers look for, but Big Agnes redesigned it with a higher volume to give a comfier sleeping space.',\s
-                1, 15, 279.96, 1);""");
+                1, 15, 279.96, false, "Daniel", 1);""");
     }
 
     @Test
@@ -88,35 +88,32 @@ class GearListDaoTest {
         assertTrue(gearList.isEmpty());
     }
 
+
     @Test
     @Order(5)
-    @DisplayName("Update multiple items into gear_lists")
-    void batchInsertGearListItems() {
-        List<GearList> newItems = List.of(
-                new GearList("Decatur Backpack", "Backpack", "A great backpack I currently own.", 1, new BigDecimal("3.4"), new BigDecimal("0"), 2),
-                new GearList("Hennessy Hammock", "Shelter", "A tent/hammock I sometimes use.", 1, new BigDecimal("2.5"), new BigDecimal("0"),2),
-                new GearList("Marmot Sleeping Bag", "Sleep System", "An older sleeping bag I currently own.  It still has some use in it.", 2, new BigDecimal("5"), new BigDecimal(0), 2)
-        );
-
-        List<GearList> insertedItems = gearListDao.batchInsertGearListItems(newItems);
-
-        assertEquals(newItems.size(), insertedItems.size());
-        }
-
-    @Test
-    @Order(6)
     @DisplayName("Update of a single gear item")
     void updateGearItem() {
         GearList newGearItem = new GearList(1, """
                 Fly Creek 2 Person 3 Season Tent""", "Shelter",
                 "The Fly Creek HV UL Solution Dye Two-Person Tent still maintains the ultralight weight that minimalist backpackers look for, but Big Agnes redesigned it with a higher volume to give a comfier sleeping space.",
-                1, new BigDecimal("15.00"), new BigDecimal("150.00"), 1);
+                1, new BigDecimal("15.00"), new BigDecimal("150.00"), false,"Danielson", 1);
 
         GearList updatedGearList = gearListDao.updateGearItem(newGearItem);
 
         BigDecimal actualPrice = updatedGearList.getPrice();
 
         assertEquals(0, actualPrice.compareTo(new BigDecimal("150.00")));
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Add a single gear list item")
+    void addGearItem() {
+        GearList gearItem = new GearList("Toilet Paper", "Hygiene", "Important for deuce dropping in the woods!", 0, new BigDecimal("2"), new BigDecimal("0"), false, "Danielson",1);
+
+        GearList addedItem = gearListDao.addGearItem(gearItem);
+
+        assertEquals(gearItem.getItemName(), addedItem.getItemName());
     }
 
 
@@ -140,7 +137,4 @@ class GearListDaoTest {
     void tearDown() {
         jdbcTemplate.execute("DROP TABLE gear_lists");
     }
-
-
-
 }

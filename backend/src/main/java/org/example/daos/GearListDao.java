@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -35,6 +33,49 @@ public class GearListDao {
         return jdbcTemplate.query("SELECT * FROM gear_lists ORDER BY item_id;", this::mapToGearList);
     }
 
+    public List<GearList> searchForGear(String field, String searchByValue, String orderByField, String sortDirection) {
+        List<String> allowedColumns = List.of(
+                "item_id",
+                "item_name",
+                "category",
+                "description",
+                "weight_lbs",
+                "weight_oz",
+                "price",
+                "private_value",
+                "owner_username",
+                "backpack_id");
+
+        List<String> allowedDirections = List.of("ASC", "DESC");
+
+        // Validate the input
+        if (!allowedColumns.contains(field) || !allowedColumns.contains(orderByField)) {
+            throw new IllegalArgumentException("Invalid field name");
+        }
+
+        // Verify the sort direction is valid
+        if (!allowedDirections.contains(sortDirection)) {
+            throw new IllegalArgumentException("Invalid sort direction");
+        }
+
+        String sql = String.format("SELECT * FROM gear_lists WHERE %s = ? ORDER BY %s %s", field, orderByField, sortDirection);
+
+        return jdbcTemplate.query(sql, this::mapToGearList, searchByValue);
+    }
+
+    public List<GearList> searchThroughCategoryForWord(String word, String orderByField, String sortDirection) {
+        List<String> allowedDirections = List.of("ASC", "DESC");
+
+        // Verify the sort direction is valid
+        if (!allowedDirections.contains(sortDirection)) {
+            throw new IllegalArgumentException("Invalid sort direction");
+        }
+        String sql = String.format("SELECT * FROM gear_lists WHERE description LIKE ? ORDER BY %s %s", orderByField, sortDirection);
+        String wordWithWildCards = "%" + word + "%";
+
+        return jdbcTemplate.query(sql, this::mapToGearList, wordWithWildCards);
+    }
+
     /**
      *
      * @param backpackId references the backpack in which the gear is for
@@ -43,6 +84,10 @@ public class GearListDao {
 
     public List<GearList> getGearListByBackpackId(int backpackId) {
         return jdbcTemplate.query("SELECT * FROM gear_lists WHERE backpack_id = ?;", this::mapToGearList, backpackId);
+    }
+
+    public GearList getSingleGearItem(int itemId) {
+        return jdbcTemplate.queryForObject("SELECT * FROM gear_lists WHERE item_id = ?;", this::mapToGearList, itemId);
     }
 
     /**
@@ -62,11 +107,10 @@ public class GearListDao {
      * @param gearItem object for updating a specific gear list item
      * @return null if no update or the gearItem object passed in
      */
-
     public GearList updateGearItem (GearList gearItem){
         String sql = """
-                UPDATE gear_lists SET item_name = ?, category = ?, description = ?, weight_lbs = ?, weight_oz = ?, price = ?, backpack_id = ?\s
-                WHERE item_id = ?;""";
+                UPDATE gear_lists SET item_name = ?, category = ?, description = ?, weight_lbs = ?, weight_oz = ?, price = ?, backpack_id = ?,\s
+                private_value = ?, owner_username = ? WHERE item_id = ?;""";
 
         int rowsAffected = jdbcTemplate.update(sql,
                 gearItem.getItemName(),
@@ -76,6 +120,8 @@ public class GearListDao {
                 gearItem.getWeightOz(),
                 gearItem.getPrice(),
                 gearItem.getBackpackId(),
+                gearItem.getPrivateValue(),
+                gearItem.getOwnerUsername(),
                 gearItem.getItemId());
 
         if (rowsAffected == 0) {
@@ -87,32 +133,32 @@ public class GearListDao {
 
     /**
      *
-     * @param gearList object(s) holding multiple gear list items and their information
-     * @return List with the gearList(s) which were passed in
+     * @param gearItem object for adding a new gear item to the list
+     * @return null if no added gear item or the gearItem object passed in
      */
-    @Transactional
-    public List<GearList> batchInsertGearListItems(final List<GearList> gearList) {
-        String sql = "INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, backpack_id) VALUES (?, ?, ?, ?, ?, ?, ?);";
-        jdbcTemplate.batchUpdate(sql, gearList, 100,
-                (PreparedStatement ps, GearList gear) -> {
-                    ps.setString(1, gear.getItemName());
-                    ps.setString(2, gear.getCategory());
-                    ps.setString(3, gear.getDescription());
-                    ps.setInt(4, gear.getWeightLbs());
-                    ps.setBigDecimal(5, gear.getWeightOz());
-                    ps.setBigDecimal(6, gear.getPrice());
-                    ps.setInt(7, gear.getBackpackId());
-                }
-            );
-        return gearList;
+    public GearList addGearItem(GearList gearItem) {
+        String sql = "INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, private_value, owner_username, backpack_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        int rowsAffected = jdbcTemplate.update(sql,
+                gearItem.getItemName(),
+                gearItem.getCategory(),
+                gearItem.getDescription(),
+                gearItem.getWeightLbs(),
+                gearItem.getWeightOz(),
+                gearItem.getPrice(),
+                gearItem.getPrivateValue(),
+                gearItem.getOwnerUsername(),
+                gearItem.getBackpackId());
+
+        return (rowsAffected > 0) ? gearItem : null;
     }
+
 
     /**
      *
      * @param resultSet object that holds data retrieved from SQL query
      * @param rowNumber integer for the row number being processed
      * @return a gearList object that has been retrieved from SQL
-     * @throws SQLException covers errors that could happen with dealing with the database
+     * @throws SQLException covers errors that could happen in dealing with the database
      */
     private GearList mapToGearList(ResultSet resultSet, int rowNumber) throws SQLException {
         return new GearList(
@@ -123,6 +169,8 @@ public class GearListDao {
                 resultSet.getInt("weight_lbs"),
                 resultSet.getBigDecimal("weight_oz"),
                 resultSet.getBigDecimal("price"),
+                resultSet.getBoolean("private_value"),
+                resultSet.getString("owner_username"),
                 resultSet.getInt("backpack_id")
         );
     }

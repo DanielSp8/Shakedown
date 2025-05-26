@@ -10,11 +10,14 @@ public class GearList {
     private int weightLbs;
     private BigDecimal weightOz;
     private BigDecimal price;
+    private Boolean privateValue;
+    private String ownerUsername;
     private int backpackId;
 
 
     public GearList() {}
 
+    // For adding an update to a gear item
     public GearList(int itemId,
                     String itemName,
                     String category,
@@ -22,6 +25,8 @@ public class GearList {
                     int weightLbs,
                     BigDecimal weightOz,
                     BigDecimal price,
+                    Boolean privateValue,
+                    String ownerUsername,
                     int backpackId) {
         this.itemId = itemId;
         this.itemName = itemName;
@@ -30,6 +35,8 @@ public class GearList {
         this.weightLbs = weightLbs;
         this.weightOz = weightOz;
         this.price = price;
+        this.privateValue = privateValue;
+        this.ownerUsername = ownerUsername;
         this.backpackId = backpackId;
     }
 
@@ -40,6 +47,8 @@ public class GearList {
                     int weightLbs,
                     BigDecimal weightOz,
                     BigDecimal price,
+                    Boolean privateValue,
+                    String ownerUsername,
                     int backpackId) {
         this.itemName = itemName;
         this.category = category;
@@ -47,6 +56,8 @@ public class GearList {
         this.weightLbs = weightLbs;
         this.weightOz = weightOz;
         this.price = price;
+        this.privateValue = privateValue;
+        this.ownerUsername = ownerUsername;
         this.backpackId = backpackId;
     }
 
@@ -104,6 +115,22 @@ public class GearList {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Boolean getPrivateValue() {
+        return privateValue;
+    }
+
+    public void setPrivateValue(Boolean privateValue) {
+        this.privateValue = privateValue;
+    }
+
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
     }
 
     public int getBackpackId() {

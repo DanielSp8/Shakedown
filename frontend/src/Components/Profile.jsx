@@ -1,7 +1,14 @@
+import React from "react";
+import AppTitle from "./AppTitle";
+import ProfileUsername from "./ProfileUsername";
+import ProfileRole from "./ProfileRole";
+
 export default function Profile() {
   return (
-    <div>
-      <p>This is the page to display the user profile.</p>
+    <div className="d-flex flex-column justify-content-center align-items-center">
+      <AppTitle />
+      <ProfileUsername />
+      <ProfileRole />
     </div>
   );
 }

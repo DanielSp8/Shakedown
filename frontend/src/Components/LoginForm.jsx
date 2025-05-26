@@ -26,21 +26,19 @@ export default function LoginForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: username, password: password }),
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
 
-      if (response.ok) {
-        console.log(`data.token: ${data.token}`);
-        localStorage.setItem("token", data.token);
-        navigate("/dashboard");
+      if (response.ok && data.accessToken.token) {
+        localStorage.setItem("token", data.accessToken.token);
+        navigate("/dashboard/home");
       } else {
         setError(data.message || "Login failed");
       }
     } catch (err) {
       setError("Network error.  Please try again later.");
-      console.error("Fetch error:", err);
     }
   };
 

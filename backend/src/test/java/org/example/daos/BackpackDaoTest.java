@@ -30,12 +30,12 @@ class BackpackDaoTest {
                                                          backpack_name VARCHAR(25) NOT NULL,
                                                          owner_username VARCHAR(255),
                                                          location VARCHAR(100),
-                                                         trip_date DATE)""");
+                                                         private_value BOOLEAN)""");
         jdbcTemplate.execute("""
-                INSERT INTO backpacks (backpack_name, owner_username, location, trip_date)
-                VALUES ('AT-Thru Hike', 'admin', 'Georgia to Maine', '2026-09-03'),
-                        ('PCT-Thru Hike', 'admin', 'Campo, California to Manning Park, British Columbia', '2027-09-03'),
-                        ('Hidden Pond', 'user', 'Ocala, Florida', '2026-08-13');""");
+                INSERT INTO backpacks (backpack_name, owner_username, location, private_value)
+                VALUES ('AT-Thru Hike', 'admin', 'Georgia to Maine', false),
+                        ('PCT-Thru Hike', 'admin', 'Campo, California to Manning Park, British Columbia', false),
+                        ('Hidden Pond', 'user', 'Ocala, Florida', false);""");
     }
 
     @AfterEach
@@ -75,7 +75,7 @@ class BackpackDaoTest {
     @DisplayName("UPDATE a backpack; check that the old contrasts the new")
     void updateBackpack() {
         Backpack oldBackpack = backpackDao.getBackpackByBackpackId(3);
-        Backpack newBackpack = new Backpack(3, "The Hidden Pond", "user", "Ocala, Florida", java.sql.Date.valueOf("2025-08-13"));
+        Backpack newBackpack = new Backpack(3, "The Hidden Pond", "user", "Ocala, Florida", false);
         Backpack updatedBackpack = backpackDao.updateBackpack(newBackpack, "user");
 
         assertNotEquals(oldBackpack.getBackpackName(), updatedBackpack.getBackpackName());
@@ -86,7 +86,7 @@ class BackpackDaoTest {
     @DisplayName("CREATE a new backpack; verify its name")
     void addBackpack() {
         String username = "user";
-        Backpack newBackpack = new Backpack("Philmont","Cimmaron, New Mexico", java.sql.Date.valueOf("2025-09-03"));
+        Backpack newBackpack = new Backpack("Philmont","Cimmaron, New Mexico", false);
         Backpack addedBackpack = backpackDao.addBackpack(newBackpack, username);
 
         assertEquals(newBackpack.getBackpackName(), addedBackpack.getBackpackName());

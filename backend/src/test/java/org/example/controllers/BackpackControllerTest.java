@@ -44,9 +44,9 @@ class BackpackControllerTest {
     @Order(1)
     @DisplayName("GET /api/backpacks returns list of backpacks")
     void testGetAllBackpacks() throws Exception {
-        Backpack backpackOne = new Backpack(1, "Surfing Backpack", "admin", "Costa Rica", java.sql.Date.valueOf("2027-09-03"));
-        Backpack backpackTwo = new Backpack(2, "Mountain Backpack", "user", "Colorado", java.sql.Date.valueOf("2025-06-20"));
-        Backpack backpackThree = new Backpack(3, "Philmont", "Danielson", "New Mexico", java.sql.Date.valueOf("2028-06-19"));
+        Backpack backpackOne = new Backpack(1, "Surfing Backpack", "admin", "Costa Rica", false);
+        Backpack backpackTwo = new Backpack(2, "Mountain Backpack", "user", "Colorado", false);
+        Backpack backpackThree = new Backpack(3, "Philmont", "Danielson", "New Mexico", false);
         List<Backpack> backpacks = Arrays.asList(backpackOne, backpackTwo, backpackThree);
 
         when(backpackDao.getBackpacks()).thenReturn(backpacks);
@@ -63,9 +63,9 @@ class BackpackControllerTest {
     @Order(2)
     @DisplayName("GET /api/backpacks/username returns a user's backpacks")
     void getBackpacksByUserName() throws Exception {
-        Backpack backpackOne = new Backpack(1, "European Adventures", "Danielson", "Europe", java.sql.Date.valueOf("2027-05-12"));
-        Backpack backpackTwo = new Backpack(2, "African Safari", "Danielson", "Tanzania", java.sql.Date.valueOf("2025-04-28"));
-        Backpack otherUserBackpack = new Backpack(3, "Surfing Backpack", "user", "Fiji", java.sql.Date.valueOf("2026-06-22"));
+        Backpack backpackOne = new Backpack(1, "European Adventures", "Danielson", "Europe", false);
+        Backpack backpackTwo = new Backpack(2, "African Safari", "Danielson", "Tanzania", false);
+        Backpack otherUserBackpack = new Backpack(3, "Surfing Backpack", "user", "Fiji", false);
         List<Backpack> theseBackpacks = Arrays.asList(backpackOne, backpackTwo);
 
         when(backpackDao.getBacksByUsername("Danielson")).thenReturn(theseBackpacks);
@@ -82,12 +82,12 @@ class BackpackControllerTest {
     @Order(3)
     @DisplayName("GET /api/backpacks/id/{backpackId} returns specific backpack")
     void getBackpackByBackpackId() throws Exception{
-        Backpack backpackOne = new Backpack(1, "European Adventures", "Danielson", "Europe", java.sql.Date.valueOf("2027-05-12"));
-        Backpack backpackTwo = new Backpack(2, "African Safari", "Danielson", "Tanzania", java.sql.Date.valueOf("2025-04-28"));
-        Backpack backpackThree = new Backpack(3, "Surfing Backpack", "user", "Fiji", java.sql.Date.valueOf("2026-06-22"));
-        Backpack backpackFour = new Backpack(4, "Surfing Backpack", "admin", "Costa Rica", java.sql.Date.valueOf("2027-09-03"));
-        Backpack backpackFive = new Backpack(5, "Mountain Backpack", "user", "Colorado", java.sql.Date.valueOf("2025-06-20"));
-        Backpack backpackSix = new Backpack(6, "Philmont", "Danielson", "New Mexico", java.sql.Date.valueOf("2028-06-19"));
+        Backpack backpackOne = new Backpack(1, "European Adventures", "Danielson", "Europe", false);
+        Backpack backpackTwo = new Backpack(2, "African Safari", "Danielson", "Tanzania", false);
+        Backpack backpackThree = new Backpack(3, "Surfing Backpack", "user", "Fiji", false);
+        Backpack backpackFour = new Backpack(4, "Surfing Backpack", "admin", "Costa Rica", false);
+        Backpack backpackFive = new Backpack(5, "Mountain Backpack", "user", "Colorado", false);
+        Backpack backpackSix = new Backpack(6, "Philmont", "Danielson", "New Mexico", false);
         List<Backpack> backpacks = Arrays.asList(backpackOne, backpackTwo, backpackThree, backpackFour, backpackFive, backpackSix);
 
         when(backpackDao.getBackpackByBackpackId(3)).thenReturn((backpacks.get(2)));
@@ -104,7 +104,7 @@ class BackpackControllerTest {
     @Order(4)
     @DisplayName("PUT /api/backpacks/update returns backpack object on success or null if not updated")
     void updateBackpack() throws Exception {
-        Backpack updateBackpack = new Backpack(1, "Philmont 2027", "Danielson", "New Mexico", java.sql.Date.valueOf("2027-06-03"));
+        Backpack updateBackpack = new Backpack(1, "Philmont 2027", "Danielson", "New Mexico", false);
         
         when(backpackDao.updateBackpack(any(Backpack.class), eq("Danielson"))).thenReturn(updateBackpack);
         
@@ -122,7 +122,7 @@ class BackpackControllerTest {
     @Order(5)
     @DisplayName("CREATE /api/backpacks/add returns the backpack entered")
     void addBackpack() throws Exception {
-        Backpack createdBackpack = new Backpack("Philmont 2026", "Daniel", "New Mexico", java.sql.Date.valueOf("2026-05-01"));
+        Backpack createdBackpack = new Backpack("Philmont 2026", "Daniel", "New Mexico", false);
 
         when(backpackDao.addBackpack(any(Backpack.class), eq("Daniel"))).thenReturn(createdBackpack);
 

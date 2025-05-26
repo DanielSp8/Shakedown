@@ -1,23 +1,27 @@
 package org.example.models;
 
-import java.util.Date;
-
 public class Backpack {
     private int backpackId;
     private String backpackName;
     private String ownerUsername;
     private String location;
-    private Date tripDate;
+    private Boolean privateValue;
 
     public Backpack() {}
 
-    // Constructor for creating a new backpack
+//    // Attempting a new constructor, without username, to create a new backpack:
+//    public Backpack(String backpackName, String location, Boolean privateValue) {
+//        this.backpackName = backpackName;
+//        this.location = location;
+//        this.privateValue = privateValue;
+//    }
 
-    public Backpack(String backpackName, String ownerUsername, String location, Date tripDate) {
+    // Constructor for creating a new backpack
+    public Backpack(String backpackName, String ownerUsername, String location, Boolean privateValue) {
         this.backpackName = backpackName;
         this.ownerUsername = ownerUsername;
         this.location = location;
-        this.tripDate = tripDate;
+        this.privateValue = privateValue;
     }
 
     /**
@@ -26,22 +30,22 @@ public class Backpack {
      *  via the one logged in
      */
 
-    public Backpack(String backpackName, String location, Date tripDate) {
+    public Backpack(String backpackName, String location, Boolean privateValue) {
         this.backpackName = backpackName;
         this.location = location;
-        this.tripDate = tripDate;
+        this.privateValue = privateValue;
     }
 
     /**
      *
      * Constructor for updating a backpack
      */
-    public Backpack(int backpackId, String backpackName, String ownerUsername, String location, Date tripDate) {
+    public Backpack(int backpackId, String backpackName, String ownerUsername, String location, Boolean privateValue) {
         this.backpackId = backpackId;
         this.backpackName = backpackName;
         this.ownerUsername = ownerUsername;
         this.location = location;
-        this.tripDate = tripDate;
+        this.privateValue = privateValue;
     }
 
 
@@ -78,11 +82,11 @@ public class Backpack {
         this.location = location;
     }
 
-    public Date getTripDate() {
-        return tripDate;
+    public Boolean getPrivateValue() {
+        return privateValue;
     }
 
-    public void setTripDate(Date tripDate) {
-        this.tripDate = tripDate;
+    public void setTripDate(Boolean privateValue) {
+        this.privateValue = privateValue;
     }
 }

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
-import backpacks from "../images/backpacks.jpg";
+import backpacks from "../images/backpacks.webp";
+import AppTitle from "./AppTitle";
 
 export default function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);
@@ -27,12 +28,7 @@ export default function AuthPage() {
               <h2 className="card-title mb-4 text-center">
                 {showLogin ? "Login" : "Sign Up"}
               </h2>
-              <h2 className="card-title mb-2 text-center rugged-title">
-                Shakedown
-              </h2>
-              <p className="fs-5 mb-5 fst-italic text-center">
-                The gear planner for backpacking.
-              </p>
+              <AppTitle />
               {showLogin ? <LoginForm /> : <SignUpForm />}
             </div>
           </div>
