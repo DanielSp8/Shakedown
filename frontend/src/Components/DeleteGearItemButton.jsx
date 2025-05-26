@@ -10,6 +10,7 @@ export default function DeleteGearItemButton({ itemId, itemName, onSuccess }) {
       <button className="btn btn-danger" onClick={() => setModal(true)}>
         Delete Item
       </button>
+
       <Modal
         isOpen={modal}
         onClose={() => setModal(false)}

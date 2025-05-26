@@ -36,6 +36,8 @@ export default function useFetchApi() {
           options.body = JSON.stringify(body);
         }
 
+        console.log("URL:", URL);
+        console.log("options:", options);
         const response = await fetch(URL, options);
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);

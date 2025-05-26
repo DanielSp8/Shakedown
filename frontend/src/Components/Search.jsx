@@ -68,7 +68,9 @@ export default function SearchForm() {
           selectedValue={sortByValue}
           setSelectedValue={setSortByValue}
         />
-        <label>Order?</label>
+        <label>
+          {sortByValue === "price" ? "Order of Cost?" : "Alphabetical Order?"}
+        </label>
         <RadioGroup
           options={radioOptionsForSearch}
           selectedValue={selectedOption}

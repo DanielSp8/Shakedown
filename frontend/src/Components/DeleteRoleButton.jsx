@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import RoleModal from "./RoleModal";
 
-export default function DeleteRoleButton({ username, role, onSuccess }) {
+export default function DeleteRoleButton({ otherUsername, role, onSuccess }) {
   const [modal, setModal] = useState(false);
 
   return (
@@ -16,10 +16,10 @@ export default function DeleteRoleButton({ username, role, onSuccess }) {
       <RoleModal
         isOpen={modal}
         onClose={() => setModal(false)}
-        username={username}
+        username={otherUsername}
         role={role}
         title={"Delete Role"}
-        url={`/api/users/${username}/roles/${role}`}
+        url={`/api/users/${otherUsername}/roles/${role}`}
         method={"DELETE"}
         onSuccess={onSuccess}
       />

@@ -21,7 +21,9 @@ describe("UserCardElement", () => {
       error: null,
     });
 
-    render(<UserCardElement username={"Danielson"} onSuccess={() => {}} />);
+    render(
+      <UserCardElement otherUsername={"Danielson"} onSuccess={() => {}} />
+    );
 
     expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
@@ -35,7 +37,7 @@ describe("UserCardElement", () => {
       error: null,
     });
 
-    render(<UserCardElement username={"Danielson"} onSuccess={() => {}} />);
+    render(<UserCardElement otherUsername={"Danielson"} onSuccess={() => {}} />);
 
     expect(screen.getByText(/danielson/i)).toBeInTheDocument();
     expect(screen.getByText("ADMIN")).toBeInTheDocument();

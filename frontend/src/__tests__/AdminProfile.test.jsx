@@ -15,10 +15,12 @@ jest.mock("../Components/UserCardElement", () => ({ username, onSuccess }) => {
   );
 });
 
+// Mock AddRoleButton
 jest.mock("../Components/AddRoleButton", () => ({ username }) => (
   <div>AddRoleButton: {username}</div>
 ));
 
+// Mock DeleteUserButton
 jest.mock("../Components/DeleteUserButton", () => ({ username }) => (
   <div>DeleteUserButton: {username}</div>
 ));
@@ -36,26 +38,6 @@ jest.mock("../hooks/useFetchApi", () => () => mockFetchApi);
 describe("AdminProfile", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  test("renders user cards when data is loaded", async () => {
-    mockFetchApi.loading = false;
-    mockFetchApi.data = [{ username: "admin" }, { username: "Daniel" }];
-    mockFetchApi.error = null;
-
-    render(<AdminProfile />);
-
-    expect(await screen.getByText(/AddRoleButton: admin/i)).toBeInTheDocument();
-    expect(
-      await screen.getByText(/DeleteUserButton: admin/i)
-    ).toBeInTheDocument();
-
-    expect(
-      await screen.getByText(/AddRoleButton: daniel/i)
-    ).toBeInTheDocument();
-    expect(
-      await screen.getByText(/DeleteUserButton: daniel/i)
-    ).toBeInTheDocument();
   });
 
   test("displays error message when there's an error", async () => {

@@ -14,6 +14,7 @@ export default function DeleteBackpackButton({
       <button className="btn btn-danger" onClick={() => setModal(true)}>
         Delete Backpack
       </button>
+
       <Modal
         isOpen={modal}
         onClose={() => setModal(false)}

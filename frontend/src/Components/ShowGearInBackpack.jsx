@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { formatCurrency } from "../helpers/currency";
 import useFetchApi from "../hooks/useFetchApi";
 import AddGearButton from "./AddGearButton";
@@ -10,6 +10,7 @@ import useRole from "../hooks/useRole";
 
 export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
   const [refreshKey, setRefreshKey] = useState(0);
+  const [buttonVisible, setButtonVisible] = useState(true);
   const { fetchData, data, loading, error } = useFetchApi();
   const { username } = useUsername();
   const { role } = useRole();
@@ -21,6 +22,14 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
   useEffect(() => {
     fetchData(`/api/gearlists/gear/${backpackId}`);
   }, [fetchData, backpackId, refreshKey]);
+
+  useEffect(() => {
+    if (data) {
+      if (data[0]["ownerUsername"] !== username && !role.includes("ADMIN")) {
+        setButtonVisible(false);
+      }
+    }
+  }, [data, username, role]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -39,7 +48,11 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
 
   return (
     <div>
-      <AddGearButton backpackId={backpackId} onSuccess={triggerRefresh} />
+      <AddGearButton
+        buttonVisible={buttonVisible}
+        backpackId={backpackId}
+        onSuccess={triggerRefresh}
+      />
       <table className="table table-striped">
         <thead>
           <tr>
@@ -70,18 +83,21 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
               return (
                 <tr key={key}>
                   <td>
-                    <UpdateGearButton
-                      itemId={val?.itemId}
-                      itemName={val?.itemName}
-                      category={val?.category}
-                      description={val?.description}
-                      weightLbs={val?.weightLbs}
-                      weightOz={val?.weightOz}
-                      price={val?.price}
-                      backpackId={val?.backpackId}
-                      privateValue={val?.privateValue}
-                      onSuccess={triggerRefresh}
-                    />
+                    {val?.ownerUsername === username ||
+                    role.includes("ADMIN") ? (
+                      <UpdateGearButton
+                        itemId={val?.itemId}
+                        itemName={val?.itemName}
+                        category={val?.category}
+                        description={val?.description}
+                        weightLbs={val?.weightLbs}
+                        weightOz={val?.weightOz}
+                        price={val?.price}
+                        backpackId={val?.backpackId}
+                        privateValue={val?.privateValue}
+                        onSuccess={triggerRefresh}
+                      />
+                    ) : null}
                   </td>
                   <td>{val.itemName}</td>
                   <td>{val.category}</td>
@@ -90,11 +106,14 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
                   <td>{val.weightOz}</td>
                   <td>{formatCurrency(val.price)}</td>
                   <td>
-                    <DeleteGearItemButton
-                      itemId={val.itemId}
-                      itemName={val.itemName}
-                      onSuccess={triggerRefresh}
-                    />
+                    {val?.ownerUsername === username ||
+                    role.includes("ADMIN") ? (
+                      <DeleteGearItemButton
+                        itemId={val.itemId}
+                        itemName={val.itemName}
+                        onSuccess={triggerRefresh}
+                      />
+                    ) : null}
                   </td>
                 </tr>
               );

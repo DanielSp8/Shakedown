@@ -2,11 +2,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 
-export default function UpdateGearButton({
-  itemId,
-  backpackId,
-  onSuccess,
-}) {
+export default function UpdateGearButton({ itemId, backpackId, onSuccess }) {
   const [modal, setModal] = useState(false);
 
   return (
@@ -14,6 +10,7 @@ export default function UpdateGearButton({
       <button className="btn btn-success" onClick={() => setModal(true)}>
         Edit Gear
       </button>
+
       <Modal
         isOpen={modal}
         onClose={() => setModal(false)}

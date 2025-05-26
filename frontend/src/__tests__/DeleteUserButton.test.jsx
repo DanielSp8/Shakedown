@@ -90,7 +90,7 @@ describe("Delete User Button", () => {
       <DeleteUserButton
         showButton={true}
         setShowButton={mockSetShowButton}
-        username={"testing"}
+        otherUsername={"testing"}
         onSuccess={mockOnSuccess}
       />
     );

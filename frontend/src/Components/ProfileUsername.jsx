@@ -24,7 +24,7 @@ export default function ProfileUsername({ onSuccess }) {
             title={"Change Password"}
             field={"Enter Password"}
             type={"password"}
-            url={`/api/users/${username}/password`}
+            url={`/api/profile/change-password`}
             method={"PUT"}
             headerContent={"text/plain"}
             onSuccess={onSuccess}

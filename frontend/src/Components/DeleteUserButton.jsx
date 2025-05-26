@@ -5,7 +5,7 @@ import RoleModal from "./RoleModal";
 export default function DeleteUserButton({
   setShowButton,
   showButton,
-  username,
+  otherUsername,
   onSuccess,
 }) {
   const [modal, setModal] = useState(false);
@@ -25,8 +25,8 @@ export default function DeleteUserButton({
       <RoleModal
         isOpen={modal}
         onClose={() => setModal(false)}
-        title={`Delete User: ${username}?`}
-        url={`/api/users/${username}`}
+        title={`Delete User: ${otherUsername}?`}
+        url={`/api/users/${otherUsername}`}
         method={"DELETE"}
         onSuccess={onSuccess}
         setShowButton={setShowButton}

@@ -30,20 +30,20 @@ export default function AdminProfile() {
           >
             <div className="card-body">
               <UserCardElement
-                username={val?.username}
+                otherUsername={val?.username}
                 onSuccess={triggerRefresh}
               />
               <div className="d-flex justify-content-end gap-2 mt-2">
                 <AddRoleButton
                   setShowButton={setShowButton}
                   showButton={showButton}
-                  username={val?.username}
+                  otherUsername={val?.username}
                   onSuccess={triggerRefresh}
                 />
                 <DeleteUserButton
                   setShowButton={setShowButton}
                   showButton={showButton}
-                  username={val?.username}
+                  otherUsername={val?.username}
                   onSuccess={triggerRefresh}
                 />
               </div>

@@ -37,7 +37,8 @@ export default function Modal({
       await fetchData(url, method);
     } else if (formData) {
       // This is for adding or updating
-      await fetchData(url, method, formData);
+      console.log("formData: ", formData);
+      await fetchData(url, method, "application/json", formData);
     }
     if (!error) {
       // Verify that onSuccess function is reliable
@@ -50,6 +51,7 @@ export default function Modal({
 
   useEffect(() => {
     if (isOpen && fields?.length) {
+      // initialData object initialized and used to update state (in formData)
       const initialData = {};
 
       if (itemId) {
@@ -68,6 +70,7 @@ export default function Modal({
     }
   }, [isOpen, fields, itemId, backpackId]);
 
+  // This keep the modal invisible if the value of isOpen is false
   if (!isOpen) return null;
 
   return (

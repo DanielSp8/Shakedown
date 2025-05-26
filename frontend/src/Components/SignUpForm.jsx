@@ -7,6 +7,29 @@ export default function SignUpForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
+  const loginNewUser = async () => {
+    try {
+      const response = await fetch("auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok && data.accessToken.token) {
+        localStorage.setItem("token", data.accessToken.token);
+        navigate("/dashboard/home");
+      } else {
+        setError(data.message || "Login failed");
+      }
+    } catch (err) {
+      setError("Network error.  Please try again.");
+      console.error("Fetch error:", err);
+    }
+  };
+
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => {
@@ -34,9 +57,9 @@ export default function SignUpForm() {
       if (!response.ok) throw new Error("Registration failed.");
 
       const data = await response.json();
-      if (response.ok && data.accessToken.token) {
-        localStorage.setItem("token", data.accessToken.token);
-        navigate("/dashboard/home");
+      console.log("data:", data);
+      if (response.ok && data) {
+        loginNewUser();
       }
     } catch (err) {
       setError(err.message);

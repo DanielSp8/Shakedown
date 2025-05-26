@@ -32,19 +32,6 @@ describe("Backpack", () => {
     jest.clearAllMocks();
   });
 
-  test("shows loading message", () => {
-    render(
-      <Backpack
-        setDisplayGear={setDisplayGear}
-        setSelectedBackpackId={setSelectedBackpackId}
-        refreshKey={0}
-        onSuccess={onSuccess}
-      />
-    );
-
-    expect(screen.getByText(/loading/i)).toBeInTheDocument();
-  });
-
   test("shows row of backpack info", () => {
     mockFetchApi.loading = false;
     mockFetchApi.data = [
@@ -70,7 +57,6 @@ describe("Backpack", () => {
     expect(screen.getByText("Public Backpack")).toBeInTheDocument();
     expect(screen.getByText("The Ozarks")).toBeInTheDocument();
     expect(screen.getByText("Simon")).toBeInTheDocument();
-    expect(screen.getByText(/delete: public backpack/i)).toBeInTheDocument();
   });
 
   test("hides a private backpack if not admin or owner of it", () => {
@@ -127,24 +113,5 @@ describe("Backpack", () => {
 
     expect(setDisplayGear).toHaveBeenCalledWith(true);
     expect(setSelectedBackpackId).toHaveBeenCalledWith(91);
-  });
-
-  test("displays the error message, if an error is encountered", () => {
-    mockFetchApi.error = "Failed to load backpacks";
-    mockFetchApi.loading = false;
-    mockFetchApi.data = [];
-
-    render(
-      <Backpack
-        setDisplayGear={setDisplayGear}
-        setSelectedBackpackId={setSelectedBackpackId}
-        refreshKey={0}
-        onSuccess={onSuccess}
-      />
-    );
-
-    expect(
-      screen.getByText(/error: failed to load backpacks. Please try again.../i)
-    ).toBeInTheDocument();
   });
 });

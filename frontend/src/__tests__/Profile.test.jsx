@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 /* eslint-disable no-undef */
 import React from "react";
 import { render, screen } from "@testing-library/react";

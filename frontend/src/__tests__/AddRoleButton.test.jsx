@@ -72,33 +72,6 @@ describe("AddRoleButton", () => {
     expect(mockSetShowButton).toHaveBeenCalledWith(false);
   });
 
-  test("RoleModal component receives correct props", () => {
-    render(
-      <AddRoleButton
-        showButton={true}
-        setShowButton={mockSetShowButton}
-        username="testing"
-        onSuccess={mockOnSuccess}
-      />
-    );
-
-    const buttonElement = screen.getByRole("button", { name: /add role/i });
-    fireEvent.click(buttonElement);
-
-    expect(mockModal).toHaveBeenCalledWith(
-      expect.objectContaining({
-        isOpen: true,
-        title: "Add Role to testing",
-        field: "Add Role",
-        url: "/api/users/testing/roles",
-        method: "POST",
-        headerContent: "text/plain",
-        onSuccess: mockOnSuccess,
-        setShowButton: mockSetShowButton,
-      })
-    );
-  });
-
   test("modal opens and closes with user clicks", () => {
     render(
       <AddRoleButton

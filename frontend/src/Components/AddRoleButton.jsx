@@ -5,7 +5,7 @@ import RoleModal from "./RoleModal";
 export default function AddRoleButton({
   showButton,
   setShowButton,
-  username,
+  otherUsername,
   onSuccess,
 }) {
   const [modal, setModal] = useState(false);
@@ -25,9 +25,9 @@ export default function AddRoleButton({
       <RoleModal
         isOpen={modal}
         onClose={() => setModal(false)}
-        title={`Add Role to ${username}`}
+        title={`Add Role to ${otherUsername}`}
         field={"Add Role"}
-        url={`/api/users/${username}/roles`}
+        url={`/api/users/${otherUsername}/roles`}
         method={"POST"}
         headerContent={"text/plain"}
         onSuccess={onSuccess}

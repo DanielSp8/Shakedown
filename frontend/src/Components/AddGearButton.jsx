@@ -2,14 +2,20 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 
-export default function AddGearButton({ backpackId, onSuccess }) {
+export default function AddGearButton({
+  buttonVisible,
+  backpackId,
+  onSuccess,
+}) {
   const [modal, setModal] = useState(false);
 
   return (
     <>
-      <button className="btn btn-success" onClick={() => setModal(true)}>
-        Add Gear
-      </button>
+      {buttonVisible && (
+        <button className="btn btn-success " onClick={() => setModal(true)}>
+          Add Gear
+        </button>
+      )}
       <Modal
         isOpen={modal}
         onClose={() => setModal(false)}

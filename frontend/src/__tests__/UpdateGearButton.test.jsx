@@ -7,8 +7,15 @@ import UpdateGearButton from "../Components/UpdateGearButton";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 // Mock the Modal component
-jest.mock("../Components/Modal", () => ({ isOpen }) => {
-  return isOpen ? <div>Edit Gear Item Modal</div> : null;
+const mockModal = jest.fn();
+jest.mock("../Components/Modal", () => (props) => {
+  mockModal(props);
+  return props.isOpen ? (
+    <>
+      <div>Edit Gear Item Modal</div>
+      <button onClick={() => props.onClose()}>Close Modal</button>
+    </>
+  ) : null;
 });
 
 describe("UpdateGearButton", () => {
@@ -35,5 +42,17 @@ describe("UpdateGearButton", () => {
     fireEvent.click(screen.getByRole("button"));
 
     expect(screen.getByText(/edit gear item modal/i)).toBeInTheDocument();
+  });
+
+  test("modal opens and closes with user clicks", () => {
+    render(
+      <UpdateGearButton itemId={1} backpackId={2} onSuccess={jest.fn()} />
+    );
+
+    expect(screen.queryByText(/edit gear item modal/i)).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Edit Gear" }));
+    expect(screen.getByText(/edit gear item modal/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Close Modal" }));
+    expect(screen.queryByText(/edit gear item modal/i)).not.toBeInTheDocument();
   });
 });
