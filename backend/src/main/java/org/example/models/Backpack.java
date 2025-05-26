@@ -9,8 +9,14 @@ public class Backpack {
 
     public Backpack() {}
 
-    // Constructor for creating a new backpack
+//    // Attempting a new constructor, without username, to create a new backpack:
+//    public Backpack(String backpackName, String location, Boolean privateValue) {
+//        this.backpackName = backpackName;
+//        this.location = location;
+//        this.privateValue = privateValue;
+//    }
 
+    // Constructor for creating a new backpack
     public Backpack(String backpackName, String ownerUsername, String location, Boolean privateValue) {
         this.backpackName = backpackName;
         this.ownerUsername = ownerUsername;

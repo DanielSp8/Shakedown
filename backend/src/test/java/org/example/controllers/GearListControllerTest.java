@@ -44,13 +44,13 @@ class GearListControllerTest {
     @Order(1)
     @DisplayName("GET /api/gearlists return all gear lists' info")
     void getAll() throws Exception {
-        GearList gearListOne = new GearList("Hennesy Hammock", "Shelter", "A mix of a tent and hammock", 1, new BigDecimal(".5"), new BigDecimal("0"), false,1);
-        GearList gearListTwo = new GearList("Sandals", "Footwear", "Great for comfort at the campsite!", 1, new BigDecimal("10"), new BigDecimal("0"), false,1);
-        GearList gearListThree = new GearList("Toothbrush", "Hygiene", "Optionally cut in half to save space and weight!", 0, new BigDecimal(".5"), new BigDecimal("1"), false,1);
-        GearList gearListFour = new GearList("Toothpaste", "Hygiene", "Freshen up!", 0, new BigDecimal(".2"), new BigDecimal("0"), false,1);
-        GearList gearListFive = new GearList("Hand Sanitizer", "Hygiene", "Nice to have, while backpacking.", 0, new BigDecimal(".2"), new BigDecimal("1.99"), false,1);
-        GearList gearListSix = new GearList("Nalgene 1 Quart Water Bottle", "Water", "Crucial for staying hydrated!", 2, new BigDecimal("4"), new BigDecimal("0"), false,1);
-        GearList gearListSeven = new GearList("Ultralight/Watertight .3 Medical Kit", "Emergencies", "Ideal for backpacking", 0, new BigDecimal("2.6"), new BigDecimal("10.95"), false,2);
+        GearList gearListOne = new GearList("Hennesy Hammock", "Shelter", "A mix of a tent and hammock", 1, new BigDecimal(".5"), new BigDecimal("0"), false,"Danielson",1);
+        GearList gearListTwo = new GearList("Sandals", "Footwear", "Great for comfort at the campsite!", 1, new BigDecimal("10"), new BigDecimal("0"), false,"Danielson", 1);
+        GearList gearListThree = new GearList("Toothbrush", "Hygiene", "Optionally cut in half to save space and weight!", 0, new BigDecimal(".5"), new BigDecimal("1"), false,"Danielson",1);
+        GearList gearListFour = new GearList("Toothpaste", "Hygiene", "Freshen up!", 0, new BigDecimal(".2"), new BigDecimal("0"), false,"Danielson",1);
+        GearList gearListFive = new GearList("Hand Sanitizer", "Hygiene", "Nice to have, while backpacking.", 0, new BigDecimal(".2"), new BigDecimal("1.99"), false,"Danielson",1);
+        GearList gearListSix = new GearList("Nalgene 1 Quart Water Bottle", "Water", "Crucial for staying hydrated!", 2, new BigDecimal("4"), new BigDecimal("0"), false,"Danielson",1);
+        GearList gearListSeven = new GearList("Ultralight/Watertight .3 Medical Kit", "Emergencies", "Ideal for backpacking", 0, new BigDecimal("2.6"), new BigDecimal("10.95"), false,"Danielson",2);
         List<GearList> gearLists = Arrays.asList(gearListOne, gearListTwo, gearListThree, gearListFour, gearListFive, gearListSix, gearListSeven);
 
         when(gearListDao.getGearLists()).thenReturn(gearLists);
@@ -72,8 +72,8 @@ class GearListControllerTest {
     void getGearBackpackId() throws Exception{
         int backpackId = 1;
         List<GearList> mockGearList = List.of(
-             new GearList("Hennesy Hammock", "Shelter", "A mix of a tent and hammock", 1, new BigDecimal(".5"), new BigDecimal("0"), false,1),
-             new GearList("Sandals", "Footwear", "Great for comfort at the campsite!", 1, new BigDecimal("10"), new BigDecimal("0"), false,1)
+             new GearList("Hennesy Hammock", "Shelter", "A mix of a tent and hammock", 1, new BigDecimal(".5"), new BigDecimal("0"), false,"Danielson",1),
+             new GearList("Sandals", "Footwear", "Great for comfort at the campsite!", 1, new BigDecimal("10"), new BigDecimal("0"), false,"Danielson",1)
         );
 
         when(gearListDao.getGearListByBackpackId(backpackId)).thenReturn(mockGearList);
@@ -88,7 +88,7 @@ class GearListControllerTest {
     @Order(3)
     @DisplayName("PUT /api/gearlists/update returns updated gear item")
     void updateGearItem() throws Exception {
-        GearList gearListItem = new GearList(1,"Nalgene 1 Quart Water Bottle", "Water", "Crucial for staying hydrated!", 2, new BigDecimal("4"), new BigDecimal("0"), false,1);
+        GearList gearListItem = new GearList(1,"Nalgene 1 Quart Water Bottle", "Water", "Crucial for staying hydrated!", 2, new BigDecimal("4"), new BigDecimal("0"), false,"Danielson",1);
 
         when(gearListDao.updateGearItem(any(GearList.class))).thenReturn(gearListItem);
 
@@ -104,7 +104,7 @@ class GearListControllerTest {
     @Order(4)
     @DisplayName("CREATE /api/gearlists/add/")
     void createGearList() throws Exception {
-        GearList gearListItem = new GearList("Small Trowel", "Hygiene", "Dig a hole for deuce dropping!", 0, new BigDecimal("8"), new BigDecimal("0"), false,1);
+        GearList gearListItem = new GearList("Small Trowel", "Hygiene", "Dig a hole for deuce dropping!", 0, new BigDecimal("8"), new BigDecimal("0"), false,"Danielson",1);
 
         when(gearListDao.addGearItem(any(GearList.class))).thenReturn(gearListItem);
 

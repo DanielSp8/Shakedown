@@ -28,13 +28,13 @@ class GearListDaoTest {
     void setUp() {
         jdbcTemplate.execute("""
                 CREATE TABLE IF NOT EXISTS gear_lists (item_id INT PRIMARY KEY AUTO_INCREMENT, item_name VARCHAR(100), category VARCHAR(100),\s
-                description TEXT, weight_lbs INT NOT NULL DEFAULT 0, weight_oz DECIMAL(4,2) NOT NULL DEFAULT 0, price DECIMAL(8,2) NOT NULL DEFAULT 0, private_value BOOLEAN, backpack_id INT)""");
+                description TEXT, weight_lbs INT NOT NULL DEFAULT 0, weight_oz DECIMAL(4,2) NOT NULL DEFAULT 0, price DECIMAL(8,2) NOT NULL DEFAULT 0, private_value BOOLEAN, owner_username VARCHAR(255), backpack_id INT)""");
 
         jdbcTemplate.execute("""
-                INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, private_value, backpack_id)\s
+                INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, private_value, owner_username, backpack_id)\s
                 VALUES ('Fly Creek 2 Person 3 Season Tent', 'Shelter',\s
                 'The Fly Creek HV UL Solution Dye Two-Person Tent still maintains the ultralight weight that minimalist backpackers look for, but Big Agnes redesigned it with a higher volume to give a comfier sleeping space.',\s
-                1, 15, 279.96, false, 1);""");
+                1, 15, 279.96, false, "Daniel", 1);""");
     }
 
     @Test
@@ -96,7 +96,7 @@ class GearListDaoTest {
         GearList newGearItem = new GearList(1, """
                 Fly Creek 2 Person 3 Season Tent""", "Shelter",
                 "The Fly Creek HV UL Solution Dye Two-Person Tent still maintains the ultralight weight that minimalist backpackers look for, but Big Agnes redesigned it with a higher volume to give a comfier sleeping space.",
-                1, new BigDecimal("15.00"), new BigDecimal("150.00"), false,1);
+                1, new BigDecimal("15.00"), new BigDecimal("150.00"), false,"Danielson", 1);
 
         GearList updatedGearList = gearListDao.updateGearItem(newGearItem);
 
@@ -109,7 +109,7 @@ class GearListDaoTest {
     @Order(6)
     @DisplayName("Add a single gear list item")
     void addGearItem() {
-        GearList gearItem = new GearList("Toilet Paper", "Hygiene", "Important for deuce dropping in the woods!", 0, new BigDecimal("2"), new BigDecimal("0"), false, 1);
+        GearList gearItem = new GearList("Toilet Paper", "Hygiene", "Important for deuce dropping in the woods!", 0, new BigDecimal("2"), new BigDecimal("0"), false, "Danielson",1);
 
         GearList addedItem = gearListDao.addGearItem(gearItem);
 

@@ -24,6 +24,19 @@ public class GearListController {
     }
 
 
+    @GetMapping("/searchGear/{field}/{searchByValue}/{orderByField}/{sortDirection}")
+    public List<GearList> searchForGear(@PathVariable String field, @PathVariable String searchByValue, @PathVariable String orderByField, @PathVariable String sortDirection) { return gearListDao.searchForGear(field, searchByValue, orderByField, sortDirection);}
+
+    @GetMapping("/searchGear/description/like/{word}/{orderByField}/{sortDirection}")
+    public List<GearList> searchThroughCategoryForWord(@PathVariable String word, @PathVariable String orderByField, @PathVariable String sortDirection) {
+        return gearListDao.searchThroughCategoryForWord(word, orderByField, sortDirection);
+    }
+
+    @GetMapping("/{gearListItem}")
+    public GearList gearListItem(@PathVariable int gearItem) {
+        return gearListDao.getSingleGearItem(gearItem);
+    }
+
     @GetMapping("/gear/{backpackId}")
     public List<GearList> getGearListByBackpackId(@PathVariable int backpackId) {
         return gearListDao.getGearListByBackpackId(backpackId);

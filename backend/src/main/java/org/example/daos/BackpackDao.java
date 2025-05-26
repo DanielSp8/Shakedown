@@ -31,7 +31,7 @@ public class BackpackDao {
     /**
      *
      * @param username The username currently logged in
-     * @return All of the backpacks stored under this specific username
+     * @return All the backpacks stored under this specific username
      */
     public List<Backpack> getBacksByUsername(String username) {
         return jdbcTemplate.query("SELECT * FROM backpacks WHERE owner_username = ?;", this::mapToBackpack, username);
