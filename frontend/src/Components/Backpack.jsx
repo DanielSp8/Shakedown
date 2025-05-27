@@ -22,8 +22,10 @@ export default function Backpack({
 
   useEffect(() => {
     if (data) {
-      if (data[0]["ownerUsername"] !== username && !role.includes("ADMIN")) {
+      if (data[0]["ownerUsername"] !== username || !role.includes("ADMIN")) {
         setButtonVisible(false);
+      } else {
+        setButtonVisible(true);
       }
     }
   }, [data, username, role]);

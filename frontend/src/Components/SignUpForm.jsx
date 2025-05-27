@@ -57,7 +57,7 @@ export default function SignUpForm() {
       if (!response.ok) throw new Error("Registration failed.");
 
       const data = await response.json();
-      console.log("data:", data);
+
       if (response.ok && data) {
         loginNewUser();
       }

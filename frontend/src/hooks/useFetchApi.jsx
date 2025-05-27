@@ -31,13 +31,12 @@ export default function useFetchApi() {
           headerContent !== "application/json" &&
           (method === "POST" || method === "PUT")
         ) {
+          
           options.body = body;
         } else if (body && (method === "POST" || method === "PUT")) {
           options.body = JSON.stringify(body);
         }
 
-        console.log("URL:", URL);
-        console.log("options:", options);
         const response = await fetch(URL, options);
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);

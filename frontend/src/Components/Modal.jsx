@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 import { translateFieldsForUser } from "../helpers/translateFieldsForUser";
 import InputBox from "./InputBox";
+import useUsername from "../hooks/useUsername";
 
 export default function Modal({
   isOpen,
@@ -17,6 +18,7 @@ export default function Modal({
 }) {
   const [formData, setFormData] = useState({ privateValue: false });
   const { fetchData, data, loading, error } = useFetchApi();
+  const { username } = useUsername();
 
   const clearAndClose = () => {
     setFormData({});
@@ -59,6 +61,9 @@ export default function Modal({
       if (backpackId) {
         initialData["backpackId"] = backpackId;
       }
+
+      // Place logged in username into the ownerUsername field
+      initialData["ownerUsername"] = username;
 
       // Set default values for each field
       fields.forEach((field) => {

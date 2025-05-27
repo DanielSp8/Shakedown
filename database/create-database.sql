@@ -27,10 +27,10 @@ insert into roles (username, role) values ('user', 'USER');
 CREATE TABLE backpacks (
 	backpack_id INT AUTO_INCREMENT PRIMARY KEY,
     backpack_name VARCHAR(25) NOT NULL,
-    owner_username VARCHAR(255),
     location VARCHAR(100),
+	owner_username VARCHAR(255),
 	private_value BOOLEAN,
-    
+
     FOREIGN KEY (owner_username) REFERENCES users(username)
 		ON DELETE CASCADE
 );
