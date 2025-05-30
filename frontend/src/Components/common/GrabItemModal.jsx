@@ -3,29 +3,50 @@ import React, { useState, useEffect } from "react";
 import useFetchAPi from "../../hooks/useFetchApi";
 import useUsername from "../../hooks/useUsername";
 import useBackpacksOfUser from "../../hooks/useBackpacksOfUser";
+import useGrabGearItemInfo from "../../hooks/useGrabGearItemInfo";
 
 // Add onSuccess functionality below...
 export default function GrabItemModal({ isOpen, onClose, itemId, onSuccess }) {
   const { fetchData, data, loading, error } = useFetchAPi();
-  const [gearData, setGearData] = useState({ privateValue: false });
-  const [selectedValue, setSelectedValue] = useState(
-    backpacks.length > 0 ? backpacks[0].backpackId : ""
-  );
+  const [selectedValue, setSelectedValue] = useState(0);
   const { backpacks } = useBackpacksOfUser();
   const { username } = useUsername();
+  const { gearItem } = useGrabGearItemInfo(itemId);
 
   const clearAndClose = () => {
-    setGearData({});
     setSelectedValue("");
     onClose();
   };
 
+  useEffect(() => {
+    if (backpacks && backpacks.length > 0) {
+      setSelectedValue(backpacks[0].backpackId);
+    }
+  }, [backpacks]);
+
   // This function is activated when the user clicks the grab gear button.
   // It will be used to grab the data from the itemId of the gear, and insert it into
   //  the specific backpack selected.
-  const onGrabGearClick = () => {
-    // fetchData(`/api/gearlists/${itemId}`);
-    // if (data)
+  const onGrabGearClick = async () => {
+    const { itemId, ...gearItemWithoutItemId } = gearItem;
+
+    const movingGearData = {
+      ...gearItemWithoutItemId,
+      ownerUsername: username,
+      backpackId: parseInt(selectedValue, 10),
+    };
+
+    console.log(movingGearData);
+    const url = `/api/gearlists/add`;
+    const method = "POST";
+
+    await fetchData(url, method, "application/json", movingGearData);
+    if (error) {
+      console.log(`Error received!:  ${error}`);
+    }
+    if (data) {
+      console.log(`data: ${data}`);
+    }
   };
 
   const handleChange = (event) => {
@@ -51,6 +72,13 @@ export default function GrabItemModal({ isOpen, onClose, itemId, onSuccess }) {
         <div className="modal-overlay">
           <div className="modal-content border border-dark rounded shadow p-4">
             <label className="modal-title">Grab Gear!</label>
+            <p>
+              Which backpack of yours would you like to place this item:{" "}
+              {gearItem?.itemName} in?
+            </p>
+            <span>
+              <strong>Backpacks:</strong>
+            </span>
             <select
               id="backpackSelect"
               value={selectedValue}
@@ -58,16 +86,18 @@ export default function GrabItemModal({ isOpen, onClose, itemId, onSuccess }) {
             >
               {backpacks.map((backpack) => (
                 <option key={backpack.backpackId} value={backpack.backpackId}>
-                  {backpack.backpackName}
+                  {backpack.backpackName} - {backpack.location}
                 </option>
               ))}
             </select>
             <p>Selected Value: {selectedValue}</p>
             <p>
-              Add {itemId} to {selectedValue}?
+              Add {gearItem?.itemName} to {selectedValue}?
             </p>
             {/* This button will be used to insert the gear into the specific backpack: */}
-            <button className="btn btn-primary w-20">Grab Gear</button>
+            <button className="btn btn-primary w-20" onClick={onGrabGearClick}>
+              Grab Gear
+            </button>
             <button className="btn btn-secondary w-20" onClick={clearAndClose}>
               Cancel
             </button>

@@ -5,6 +5,7 @@ import useFetchApi from "../../hooks/useFetchApi";
 import AddGearButton from "../buttons/AddGearButton";
 import UpdateGearButton from "../buttons/UpdateGearButton";
 import DeleteGearItemButton from "../buttons/DeleteGearItemButton";
+import GrabItemButton from "../buttons/GrabItemButton";
 import useUsername from "../../hooks/useUsername";
 import useRole from "../../hooks/useRole";
 
@@ -115,7 +116,12 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
                         itemName={val.itemName}
                         onSuccess={triggerRefresh}
                       />
-                    ) : null}
+                    ) : (
+                      <GrabItemButton
+                        buttonVisible={buttonVisible}
+                        itemId={val.itemId}
+                      />
+                    )}
                   </td>
                 </tr>
               );

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import GrabItemModal from "../common/GrabItemModal";
 
@@ -6,7 +7,7 @@ export default function GrabItemButton({ buttonVisible, itemId }) {
 
   return (
     <>
-      {buttonVisible && (
+      {!buttonVisible && (
         <button className="btn btn-success" onClick={() => setModal(true)}>
           Grab Gear
         </button>
