@@ -1,0 +1,6 @@
+.card-with-background {
+    background-image: url('../../images/BackgroundBackpack_2.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+}

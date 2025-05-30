@@ -3,6 +3,7 @@ import useFetchApi from "../hooks/useFetchApi";
 import UserCardElement from "./UserCardElement";
 import AddRoleButton from "./AddRoleButton";
 import DeleteUserButton from "./DeleteUserButton";
+import "../assets/css/card.css";
 
 export default function AdminProfile() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -25,7 +26,7 @@ export default function AdminProfile() {
       {data?.map((val, key) => {
         return (
           <div
-            className="card border-dark rounded shadow-lg card-fit"
+            className="card border-dark rounded shadow-lg card-fit card-with-background"
             key={key}
           >
             <div className="card-body">
@@ -33,7 +34,7 @@ export default function AdminProfile() {
                 otherUsername={val?.username}
                 onSuccess={triggerRefresh}
               />
-              <div className="d-flex justify-content-end gap-2 mt-2">
+              <div className="d-flex justify-content-end gap-2 mt-5">
                 <AddRoleButton
                   setShowButton={setShowButton}
                   showButton={showButton}
