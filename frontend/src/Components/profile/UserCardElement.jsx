@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import useFetchApi from "../hooks/useFetchApi";
-import DeleteRoleButton from "./DeleteRoleButton";
-import useUsername from "../hooks/useUsername";
-import ChangeOtherPasswordButton from "./ChangeOtherPasswordButton";
+import useFetchApi from "../../hooks/useFetchApi";
+import DeleteRoleButton from "../buttons/DeleteRoleButton";
+import useUsername from "../../hooks/useUsername";
+import ChangeOtherPasswordButton from "../buttons/ChangeOtherPasswordButton";
 
 // eslint-disable-next-line react/prop-types
 export default function UserCardElement({ otherUsername, onSuccess }) {

@@ -1,5 +1,5 @@
 import React from "react";
-import useRole from "../hooks/useRole";
+import useRole from "../../hooks/useRole";
 export default function UserProfile() {
   const { role } = useRole();
 

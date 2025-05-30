@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
-import useFetchApi from "../hooks/useFetchApi";
-import { translateFieldsForUser } from "../helpers/translateFieldsForUser";
-import InputBox from "./InputBox";
-import useUsername from "../hooks/useUsername";
+import useFetchApi from "../../hooks/useFetchApi";
+import { translateFieldsForUser } from "../../helpers/translateFieldsForUser";
+import InputBox from "../elements/InputBox";
+import useUsername from "../../hooks/useUsername";
 
 export default function Modal({
   isOpen,

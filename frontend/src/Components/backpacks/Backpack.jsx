@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
-import useFetchApi from "../hooks/useFetchApi";
-import DeleteBackpackButton from "./DeleteBackpackButton";
-import useUsername from "../hooks/useUsername";
-import useRole from "../hooks/useRole";
+import useFetchApi from "../../hooks/useFetchApi";
+import DeleteBackpackButton from "../buttons/DeleteBackpackButton";
+import useUsername from "../../hooks/useUsername";
+import useRole from "../../hooks/useRole";
 
 export default function Backpack({
   setDisplayGear,

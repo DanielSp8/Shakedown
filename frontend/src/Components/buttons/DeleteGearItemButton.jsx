@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import Modal from "./Modal";
+import Modal from "../common/Modal";
 
 export default function DeleteGearItemButton({ itemId, itemName, onSuccess }) {
   const [modal, setModal] = useState(false);

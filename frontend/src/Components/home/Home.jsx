@@ -1,5 +1,5 @@
 import React from "react";
-import AppTitle from "./AppTitle";
+import AppTitle from "../common/AppTitle";
 import Carousel from "./Carousel";
 import DisplayQuote from "./DisplayQuote";
 

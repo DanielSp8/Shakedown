@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import useFetchApi from "../hooks/useFetchApi";
+import useFetchApi from "../../hooks/useFetchApi";
 import UserCardElement from "./UserCardElement";
-import AddRoleButton from "./AddRoleButton";
-import DeleteUserButton from "./DeleteUserButton";
-import "../assets/css/card.css";
+import AddRoleButton from "../buttons/AddRoleButton";
+import DeleteUserButton from "../buttons/DeleteUserButton";
+import "../../assets/css/card.css";
 
 export default function AdminProfile() {
   const [refreshKey, setRefreshKey] = useState(0);

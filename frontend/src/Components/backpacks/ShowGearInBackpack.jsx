@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
-import { formatCurrency } from "../helpers/currency";
-import useFetchApi from "../hooks/useFetchApi";
-import AddGearButton from "./AddGearButton";
-import UpdateGearButton from "./UpdateGearButton";
-import DeleteGearItemButton from "./DeleteGearItemButton";
-import useUsername from "../hooks/useUsername";
-import useRole from "../hooks/useRole";
+import { formatCurrency } from "../../helpers/currency";
+import useFetchApi from "../../hooks/useFetchApi";
+import AddGearButton from "../buttons/AddGearButton";
+import UpdateGearButton from "../buttons/UpdateGearButton";
+import DeleteGearItemButton from "../buttons/DeleteGearItemButton";
+import useUsername from "../../hooks/useUsername";
+import useRole from "../../hooks/useRole";
 
 export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
   const [refreshKey, setRefreshKey] = useState(0);

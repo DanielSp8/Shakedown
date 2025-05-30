@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { formatCurrency } from "../helpers/currency";
-import useUsername from "../hooks/useUsername";
-import useRole from "../hooks/useRole";
+import { formatCurrency } from "../../helpers/currency";
+import useUsername from "../../hooks/useUsername";
+import useRole from "../../hooks/useRole";
 
 export default function DisplaySearchedGearItems({ data, displayTable }) {
   const { username } = useUsername();

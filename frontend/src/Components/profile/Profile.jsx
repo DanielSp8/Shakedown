@@ -1,5 +1,5 @@
 import React from "react";
-import AppTitle from "./AppTitle";
+import AppTitle from "../common/AppTitle";
 import ProfileUsername from "./ProfileUsername";
 import ProfileRole from "./ProfileRole";
 

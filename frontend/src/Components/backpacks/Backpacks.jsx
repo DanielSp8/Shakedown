@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import Backpack from "./Backpack";
-import AddBackpackButton from "./AddBackpackButton";
+import AddBackpackButton from "../buttons/AddBackpackButton";
 import ShowGearInBackpack from "./ShowGearInBackpack";
 
 export default function Backpacks() {

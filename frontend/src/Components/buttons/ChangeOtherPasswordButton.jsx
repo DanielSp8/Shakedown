@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import RoleModal from "./RoleModal";
+import RoleModal from "../common/RoleModal";
 
 export default function ChangeOtherPasswordButton({
   otherUsername,

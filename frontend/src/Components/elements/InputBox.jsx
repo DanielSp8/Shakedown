@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { useState } from "react";
-import { translateFieldsForUser } from "../helpers/translateFieldsForUser";
-import { checkForDecimalField } from "../helpers/checkForDecimalField";
+import { translateFieldsForUser } from "../../helpers/translateFieldsForUser";
+import { checkForDecimalField } from "../../helpers/checkForDecimalField";
 
 export default function InputBox({ field, formData, handleChange }) {
   const [value, setValue] = useState("");

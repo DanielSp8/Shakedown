@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
-import useFetchApi from "../hooks/useFetchApi";
+import useFetchApi from "../../hooks/useFetchApi";
 
 export default function RoleModal({
   isOpen,

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
-import backpacks from "../images/backpacks.webp";
-import AppTitle from "./AppTitle";
+import backpacks from "../../images/backpacks.webp";
+import AppTitle from "../common/AppTitle";
 
 export default function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);

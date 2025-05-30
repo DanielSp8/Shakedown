@@ -1,10 +1,10 @@
 /* eslint-disable no-const-assign */
 import React, { useState, useEffect } from "react";
-import Dropdown from "./Dropdown";
-import { fieldsToSearch } from "../helpers/fieldsToSearch";
-import RadioGroup from "./RadioGroup";
-import { radioOptionsForSearch } from "../helpers/radioOptionsForSearch";
-import useFetchApi from "../hooks/useFetchApi";
+import Dropdown from "../elements/Dropdown";
+import { fieldsToSearch } from "../../helpers/fieldsToSearch";
+import RadioGroup from "../elements/RadioGroup";
+import { radioOptionsForSearch } from "../../helpers/radioOptionsForSearch";
+import useFetchApi from "../../hooks/useFetchApi";
 import DisplaySearchedGearItems from "./DisplaySearchedGearItems";
 
 export default function SearchForm() {

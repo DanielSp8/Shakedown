@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import useUsername from "../hooks/useUsername";
-import RoleModal from "./RoleModal";
+import useUsername from "../../hooks/useUsername";
+import RoleModal from "../common/RoleModal";
 
 export default function ProfileUsername({ onSuccess }) {
   const { username } = useUsername();
