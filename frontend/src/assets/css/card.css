@@ -3,4 +3,9 @@
     background-size: cover;
     background-repeat: no-repeat;
     color: white;
+    transition: box-shadow 0.3s ease;
+}
+
+.card-with-background:hover {
+    box-shadow: 10px 10px 20px rgba(36, 36, 36, 0.5);
 }

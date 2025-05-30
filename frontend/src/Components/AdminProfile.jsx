@@ -22,11 +22,11 @@ export default function AdminProfile() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="d-flex gap-3 drop-more">
+    <div className="d-flex gap-5 drop-more">
       {data?.map((val, key) => {
         return (
           <div
-            className="card border-dark rounded shadow-lg card-fit card-with-background"
+            className="card border-dark rounded card-fit card-with-background"
             key={key}
           >
             <div className="card-body">
