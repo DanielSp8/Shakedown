@@ -12,7 +12,7 @@ export default function AddGearButton({
   return (
     <>
       {buttonVisible && (
-        <button className="btn btn-success " onClick={() => setModal(true)}>
+        <button className="btn btn-success" onClick={() => setModal(true)}>
           Add Gear
         </button>
       )}
