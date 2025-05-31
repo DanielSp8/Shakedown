@@ -29,6 +29,7 @@ export default function AddGearButton({
           "weightOz",
           "price",
           "privateValue",
+          "needToPurchase"
         ]}
         url={"/api/gearlists/add"}
         method={"POST"}

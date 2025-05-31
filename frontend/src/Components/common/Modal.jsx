@@ -70,6 +70,7 @@ export default function Modal({
       fields.forEach((field) => {
         // Checkbox field set to false.  All is else set to an empty string
         initialData[field] = field === "privateValue" ? false : "";
+        initialData[field] = field === "needToPurchase" ? false : "";
       });
       setFormData(initialData);
     }

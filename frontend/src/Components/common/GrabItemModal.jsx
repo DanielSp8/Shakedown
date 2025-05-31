@@ -33,6 +33,7 @@ export default function GrabItemModal({ isOpen, onClose, itemId, onSuccess }) {
     const movingGearData = {
       ...gearItemWithoutItemId,
       ownerUsername: username,
+      needToPurchase: true,
       backpackId: parseInt(selectedValue, 10),
     };
 
@@ -86,15 +87,12 @@ export default function GrabItemModal({ isOpen, onClose, itemId, onSuccess }) {
                 </option>
               ))}
             </select>
-            <p>Selected Value: {selectedValue}</p>
-            <p>
-              Add {gearItem?.itemName} to {selectedValue}?
-            </p>
+            
             {/* This button will be used to insert the gear into the specific backpack: */}
-            <button className="btn btn-primary w-20" onClick={onGrabGearClick}>
+            <button className="btn btn-primary w-20 mt-4" onClick={onGrabGearClick}>
               Grab Gear
             </button>
-            <button className="btn btn-secondary w-20" onClick={clearAndClose}>
+            <button className="btn btn-secondary w-20 mt-1" onClick={clearAndClose}>
               Cancel
             </button>
           </div>

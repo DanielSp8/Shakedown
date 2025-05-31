@@ -25,6 +25,7 @@ export default function UpdateGearButton({ itemId, backpackId, onSuccess }) {
           "weightOz",
           "price",
           "privateValue",
+          "needToPurchase",
         ]}
         url={`/api/gearlists/update`}
         method={"PUT"}

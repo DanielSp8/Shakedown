@@ -19,8 +19,8 @@ export default function InputBox({ field, formData, handleChange }) {
       handleChange(field, input);
     }
   };
-  
-  if (field === "privateValue")
+
+  if (field === "privateValue" || field === "needToPurchase")
     return (
       <div>
         <input
