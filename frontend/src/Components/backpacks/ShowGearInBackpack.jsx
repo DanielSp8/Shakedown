@@ -37,17 +37,20 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
   if (loading) return <div>Loading...</div>;
 
   // These calculations give sum totals; for total weight and total price of items
-  const totalWeightLbs = Array.isArray(data)
+  const totalWeightLbs = Array.isArray(data) // Calculates the total weight of lbs
     ? data.reduce((acc, val) => acc + (val.weightLbs || 0), 0)
     : 0;
-  const totalWeightOz = Array.isArray(data)
+  const totalWeightOz = Array.isArray(data) // Calculates the total weight of oz
     ? data.reduce((acc, val) => acc + (val.weightOz || 0), 0)
     : 0;
+  const totalOunces = totalWeightLbs * 16 + totalWeightOz; // Converts all weight to ounces:
+  const displayLbs = Math.floor(totalOunces / 16);
+  const displayOz = (totalOunces % 16).toFixed(2);
+  const displayWeight = `${displayLbs} lbs, ${displayOz} oz`;
+
   const totalPrice = Array.isArray(data)
     ? data.reduce((acc, val) => acc + parseFloat(val.price || 0), 0)
     : 0;
-
-  const totalWeightInPounds = totalWeightLbs + totalWeightOz / 16;
 
   return (
     <div>
@@ -134,7 +137,7 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
               <strong>Total Weight and Remaining Cost of Backpack</strong>
             </td>
             <td colSpan="2">
-              <strong>{totalWeightInPounds.toFixed(2)} lbs</strong>
+              <strong>{displayWeight}</strong>
             </td>
             <td>
               <strong>{formatCurrency(totalPrice)}</strong>

@@ -6,6 +6,8 @@ import RadioGroup from "../elements/RadioGroup";
 import { radioOptionsForSearch } from "../../helpers/radioOptionsForSearch";
 import useFetchApi from "../../hooks/useFetchApi";
 import DisplaySearchedGearItems from "./DisplaySearchedGearItems";
+import AppTitle from "../common/AppTitle";
+import "../../assets/css/search.css";
 
 export default function SearchForm() {
   const { fetchData, data, loading, error } = useFetchApi();
@@ -41,7 +43,8 @@ export default function SearchForm() {
 
   return (
     <>
-      <form className="drop-more" onSubmit={handleSubmit}>
+      <AppTitle />
+      <form onSubmit={handleSubmit}>
         <label>Search by Field</label>
         <Dropdown
           options={fieldsToSearch}

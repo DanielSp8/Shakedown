@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Backpack from "./Backpack";
 import AddBackpackButton from "../buttons/AddBackpackButton";
 import ShowGearInBackpack from "./ShowGearInBackpack";
+import AppTitle from "../common/AppTitle";
 
 export default function Backpacks() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -16,6 +17,7 @@ export default function Backpacks() {
   if (!displayGear) {
     return (
       <>
+        <AppTitle />
         <AddBackpackButton onSuccess={triggerRefresh} />
         <Backpack
           setDisplayGear={setDisplayGear}
@@ -30,6 +32,7 @@ export default function Backpacks() {
   if (displayGear) {
     return (
       <>
+        <AppTitle />
         <ShowGearInBackpack
           backpackId={selectedBackpackId}
           setDisplayGear={setDisplayGear}

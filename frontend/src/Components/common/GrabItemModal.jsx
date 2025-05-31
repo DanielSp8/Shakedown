@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import useFetchAPi from "../../hooks/useFetchApi";
@@ -24,10 +25,9 @@ export default function GrabItemModal({ isOpen, onClose, itemId, onSuccess }) {
     }
   }, [backpacks]);
 
-  // This function is activated when the user clicks the grab gear button.
-  // It will be used to grab the data from the itemId of the gear, and insert it into
-  //  the specific backpack selected.
   const onGrabGearClick = async () => {
+    // This removes the itemId field from the object, so that it will add it
+    //  to the backpack correctly.
     const { itemId, ...gearItemWithoutItemId } = gearItem;
 
     const movingGearData = {
@@ -41,12 +41,8 @@ export default function GrabItemModal({ isOpen, onClose, itemId, onSuccess }) {
     const method = "POST";
 
     await fetchData(url, method, "application/json", movingGearData);
-    if (error) {
-      console.log(`Error received!:  ${error}`);
-    }
-    if (data) {
-      console.log(`data: ${data}`);
-    }
+
+    clearAndClose();
   };
 
   const handleChange = (event) => {

@@ -21,6 +21,7 @@ export default function DisplaySearchedGearItems({ data, displayTable }) {
               <th scope="col">Weight (in oz)</th>
               <th scope="col">Price</th>
               <th scope="col">Private?</th>
+              <th scope="col">Username</th>
             </tr>
           </thead>
           <tbody>
@@ -41,6 +42,7 @@ export default function DisplaySearchedGearItems({ data, displayTable }) {
                     <td>{val.weightOz}</td>
                     <td>{formatCurrency(val.price)}</td>
                     <td>{val.privateValue ? "true" : "false"}</td>
+                    <td>{val.ownerUsername}</td>
                   </tr>
                 );
               }
