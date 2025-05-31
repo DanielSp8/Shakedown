@@ -48,9 +48,12 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
   const displayOz = (totalOunces % 16).toFixed(2);
   const displayWeight = `${displayLbs} lbs, ${displayOz} oz`;
 
-  // This is the calculation I will need to work on...  :)
+  // This calculates the sum total of the price, excluding items that have already
+  //  been purchased by the user
   const totalPrice = Array.isArray(data)
-    ? data.reduce((acc, val) => acc + parseFloat(val.price || 0), 0)
+    ? data
+        .filter((item) => item.needToPurchase)
+        .reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0)
     : 0;
 
   return (
