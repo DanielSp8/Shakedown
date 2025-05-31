@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import useFetchApi from "../../hooks/useFetchApi";
 import useRole from "../../hooks/useRole";
 import { userRoles } from "../../helpers/userRoles";
 
 // Add refresh functionality -- for updating the profile page.
-export default function DropdownRole({ usernameForRoles }) {
+export default function DropdownRole({ usernameForRoles, personRole }) {
   const { fetchData, data, loading, error } = useFetchApi();
   const [selectedValue, setSelectedValue] = useState("");
   const { role } = useRole();
@@ -20,7 +21,7 @@ export default function DropdownRole({ usernameForRoles }) {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="mb-3">
+    <div className="card-texts">
       <label htmlFor="dropdownRole">Select Role:</label>
       <select
         id="dropdownRole"

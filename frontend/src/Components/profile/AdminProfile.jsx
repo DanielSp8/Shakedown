@@ -42,12 +42,12 @@ export default function AdminProfile() {
                   otherUsername={val?.username}
                   onSuccess={triggerRefresh}
                 /> */}
-                <DeleteUserButton
+                {/* <DeleteUserButton
                   setShowButton={setShowButton}
                   showButton={showButton}
                   otherUsername={val?.username}
                   onSuccess={triggerRefresh}
-                />
+                /> */}
               </div>
 
               {error && (

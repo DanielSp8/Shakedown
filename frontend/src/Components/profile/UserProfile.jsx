@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import useFetchApi from "../../hooks/useFetchApi";
-import AlertBox from "../common/AlertBox";
 import useUsername from "../../hooks/useUsername";
 import useRole from "../../hooks/useRole";
 import "../../assets/css/card.css";
@@ -13,19 +12,36 @@ export default function UserProfile() {
   const [message, setMessage] = useState(null);
   const [alertOpen, setAlertOpen] = useState(false);
 
-  const submitNewPassword = () => {
+  useEffect(() => {
+    if (data) {
+      setMessage("Password Successfully Changed.");
+      setAlertOpen(true);
+    } else if (error) {
+      setMessage(`${error} Password Updated failed.  Please try again...`);
+      setAlertOpen(true);
+    }
+  }, [data, error]);
+
+  useEffect(() => {
+    if (!alertOpen) return;
+
+    const timer = setTimeout(() => {
+      setAlertOpen(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [alertOpen]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const url = `/api/profile/change-password`;
     const method = "PUT";
-    const headerContent = "application/text";
+    const headerContent = "text/plain";
     const body = newPassword;
     fetchData(url, method, headerContent, body);
-    if (!error && data) {
-      setMessage("Password Successfully Changed.");
-    } else {
-      setMessage(`${error} Password Updated failed.  Please try again...`);
-    }
-    setAlertOpen(true);
   };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div>
@@ -37,33 +53,29 @@ export default function UserProfile() {
           <div className="fs-4">
             <span className="card-texts">Role: {role}</span>
           </div>
-          <div className="input-group mb-3 mt-3 card-texts form">
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Enter new password"
-              aria-label="New Password"
-              aria-describedby="button-addon2"
-              onChange={(e) => setNewPassword(e.target.value)}
-            ></input>
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
-              onClick={submitNewPassword}
-            >
-              Change
-            </button>
+          <div className="input-group mb-3 mt-3 card-texts">
+            <form onSubmit={handleSubmit} id="passwordFormForUser">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Enter new password"
+                aria-label="New Password"
+                aria-describedby="button-addon2"
+                required
+                onChange={(e) => setNewPassword(e.target.value)}
+              ></input>
+              <button
+                className="btn btn-outline-secondary"
+                type="submit"
+                id="button-addon2"
+              >
+                Change
+              </button>
+            </form>
           </div>
         </div>
       </div>
-      {alertOpen && (
-        <AlertBox
-          alertOpen={alertOpen}
-          setAlertOpen={setAlertOpen}
-          message={message}
-        />
-      )}
+      {alertOpen && <div className="alert alert-success">{message}</div>}
     </div>
   );
 }
