@@ -27,7 +27,7 @@ export default function AdminProfile() {
       {data?.map((val, key) => {
         return (
           <div
-            className="card border-dark rounded card-fit card-with-background fixed-card-size"
+            className="card border-dark rounded card-fit card-with-background"
             key={key}
           >
             <div className="card-body d-flex flex-column justify-content-center align-items-center text-center">

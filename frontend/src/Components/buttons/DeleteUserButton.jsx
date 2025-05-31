@@ -11,7 +11,7 @@ export default function DeleteUserButton({
   const [modal, setModal] = useState(false);
 
   return (
-    <>
+    <div className="mt-5">
       <button
         className="btn btn-danger btn-sm"
         style={{ display: showButton ? "inline-block" : "none" }}
@@ -31,6 +31,6 @@ export default function DeleteUserButton({
         onSuccess={onSuccess}
         setShowButton={setShowButton}
       />
-    </>
+    </div>
   );
 }

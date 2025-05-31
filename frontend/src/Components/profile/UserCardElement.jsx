@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useFetchApi from "../../hooks/useFetchApi";
-import DeleteRoleButton from "../buttons/DeleteRoleButton";
 import useUsername from "../../hooks/useUsername";
-import DropdownRole from "../elements/DropdownRole";
 import DeleteUserButton from "../buttons/DeleteUserButton";
 import useUserRoles from "../../hooks/useUserRoles";
 import "../../assets/css/card.css";
@@ -19,7 +17,7 @@ export default function UserCardElement({ otherUsername, onSuccess }) {
 
   const verifyLoggedInUsername = (usernameToCheck) => {
     if (username === usernameToCheck) {
-      return "Logged In:";
+      return "Logged in Username:";
     } else {
       return "Username:";
     }
@@ -63,8 +61,6 @@ export default function UserCardElement({ otherUsername, onSuccess }) {
       <div className="card-texts">Current Role: {roles}</div>
       {username !== otherUsername ? (
         <>
-          <DropdownRole usernameForRoles={otherUsername} personRole={data} />
-
           <div className="input-group mb-3 mt-3 card-texts">
             <form onSubmit={handleSubmit} id={`${otherUsername}-id`}>
               <input
@@ -93,21 +89,21 @@ export default function UserCardElement({ otherUsername, onSuccess }) {
           />
         </>
       ) : (
-        <div className="input-group mb-3 mt-3 card-texts">
+        <div className="input-group mb-3 mt-5 card-texts">
           <form onSubmit={handleSubmit} id={`${username}-id`}>
             <input
               type="password"
               className="form-control"
               placeholder="Enter new password"
               aria-label="New Password"
-              aria-describedby="button-addon2"
+              aria-describedby="button-addon3"
               required
               onChange={(e) => setNewPassword(e.target.value)}
             ></input>
             <button
               className="btn btn-outline-secondary"
               type="submit"
-              id="button-addon2"
+              id="button-addon3"
             >
               Change Password
             </button>
