@@ -1,3 +1,4 @@
+// Style the card(s) uniquely for AdminProfile with CSS once everything is in them!
 import React, { useState, useEffect } from "react";
 import useFetchApi from "../../hooks/useFetchApi";
 import UserCardElement from "./UserCardElement";
@@ -29,18 +30,18 @@ export default function AdminProfile() {
             className="card border-dark rounded card-fit card-with-background fixed-card-size"
             key={key}
           >
-            <div className="card-body">
+            <div className="card-body d-flex flex-column justify-content-center align-items-center text-center">
               <UserCardElement
                 otherUsername={val?.username}
                 onSuccess={triggerRefresh}
               />
               <div className="d-flex justify-content-end gap-2 mt-5">
-                <AddRoleButton
+                {/* <AddRoleButton
                   setShowButton={setShowButton}
                   showButton={showButton}
                   otherUsername={val?.username}
                   onSuccess={triggerRefresh}
-                />
+                /> */}
                 <DeleteUserButton
                   setShowButton={setShowButton}
                   showButton={showButton}

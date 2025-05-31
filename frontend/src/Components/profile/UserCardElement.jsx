@@ -3,6 +3,7 @@ import useFetchApi from "../../hooks/useFetchApi";
 import DeleteRoleButton from "../buttons/DeleteRoleButton";
 import useUsername from "../../hooks/useUsername";
 import ChangeOtherPasswordButton from "../buttons/ChangeOtherPasswordButton";
+import DropdownRole from "../elements/DropdownRole";
 
 // eslint-disable-next-line react/prop-types
 export default function UserCardElement({ otherUsername, onSuccess }) {
