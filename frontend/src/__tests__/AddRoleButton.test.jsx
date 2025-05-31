@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/display-name */
 import React from "react";
-import AddRoleButton from "../Components/AddRoleButton";
+import AddRoleButton from "../components/buttons/AddRoleButton";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 const mockModal = jest.fn();
@@ -10,7 +10,7 @@ const mockOnSuccess = jest.fn();
 const mockSetShowButton = jest.fn();
 
 // Mock the role modal component
-jest.mock("../Components/RoleModal", () => (props) => {
+jest.mock("../components/common/RoleModal", () => (props) => {
   mockModal(props);
   return props.isOpen ? (
     <>

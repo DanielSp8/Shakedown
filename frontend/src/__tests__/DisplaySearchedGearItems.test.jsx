@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import DisplaySearchedGearItems from "../Components/DisplaySearchedGearItems";
+import DisplaySearchedGearItems from "../components/search/DisplaySearchedGearItems";
 
 // Mock custom hooks
 jest.mock("../hooks/useUsername", () => ({

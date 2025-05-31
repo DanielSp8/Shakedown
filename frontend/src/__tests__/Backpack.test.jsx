@@ -2,7 +2,7 @@
 /* eslint-disable react/display-name */
 /* eslint-disable no-undef */
 import React from "react";
-import Backpack from "../Components/Backpack";
+import Backpack from "../components/backpacks/Backpack";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 // Mock custom hooks being used
@@ -11,7 +11,7 @@ jest.mock("../hooks/useUsername", () => () => ({ username: "daniel" }));
 jest.mock("../hooks/useRole", () => () => ({ role: ["USER"] }));
 
 // Mock other components being used
-jest.mock("../Components/DeleteBackpackButton", () => ({ backpackName }) => (
+jest.mock("../components/buttons/DeleteBackpackButton", () => ({ backpackName }) => (
   <div>Delete: {backpackName}</div>
 ));
 

@@ -3,12 +3,12 @@
 /* eslint-disable react/display-name */
 /* eslint-disable no-undef */
 import React from "react";
-import UpdateGearButton from "../Components/UpdateGearButton";
+import UpdateGearButton from "../components/buttons/UpdateGearButton";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 // Mock the Modal component
 const mockModal = jest.fn();
-jest.mock("../Components/Modal", () => (props) => {
+jest.mock("../components/common/Modal", () => (props) => {
   mockModal(props);
   return props.isOpen ? (
     <>

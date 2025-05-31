@@ -9,7 +9,7 @@ jest.mock("../helpers/translateFieldsForUser", () => ({
 }));
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import InputBox from "../Components/InputBox";
+import InputBox from "../components/elements/InputBox";
 
 describe("InputBox when field is privateValue", () => {
   const mockFormData = {

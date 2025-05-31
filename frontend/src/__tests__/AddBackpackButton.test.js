@@ -3,12 +3,12 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 import React from "react";
-import AddBackpackButton from "../Components/AddBackpackButton";
+import AddBackpackButton from "../components/buttons/AddBackpackButton";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 const mockModal = jest.fn();
 const mockOnSuccess = jest.fn();
-jest.mock("../Components/Modal", () => (props) => {
+jest.mock("../components/common/Modal", () => (props) => {
   mockModal(props);
   return props.isOpen ? (
     <>

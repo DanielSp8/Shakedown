@@ -2,12 +2,12 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/display-name */
 import React from "react";
-import DeleteBackpackButton from "../Components/DeleteBackpackButton";
+import DeleteBackpackButton from "../components/buttons/DeleteBackpackButton";
 import { screen, render, fireEvent } from "@testing-library/react";
 
 const mockModal = jest.fn();
 const mockOnSuccess = jest.fn();
-jest.mock("../Components/Modal", () => (props) => {
+jest.mock("../components/common/Modal", () => (props) => {
   mockModal(props);
   return props.isOpen ? (
     <>

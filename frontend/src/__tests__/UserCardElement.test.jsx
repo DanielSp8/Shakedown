@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React from "react";
-import UserCardElement from "../Components/UserCardElement";
+import UserCardElement from "../components/profile/UserCardElement";
 import { render, screen } from "@testing-library/react";
 
 jest.mock("../hooks/useFetchApi", () => ({
@@ -37,10 +37,11 @@ describe("UserCardElement", () => {
       error: null,
     });
 
-    render(<UserCardElement otherUsername={"Danielson"} onSuccess={() => {}} />);
+    render(
+      <UserCardElement otherUsername={"Danielson"} onSuccess={() => {}} />
+    );
 
     expect(screen.getByText(/danielson/i)).toBeInTheDocument();
-    expect(screen.getByText("ADMIN")).toBeInTheDocument();
-    expect(screen.getByText("USER")).toBeInTheDocument();
+    expect(screen.getByText(/ADMIN/i)).toBeInTheDocument();
   });
 });

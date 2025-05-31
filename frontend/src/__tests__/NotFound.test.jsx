@@ -1,5 +1,5 @@
 import React from "react";
-import NotFound from "../Components/NotFound";
+import NotFound from "../components/NotFound";
 import { render, screen } from "@testing-library/react";
 
 describe("NotFound", () => {

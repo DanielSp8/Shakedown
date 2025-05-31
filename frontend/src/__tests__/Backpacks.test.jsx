@@ -4,10 +4,10 @@
 /* eslint-disable no-undef */
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Backpacks from "../Components/Backpacks";
+import Backpacks from "../components/backpacks/Backpacks";
 
 // Mock the children components that this component uses
-jest.mock("../Components/AddBackpackButton", () => (props) => {
+jest.mock("../components/buttons/AddBackpackButton", () => (props) => {
   return (
     <>
       <div>AddBackpackButton</div>
@@ -16,7 +16,7 @@ jest.mock("../Components/AddBackpackButton", () => (props) => {
   );
 });
 
-jest.mock("../Components/Backpack", () => (props) => {
+jest.mock("../components/backpacks/Backpack", () => (props) => {
   return (
     <>
       <div>Backpack Component refreshKey: {props.refreshKey}</div>
@@ -32,7 +32,7 @@ jest.mock("../Components/Backpack", () => (props) => {
   );
 });
 
-jest.mock("../Components/ShowGearInBackpack", () => (props) => {
+jest.mock("../components/backpacks/ShowGearInBackpack", () => (props) => {
   return <div>ShowGearInBackpack: {props.backpackId}</div>;
 });
 

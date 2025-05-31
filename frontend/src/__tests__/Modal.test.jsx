@@ -3,9 +3,9 @@
 /* eslint-disable no-undef */
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Modal from "../Components/Modal";
+import Modal from "../components/common/Modal";
 
-jest.mock("../Components/InputBox", () => (props) => (
+jest.mock("../components/elements/InputBox", () => (props) => (
   <div>InputBox: {props.field}</div>
 ));
 jest.mock("../helpers/translateFieldsForUser", () => ({

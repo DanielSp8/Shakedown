@@ -2,12 +2,12 @@
 /* eslint-disable no-undef */
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Home from "../Components/Home";
+import Home from "../components/home/Home";
 
 // Mock children components being used in this component:
-jest.mock("../Components/AppTitle", () => () => <div>AppTitle</div>);
-jest.mock("../Components/Carousel", () => () => <div>Carousel</div>);
-jest.mock("../Components/DisplayQuote", () => () => <div>DisplayQuote</div>);
+jest.mock("../components/common/AppTitle", () => () => <div>AppTitle</div>);
+jest.mock("../components/home/Carousel", () => () => <div>Carousel</div>);
+jest.mock("../components/home/DisplayQuote", () => () => <div>DisplayQuote</div>);
 
 describe("Home", () => {
   test("children components render", () => {

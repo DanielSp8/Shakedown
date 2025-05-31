@@ -3,11 +3,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import React from "react";
-import DeleteGearItemButton from "../Components/DeleteGearItemButton";
+import DeleteGearItemButton from "../components/buttons/DeleteGearItemButton";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 const mockModal = jest.fn();
-jest.mock("../Components/Modal", () => (props) => {
+jest.mock("../components/common/Modal", () => (props) => {
   mockModal(props);
   return props.isOpen ? (
     <>

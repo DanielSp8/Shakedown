@@ -3,12 +3,12 @@
 /* eslint-disable react/display-name */
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import DeleteUserButton from "../Components/DeleteUserButton";
+import DeleteUserButton from "../components/buttons/DeleteUserButton";
 
 const mockSetShowButton = jest.fn();
 const mockOnSuccess = jest.fn();
 const mockModal = jest.fn();
-jest.mock("../Components/RoleModal", () => (props) => {
+jest.mock("../components/common/RoleModal", () => (props) => {
   mockModal(props);
   return props.isOpen ? (
     <>

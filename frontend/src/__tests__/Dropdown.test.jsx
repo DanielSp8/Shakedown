@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Dropdown from "../Components/Dropdown";
+import Dropdown from "../components/elements/Dropdown";
 
 const options = [
   { value: "item_name", label: "Item Name" },

@@ -3,12 +3,12 @@
 /* eslint-disable react/display-name */
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import AuthPage from "../Components/AuthPage";
+import AuthPage from "../components/auth/AuthPage";
 
 // Mock components used in AuthPage
-jest.mock("../Components/LoginForm", () => () => <div>LoginForm</div>);
-jest.mock("../Components/SignUpForm", () => () => <div>SignUpForm</div>);
-jest.mock("../Components/AppTitle", () => () => <div>AppTitle</div>);
+jest.mock("../components/auth/LoginForm", () => () => <div>LoginForm</div>);
+jest.mock("../components/auth/SignUpForm", () => () => <div>SignUpForm</div>);
+jest.mock("../components/common/AppTitle", () => () => <div>AppTitle</div>);
 
 describe("AuthPage", () => {
   test("renders login view on initial render", () => {

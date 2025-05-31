@@ -3,10 +3,10 @@
 /* eslint-disable no-undef */
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import AdminProfile from "../Components/AdminProfile";
+import AdminProfile from "../components/profile/AdminProfile";
 
 // Mock other components being used
-jest.mock("../Components/UserCardElement", () => ({ username, onSuccess }) => {
+jest.mock("../components/profile/UserCardElement", () => ({ username, onSuccess }) => {
   return (
     <>
       <div>UserCard: {username}</div>
@@ -16,12 +16,12 @@ jest.mock("../Components/UserCardElement", () => ({ username, onSuccess }) => {
 });
 
 // Mock AddRoleButton
-jest.mock("../Components/AddRoleButton", () => ({ username }) => (
+jest.mock("../components/buttons/AddRoleButton", () => ({ username }) => (
   <div>AddRoleButton: {username}</div>
 ));
 
 // Mock DeleteUserButton
-jest.mock("../Components/DeleteUserButton", () => ({ username }) => (
+jest.mock("../components/buttons/DeleteUserButton", () => ({ username }) => (
   <div>DeleteUserButton: {username}</div>
 ));
 

@@ -1,5 +1,5 @@
 import React from "react";
-import RadioButton from "../Components/RadioButton";
+import RadioButton from "../components/elements/RadioButton";
 import { render, screen } from "@testing-library/react";
 
 describe("RadioButton", () => {

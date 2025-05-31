@@ -3,7 +3,7 @@
 /* eslint-disable no-undef */
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import ShowGearInBackpack from "../Components/ShowGearInBackpack";
+import ShowGearInBackpack from "../components/backpacks/ShowGearInBackpack";
 
 // Mock useFetchApi
 const mockFetchApi = {
@@ -15,17 +15,17 @@ const mockFetchApi = {
 jest.mock("../hooks/useFetchApi", () => () => mockFetchApi);
 
 // Mock AddGearButton
-jest.mock("../Components/AddGearButton", () => ({ backpackId }) => (
+jest.mock("../components/buttons/AddGearButton", () => ({ backpackId }) => (
   <div>AddGearButton: {backpackId}</div>
 ));
 
 // Mock UpdateGearButton
-jest.mock("../Components/UpdateGearButton", () => (props) => (
+jest.mock("../components/buttons/UpdateGearButton", () => (props) => (
   <div>UpdateGearButton</div>
 ));
 
 // Mock DeleteGearButton
-jest.mock("../Components/DeleteGearItemButton", () => (props) => {
+jest.mock("../components/buttons/DeleteGearItemButton", () => (props) => {
   <div>DeleteGearItemButton</div>;
 });
 

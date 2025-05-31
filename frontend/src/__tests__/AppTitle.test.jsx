@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import AppTitle from "../Components/AppTitle.jsx";
+import AppTitle from "../components/common/AppTitle";
 
 describe("rendering AppTitle", () => {
   test("Should render title", () => {

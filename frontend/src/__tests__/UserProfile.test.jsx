@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React from "react";
-import UserProfile from "../Components/UserProfile";
+import UserProfile from "../components/profile/UserProfile";
 import { render, screen } from "@testing-library/react";
 
 // Mock the custom hook useRole
@@ -15,7 +15,7 @@ describe(UserProfile, () => {
   test("displays the role returned by useRole", () => {
     render(<UserProfile />);
 
-    const roleElement = screen.getByText(/current role: admin/i);
+    const roleElement = screen.getByText(/Role: admin/i);
     expect(roleElement).toBeInTheDocument();
   });
 });
