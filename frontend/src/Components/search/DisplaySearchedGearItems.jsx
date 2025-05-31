@@ -47,6 +47,11 @@ export default function DisplaySearchedGearItems({ data, displayTable }) {
                 );
               }
             })}
+            <tr>
+              <td>
+                <strong>Total Items Found: {data?.length}</strong>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

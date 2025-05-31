@@ -19,23 +19,25 @@ export default function SearchForm() {
   const [selectedOption, setSelectedOption] = useState("ASC");
   const [displayTable, setDisplayTable] = useState(false);
 
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let url;
-    // Checks if search item selected is description; if so, use the url for LIKE sql statement
-    if (selectedField === "description") {
-      url = `/api/gearlists/searchGear/description/like/${encodeURIComponent(
+    if (inputSearch === "") {
+      url = `/api/gearlists/searchGear/returnAll/${encodeURIComponent(
+        sortByValue
+      )}/${encodeURIComponent(selectedOption)}`;
+    } else {
+      url = `/api/gearlists/searchGear/${selectedField}/like/${encodeURIComponent(
         inputSearch
       )}/${encodeURIComponent(sortByValue)}/${encodeURIComponent(
         selectedOption
       )}`;
-    } else {
-      url = `/api/gearlists/searchGear/${encodeURIComponent(
-        selectedField
-      )}/${encodeURIComponent(inputSearch)}/${encodeURIComponent(
-        sortByValue
-      )}/${encodeURIComponent(selectedOption)}`;
     }
+
     await fetchData(url);
     setDisplayTable(true);
   };
@@ -68,13 +70,8 @@ export default function SearchForm() {
               type="text"
               value={inputSearch}
               onChange={(e) => setInputSearch(e.target.value)}
-              placeholder={
-                selectedField === "description"
-                  ? "Enter a phrase to search in the descriptions"
-                  : "Enter search input"
-              }
+              placeholder={"Enter a search"}
               className="form-control"
-              required
             />
           </div>
           <div className="me-3">
