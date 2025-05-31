@@ -48,6 +48,7 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
   const displayOz = (totalOunces % 16).toFixed(2);
   const displayWeight = `${displayLbs} lbs, ${displayOz} oz`;
 
+  // This is the calculation I will need to work on...  :)
   const totalPrice = Array.isArray(data)
     ? data.reduce((acc, val) => acc + parseFloat(val.price || 0), 0)
     : 0;
@@ -69,6 +70,7 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
             <th scope="col">Weight (in lbs)</th>
             <th scope="col">Weight (in oz)</th>
             <th scope="col">Price</th>
+            <th scope="col">Item Needed?</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -111,6 +113,7 @@ export default function ShowGearInBackpack({ backpackId, setDisplayGear }) {
                   <td>{val.weightLbs}</td>
                   <td>{val.weightOz}</td>
                   <td>{formatCurrency(val.price)}</td>
+                  <td>{val.needToPurchase === true ? "Yes" : "No"}</td>
                   <td>
                     {val?.ownerUsername === username ||
                     role.includes("ADMIN") ? (
