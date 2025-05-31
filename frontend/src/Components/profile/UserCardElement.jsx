@@ -9,6 +9,14 @@ export default function UserCardElement({ otherUsername, onSuccess }) {
   const { fetchData, data, loading, error } = useFetchApi();
   const { username } = useUsername();
 
+  const verifyLoggedInUsername = (usernameToCheck) => {
+    if (username === usernameToCheck) {
+      return "Logged In:";
+    } else {
+      return "Username:";
+    }
+  };
+
   useEffect(() => {
     fetchData(`/api/users/${otherUsername}/roles`, "GET");
   }, [fetchData, otherUsername]);
@@ -18,7 +26,10 @@ export default function UserCardElement({ otherUsername, onSuccess }) {
   return (
     <div className="row">
       <div className="card-body">
-        <div className="card-title">{otherUsername}</div>
+        <div className="card-title">
+          {verifyLoggedInUsername(otherUsername)}{" "}
+          <span className="card-body-text">{otherUsername}</span>
+        </div>
         Roles:
         <ul>
           {data?.map((item, index) => (

@@ -22,11 +22,11 @@ export default function AdminProfile() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="d-flex gap-5 drop-more">
+    <div className="d-flex gap-5">
       {data?.map((val, key) => {
         return (
           <div
-            className="card border-dark rounded card-fit card-with-background"
+            className="card border-dark rounded card-fit card-with-background fixed-card-size"
             key={key}
           >
             <div className="card-body">
@@ -49,7 +49,11 @@ export default function AdminProfile() {
                 />
               </div>
 
-              {error && <div className="text-danger">Error: {error}</div>}
+              {error && (
+                <div className="text-danger">
+                  Error: {error}, please try again...
+                </div>
+              )}
             </div>
           </div>
         );

@@ -4,8 +4,36 @@
     background-repeat: no-repeat;
     color: white;
     transition: box-shadow 0.3s ease;
+    position: absolute;
 }
 
 .card-with-background:hover {
     box-shadow: 10px 10px 20px rgba(36, 36, 36, 0.5);
+}
+
+.card-with-background .card-body {
+    background: rgba(0,0,0,0.4);
+    border-radius: 0.5rem;
+}
+
+.card-with-background .card-title {
+    text-shadow: 1px 1px 4px #000;
+}
+
+.fixed-card-size {
+    padding: 7rem 2rem 13rem;
+
+}
+
+.card-body-text {
+    color: whitesmoke;
+    height: 100%;
+}
+
+.card-texts {
+    color: whitesmoke;
+}
+
+#button-addon2 {
+    background-color: darkgreen;
 }
