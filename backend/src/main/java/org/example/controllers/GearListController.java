@@ -23,18 +23,24 @@ public class GearListController {
         return gearListDao.getGearLists();
     }
 
+    @GetMapping("/searchGear/returnAll/{orderByField}/{sortDirection}")
+    public List<GearList> returnAllGearThroughSearch(@PathVariable String orderByField, @PathVariable String sortDirection) {
+        return gearListDao.returnAllGearThroughSearch(orderByField, sortDirection);
+    }
 
     @GetMapping("/searchGear/{field}/{searchByValue}/{orderByField}/{sortDirection}")
     public List<GearList> searchForGear(@PathVariable String field, @PathVariable String searchByValue, @PathVariable String orderByField, @PathVariable String sortDirection) { return gearListDao.searchForGear(field, searchByValue, orderByField, sortDirection);}
 
-    @GetMapping("/searchGear/description/like/{word}/{orderByField}/{sortDirection}")
-    public List<GearList> searchThroughCategoryForWord(@PathVariable String word, @PathVariable String orderByField, @PathVariable String sortDirection) {
-        return gearListDao.searchThroughCategoryForWord(word, orderByField, sortDirection);
+    // Search for gear via a LIKE statement
+    @GetMapping("/searchGear/{columnToSearch}/like/{word}/{orderByField}/{sortDirection}")
+    public List<GearList> searchThroughCategoryForWord(@PathVariable String columnToSearch, @PathVariable String word, @PathVariable String orderByField, @PathVariable String sortDirection) {
+        return gearListDao.searchThroughCategoryForWord(columnToSearch, word, orderByField, sortDirection);
     }
 
+    // For getting a single gear list item
     @GetMapping("/{gearListItem}")
-    public GearList gearListItem(@PathVariable int gearItem) {
-        return gearListDao.getSingleGearItem(gearItem);
+    public GearList gearListItem(@PathVariable int gearListItem) {
+        return gearListDao.getSingleGearItem(gearListItem);
     }
 
     @GetMapping("/gear/{backpackId}")
@@ -48,6 +54,7 @@ public class GearListController {
         return gearListDao.updateGearItem(gearItem);
     }
 
+    // For adding a single gear item...
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public GearList createGearItem (@RequestBody GearList gearItem) {

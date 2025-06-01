@@ -1,111 +1,238 @@
 package org.example.daos;
 
+import io.swagger.v3.oas.annotations.media.DependentSchema;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.example.models.Backpack;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.jdbc.core.RowMapper;
 
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@TestPropertySource(locations = "classpath:application-test.properties")
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BackpackDaoTest {
 
-    @Autowired
-    private BackpackDao backpackDao;
+    @Test
+    @DisplayName("getBackpacks returns expected list")
+    void getBackpacks() {
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        BackpackDao dao = new BackpackDao(mockJdbcTemplate);
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+        Backpack expected = new Backpack(
+                1,
+                "Arc Teryx Backpack",
+                "Danny",
+                "Grandview, MO",
+                false
+        );
 
-    @BeforeEach
-    void setUp() {
-        jdbcTemplate.execute("""
-                CREATE TABLE IF NOT EXISTS backpacks (backpack_id INT AUTO_INCREMENT PRIMARY KEY,
-                                                         backpack_name VARCHAR(25) NOT NULL,
-                                                         owner_username VARCHAR(255),
-                                                         location VARCHAR(100),
-                                                         private_value BOOLEAN)""");
-        jdbcTemplate.execute("""
-                INSERT INTO backpacks (backpack_name, owner_username, location, private_value)
-                VALUES ('AT-Thru Hike', 'admin', 'Georgia to Maine', false),
-                        ('PCT-Thru Hike', 'admin', 'Campo, California to Manning Park, British Columbia', false),
-                        ('Hidden Pond', 'user', 'Ocala, Florida', false);""");
-    }
+        String expectedSql = "SELECT * FROM backpacks ORDER BY backpack_id;";
 
-    @AfterEach
-    void tearDown() {
-        jdbcTemplate.execute("DROP TABLE backpacks");
+        when(mockJdbcTemplate.query(
+                eq(expectedSql),
+                any(RowMapper.class)
+        )).thenReturn(List.of(expected));
+
+        // Act
+        List<Backpack> result = dao.getBackpacks();
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("Arc Teryx Backpack", result.get(0).getBackpackName());
+        assertEquals("Grandview, MO", result.get(0).getLocation());
+
+        verify(mockJdbcTemplate).query(
+                eq(expectedSql),
+                any(RowMapper.class)
+        );
+
     }
 
     @Test
-    @Order(1)
-    @DisplayName("GET all the backpacks; display each name; verify by size")
-    void getBackpack() {
-        List<Backpack> backpacks = backpackDao.getBackpacks();
-        for (Backpack backpack : backpacks) {
-            System.out.println(backpack.getBackpackName());
-        }
-        assertEquals(3, backpacks.size());
+    @DisplayName("getBackpacksByUsername returns the expected result")
+    void getBacksByUsername() {
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        BackpackDao dao = new BackpackDao(mockJdbcTemplate);
+
+        Backpack expected = new Backpack(
+                2,
+                "Osprey Backpack",
+                "Danielson",
+                "Alaska",
+                false
+        );
+
+        String username = "Danielson";
+        String expectedSql = "SELECT * FROM backpacks WHERE owner_username = ?;";
+
+        when(mockJdbcTemplate.query(
+                eq(expectedSql),
+                any(RowMapper.class),
+                eq(username)
+        )).thenReturn(List.of(expected));
+
+        List<Backpack> result = dao.getBacksByUsername(username);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("Osprey Backpack", result.get(0).getBackpackName());
+        assertEquals("Danielson", result.get(0).getOwnerUsername());
+
+        verify(mockJdbcTemplate).query(
+                eq(expectedSql),
+                any(RowMapper.class),
+                eq(username)
+        );
+
     }
 
     @Test
-    @Order(2)
-    @DisplayName("GET backpacks by username; verify by size")
-    void getBackpacksByUsername() {
-        List<Backpack> backpacks = backpackDao.getBacksByUsername("admin");
-        assertEquals(2, backpacks.size());
+    @DisplayName("getBackpacksByBackpackId returns the expected result")
+    void getBackpackByBackpackId() {
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        BackpackDao dao = new BackpackDao(mockJdbcTemplate);
+
+        Backpack expected = new Backpack(
+                3,
+                "REI Backpack",
+                "Dan",
+                "Colorado",
+                true
+        );
+
+        int backpackId = 3;
+        String expectedSql = "SELECT * FROM backpacks WHERE backpack_id = ?;";
+
+        when(mockJdbcTemplate.queryForObject(
+                eq(expectedSql),
+                any(RowMapper.class),
+                eq(backpackId)
+        )).thenReturn(expected);
+
+        Backpack result = dao.getBackpackByBackpackId(backpackId);
+
+        assertNotNull(result);
+        assertEquals("REI Backpack", result.getBackpackName());
+        assertEquals("Colorado", result.getLocation());
+
+        verify(mockJdbcTemplate).queryForObject(
+                eq(expectedSql),
+                any(RowMapper.class),
+                eq(backpackId)
+        );
     }
 
-    @Test
-    @Order(3)
-    @DisplayName("GET a single backpack by its id")
-    void getBackpacksById() {
-        Backpack backpack = backpackDao.getBackpackByBackpackId(2);
-        assertEquals("PCT-Thru Hike", backpack.getBackpackName());
-    }
 
     @Test
-    @Order(4)
-    @DisplayName("UPDATE a backpack; check that the old contrasts the new")
+    @DisplayName("updateBackpack successfully updates a backpack")
     void updateBackpack() {
-        Backpack oldBackpack = backpackDao.getBackpackByBackpackId(3);
-        Backpack newBackpack = new Backpack(3, "The Hidden Pond", "user", "Ocala, Florida", false);
-        Backpack updatedBackpack = backpackDao.updateBackpack(newBackpack, "user");
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        BackpackDao dao = new BackpackDao(mockJdbcTemplate);
 
-        assertNotEquals(oldBackpack.getBackpackName(), updatedBackpack.getBackpackName());
+        Backpack backpack = new Backpack(
+                4,
+                "Sublime Adventures",
+                "Dan",
+                "Washington State",
+                false
+        );
+        String username = "Dan";
+        String expectedSql = """
+            UPDATE backpacks SET backpack_name = ?, owner_username = ?, location = ?,
+             private_value = ? WHERE backpack_id = ?;""";
+
+        when(mockJdbcTemplate.update(
+                eq(expectedSql),
+                eq(backpack.getBackpackName()),
+                eq(username),
+                eq(backpack.getLocation()),
+                eq(backpack.getPrivateValue()),
+                eq(backpack.getBackpackId())
+        )).thenReturn(1);
+
+        Backpack result = dao.updateBackpack(backpack, username);
+
+        assertNotNull(result);
+        assertEquals(backpack, result);
+
+        verify(mockJdbcTemplate).update(
+                eq(expectedSql),
+                eq(backpack.getBackpackName()),
+                eq(username),
+                eq(backpack.getLocation()),
+                eq(backpack.getPrivateValue()),
+                eq(backpack.getBackpackId())
+        );
     }
 
     @Test
-    @Order(5)
-    @DisplayName("CREATE a new backpack; verify its name")
+    @DisplayName("addBackpack successfully adds a backpack")
     void addBackpack() {
-        String username = "user";
-        Backpack newBackpack = new Backpack("Philmont","Cimmaron, New Mexico", false);
-        Backpack addedBackpack = backpackDao.addBackpack(newBackpack, username);
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        BackpackDao dao = new BackpackDao(mockJdbcTemplate);
 
-        assertEquals(newBackpack.getBackpackName(), addedBackpack.getBackpackName());
-        assertEquals(newBackpack.getLocation(), addedBackpack.getLocation());
+        Backpack backpack = new Backpack(
+                9,
+                "Wonderful Views!",
+                "Daniel",
+                "AT Thru-hiking pack",
+                false
+        );
+        String username = "Daniel";
+        String expectedSql = """
+            INSERT INTO backpacks (backpack_name, owner_username, location, private_value)
+            VALUES (?, ?, ?, ?);""";
+
+        when(mockJdbcTemplate.update(
+                eq(expectedSql),
+                eq(backpack.getBackpackName()),
+                eq(username),
+                eq(backpack.getLocation()),
+                eq(backpack.getPrivateValue())
+        )).thenReturn(1);
+
+        Backpack result = dao.addBackpack(backpack, username);
+
+        assertNotNull(result);
+        assertEquals(backpack, result);
+
+        verify(mockJdbcTemplate).update(
+                eq(expectedSql),
+                eq(backpack.getBackpackName()),
+                eq(username),
+                eq(backpack.getLocation()),
+                eq(backpack.getPrivateValue())
+        );
+
     }
 
     @Test
-    @Order(6)
-    @DisplayName("DELETE a backpack by its id; verify its success")
+    @DisplayName("deleteBackpack successfully returns 1")
     void deleteBackpack() {
-        int rowsAffected = backpackDao.deleteBackpack(2);
-        assertEquals(1, rowsAffected);
-    }
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        BackpackDao dao = new BackpackDao(mockJdbcTemplate);
 
-    @Test
-    @Order(7)
-    @DisplayName("Attempt to delete a backpack by id that doesn't exist")
-    void deleteNonExistentBackpack() {
-        int rowsAffected = backpackDao.deleteBackpack(1001);
-        assertEquals(0, rowsAffected);
+        int backpackId = 12;
+        String expectedSql = "DELETE FROM backpacks WHERE backpack_id = ?;";
+
+        when(mockJdbcTemplate.update(
+                eq(expectedSql),
+                eq(backpackId)
+        )).thenReturn(1); // Simulate one row deleted
+
+        int result = dao.deleteBackpack(backpackId);
+
+        assertEquals(1, result);
+
+        verify(mockJdbcTemplate).update(
+                eq(expectedSql),
+                eq(backpackId)
+        );
     }
 }

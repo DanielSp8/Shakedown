@@ -1,140 +1,448 @@
 package org.example.daos;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import org.example.models.GearList;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.context.TestPropertySource;
+
+import org.springframework.jdbc.core.RowMapper;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-
-@SpringBootTest
-@TestPropertySource(locations = "classpath:application-test.properties")
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class GearListDaoTest {
 
-    @Autowired
-    private GearListDao gearListDao;
+    @Test
+    @DisplayName("getGearLists returns expected list")
+    void getGearLists() {
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        GearListDao dao = new GearListDao(mockJdbcTemplate);
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+        GearList expected = new GearList(
+                1,
+                "Tent",
+                "Shelter",
+                "A great tent!  I love it!",
+                1,
+                new BigDecimal("15.00"),
+                new BigDecimal("399.95"),
+                false,
+                "Danielson",
+                true,
+                1);
 
-    @BeforeEach
-    void setUp() {
-        jdbcTemplate.execute("""
-                CREATE TABLE IF NOT EXISTS gear_lists (item_id INT PRIMARY KEY AUTO_INCREMENT, item_name VARCHAR(100), category VARCHAR(100),\s
-                description TEXT, weight_lbs INT NOT NULL DEFAULT 0, weight_oz DECIMAL(4,2) NOT NULL DEFAULT 0, price DECIMAL(8,2) NOT NULL DEFAULT 0, private_value BOOLEAN, owner_username VARCHAR(255), backpack_id INT)""");
+        when(mockJdbcTemplate.query(
+                eq("SELECT * FROM gear_lists ORDER BY item_id;"),
+                any(RowMapper.class)
+        )).thenReturn(List.of(expected));
 
-        jdbcTemplate.execute("""
-                INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, private_value, owner_username, backpack_id)\s
-                VALUES ('Fly Creek 2 Person 3 Season Tent', 'Shelter',\s
-                'The Fly Creek HV UL Solution Dye Two-Person Tent still maintains the ultralight weight that minimalist backpackers look for, but Big Agnes redesigned it with a higher volume to give a comfier sleeping space.',\s
-                1, 15, 279.96, false, "Daniel", 1);""");
+        List<GearList> result = dao.getGearLists();
+
+        assertEquals(1, result.size());
+        assertEquals("Tent", result.get(0).getItemName());
+        assertEquals("Shelter", result.get(0).getCategory());
+        assertEquals("A great tent!  I love it!", result.get(0).getDescription());
+        assertEquals("Danielson", result.get(0).getOwnerUsername());
+
+        verify(mockJdbcTemplate, times(1)).query(eq("SELECT * FROM gear_lists ORDER BY item_id;"),
+                any(RowMapper.class));
     }
 
     @Test
-    @Order(1)
-    @DisplayName("GET all the gear lists; verify 1st row")
-    void testGetGearLists_returnItems() {
-        List<GearList> gearLists = gearListDao.getGearLists();
+    @DisplayName("searchForGear valid input returns an expected list")
+    void searchForGear() {
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        GearListDao dao = new GearListDao(mockJdbcTemplate);
 
-        GearList item = gearLists.get(0);
-        assertEquals("Fly Creek 2 Person 3 Season Tent", item.getItemName());
-        assertEquals("Shelter", item.getCategory());
-        assertEquals(1, item.getWeightLbs());
+        GearList expected = new GearList(
+                1,
+                "Tent",
+                "Shelter",
+                "A great tent!  I love it!",
+                1,
+                new BigDecimal("15.00"),
+                new BigDecimal("399.95"),
+                false,
+                "Danielson",
+                true,
+                1);
 
-        BigDecimal expectedWeight_oz = new BigDecimal("15.00");
-        BigDecimal actualWeight_oz = item.getWeightOz();
-        assertEquals(0, actualWeight_oz.compareTo(expectedWeight_oz));
+        String field = "category";
+        String searchByValue = "Shelter";
+        String orderByField = "item_id";
+        String sortDirection = "ASC";
+        String expectedSql = "SELECT * FROM gear_lists WHERE category = ? ORDER BY item_id ASC";
 
-        BigDecimal expectedPrice = new BigDecimal("279.96");
-        BigDecimal actualPrice = item.getPrice();
-        assertEquals(0, actualPrice.compareTo(expectedPrice));
+        when(mockJdbcTemplate.query(eq(expectedSql),
+                any(RowMapper.class),
+                eq(searchByValue)
+        )).thenReturn(List.of(expected));
 
-        assertEquals(1, item.getBackpackId());
+        List<GearList> result = dao.searchForGear(field, searchByValue, orderByField, sortDirection);
+
+        assertEquals(1, result.size());
+        assertEquals("Tent", result.get(0).getItemName());
+        assertEquals("Danielson", result.get(0).getOwnerUsername());
+
+        verify(mockJdbcTemplate, times(1)).query(
+                eq(expectedSql),
+                any(RowMapper.class),
+                eq(searchByValue)
+        );
     }
 
     @Test
-    @Order(2)
-    @DisplayName("GET backpacks by their id; match size")
-    void testGetGearListByBackpackId() {
-        List<GearList> gearList = gearListDao.getGearListByBackpackId(1);
+    @DisplayName("searchThroughCategoryForWord returns expected list")
+    void searchThroughCategoryForWord() {
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        GearListDao dao = new GearListDao(mockJdbcTemplate);
 
-        // Verify the size of the gear list:
-        assertEquals(1, gearList.size());
+        GearList expected = new GearList(
+                1,
+                "Tent",
+                "Shelter",
+                "A great tent!  I love it!",
+                1,
+                new BigDecimal("15.00"),
+                new BigDecimal("399.95"),
+                false,
+                "Danielson",
+                true,
+                1);
+
+        String columnToSearch = "category";
+        String word = "Shelter";
+        String orderByField = "item_name";
+        String sortDirection = "ASC";
+
+        String expectedSql = "SELECT * FROM gear_lists WHERE category LIKE ? ORDER BY item_name ASC";
+        String expectedParam = "%Shelter%";
+
+        when(mockJdbcTemplate.query(eq(expectedSql),
+                any(RowMapper.class),
+                eq(expectedParam)
+        )).thenReturn(List.of(expected));
+
+        List<GearList> result = dao.searchThroughCategoryForWord(columnToSearch, word, orderByField, sortDirection);
+
+        assertEquals(1, result.size());
+        assertEquals("Tent", result.get(0).getItemName());
+        assertEquals("Danielson", result.get(0).getOwnerUsername());
+
+        verify(mockJdbcTemplate, times(1)).query(
+                eq(expectedSql),
+                any(RowMapper.class),
+                eq(expectedParam)
+        );
     }
 
     @Test
-    @Order(3)
-    @DisplayName("GET by trailId; match category info")
-    void testGetGearListByBackpackIdMatchCategory() {
-        List<GearList> gearList = gearListDao.getGearListByBackpackId(1);
+    @DisplayName("returnsAllGearThroughSearch returns expected list")
+    void returnAllGearThroughSearch() {
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        GearListDao dao = new GearListDao(mockJdbcTemplate);
 
-        GearList item = gearList.get(0);
-        assertEquals("Shelter", item.getCategory());
+        GearList expected = new GearList(
+                1,
+                "Tent",
+                "Shelter",
+                "A great tent!  I love it!",
+                1,
+                new BigDecimal("15.00"),
+                new BigDecimal("399.95"),
+                false,
+                "Danielson",
+                true,
+                1);
+
+        String orderByField = "item_name";
+        String sortDirection = "ASC";
+        String expectedSql = "SELECT * FROM gear_lists ORDER BY item_name ASC";
+
+        when(mockJdbcTemplate.query(
+                eq(expectedSql),
+                any(RowMapper.class)
+                )).thenReturn(List.of(expected));
+
+        List<GearList> result = dao.returnAllGearThroughSearch(orderByField, sortDirection);
+
+        assertEquals(1, result.size());
+        assertEquals("Tent", result.get(0).getItemName());
+        assertEquals("Danielson", result.get(0).getOwnerUsername());
+
+        verify(mockJdbcTemplate, times(1)).query(
+                eq(expectedSql),
+                any(RowMapper.class));
     }
 
     @Test
-    @Order(4)
-    @DisplayName("GET by nonexistent backpackId")
-    void testGetGearListByFalseBackpackId() {
-        List<GearList> gearList = gearListDao.getGearListByBackpackId(1001);
+    @DisplayName("getGearListByBackpackId returns the expected list")
+    void getGearListByBackpackId() {
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        GearListDao dao = new GearListDao(mockJdbcTemplate);
 
-        assertTrue(gearList.isEmpty());
+        GearList expected = new GearList(
+                1,
+                "Tent",
+                "Shelter",
+                "desc",
+                1,
+                new BigDecimal("15.00"),
+                new BigDecimal("279.96"),
+                false,
+                "Daniel",
+                true,
+                7
+        );
+
+        String expectedSql = "SELECT * FROM gear_lists WHERE backpack_id = ?;";
+
+        when(mockJdbcTemplate.query(
+                eq(expectedSql),
+                any(RowMapper.class),
+                eq(7)
+        )).thenReturn(List.of(expected));
+
+        List<GearList> result = dao.getGearListByBackpackId(7);
+
+        assertEquals(1, result.size());
+        assertEquals("Tent", result.get(0).getItemName());
+        assertEquals(7, result.get(0).getBackpackId());
+
+        verify(mockJdbcTemplate, times(1)).query(
+                eq(expectedSql),
+                any(RowMapper.class),
+                eq(7)
+        );
     }
 
+    @Test
+    @DisplayName("getSingleGearItem returns the expected item")
+    void getSingleGearItem() {
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        GearListDao dao = new GearListDao(mockJdbcTemplate);
+
+        GearList expected = new GearList(
+                101,
+                "Sleeping Bag",
+                "Sleep",
+                "Warm and comfy",
+                2,
+                new BigDecimal("32.00"),
+                new BigDecimal("119.99"),
+                false,
+                "Daniel",
+                false,
+                5
+        );
+
+        String expectedSql = "SELECT * FROM gear_lists WHERE item_id = ?;";
+
+        when(mockJdbcTemplate.queryForObject(
+                eq(expectedSql),
+                any(org.springframework.jdbc.core.RowMapper.class),
+                eq(101)
+        )).thenReturn(expected);
+
+        GearList result = dao.getSingleGearItem(101);
+
+        assertNotNull(result);
+        assertEquals("Sleeping Bag", result.getItemName());
+        assertEquals(101, result.getItemId());
+        assertEquals("Sleep", result.getCategory());
+
+        verify(mockJdbcTemplate, times(1)).queryForObject(
+                eq(expectedSql),
+                any(RowMapper.class),
+                eq(101)
+        );
+    }
 
     @Test
-    @Order(5)
-    @DisplayName("Update of a single gear item")
+    @DisplayName("getGearListByCategory returns the expected item")
+    void getGearListByCategory() {
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        GearListDao dao = new GearListDao(mockJdbcTemplate);
+
+        GearList expected = new GearList(
+                1,
+                "Tent",
+                "Shelter",
+                "desc",
+                1,
+                new BigDecimal("15.00"),
+                new BigDecimal("279.96"),
+                false,
+                "Daniel",
+                true,
+                1
+        );
+
+        String category = "Shelter";
+        String expectedSql = "SELECT * FROM gear_lists WHERE category = ?;";
+
+        when(mockJdbcTemplate.query(
+                eq(expectedSql),
+                any(RowMapper.class),
+                eq(category)
+        )).thenReturn(List.of(expected));
+
+        List<GearList> result = dao.getGearListByCategory(category);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("Tent", result.get(0).getItemName());
+        verify(mockJdbcTemplate).query(
+                eq(expectedSql),
+                any(RowMapper.class),
+                eq(category)
+        );
+    }
+
+    @Test
+    @DisplayName("updateGearItem updates successfully")
     void updateGearItem() {
-        GearList newGearItem = new GearList(1, """
-                Fly Creek 2 Person 3 Season Tent""", "Shelter",
-                "The Fly Creek HV UL Solution Dye Two-Person Tent still maintains the ultralight weight that minimalist backpackers look for, but Big Agnes redesigned it with a higher volume to give a comfier sleeping space.",
-                1, new BigDecimal("15.00"), new BigDecimal("150.00"), false,"Danielson", 1);
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        GearListDao dao = new GearListDao(mockJdbcTemplate);
 
-        GearList updatedGearList = gearListDao.updateGearItem(newGearItem);
+        GearList gearItem = new GearList(
+                2, // itemId
+                "Rain Jacket",
+                "Clothing",
+                "Waterproof shell",
+                1,
+                new BigDecimal("8.00"),
+                new BigDecimal("99.99"),
+                false,
+                "Daniel",
+                false,
+                4
+        );
 
-        BigDecimal actualPrice = updatedGearList.getPrice();
+        String expectedSql = """
+            UPDATE gear_lists SET item_name = ?, category = ?, description = ?, weight_lbs = ?, weight_oz = ?, price = ?, backpack_id = ?,\s
+            private_value = ?, need_to_purchase = ?, owner_username = ? WHERE item_id = ?;""";
 
-        assertEquals(0, actualPrice.compareTo(new BigDecimal("150.00")));
+        when(mockJdbcTemplate.update(
+                eq(expectedSql),
+                eq(gearItem.getItemName()),
+                eq(gearItem.getCategory()),
+                eq(gearItem.getDescription()),
+                eq(gearItem.getWeightLbs()),
+                eq(gearItem.getWeightOz()),
+                eq(gearItem.getPrice()),
+                eq(gearItem.getBackpackId()),
+                eq(gearItem.getPrivateValue()),
+                eq(gearItem.getNeedToPurchase()),
+                eq(gearItem.getOwnerUsername()),
+                eq(gearItem.getItemId())
+        )).thenReturn(1);
+
+        GearList result = dao.updateGearItem(gearItem);
+
+        assertNotNull(result);
+        assertEquals(gearItem, result);
+
+        verify(mockJdbcTemplate).update(
+                eq(expectedSql),
+                eq(gearItem.getItemName()),
+                eq(gearItem.getCategory()),
+                eq(gearItem.getDescription()),
+                eq(gearItem.getWeightLbs()),
+                eq(gearItem.getWeightOz()),
+                eq(gearItem.getPrice()),
+                eq(gearItem.getBackpackId()),
+                eq(gearItem.getPrivateValue()),
+                eq(gearItem.getNeedToPurchase()),
+                eq(gearItem.getOwnerUsername()),
+                eq(gearItem.getItemId())
+        );
     }
 
     @Test
-    @Order(6)
-    @DisplayName("Add a single gear list item")
+    @DisplayName("addGearItem adds a gear item successfully")
     void addGearItem() {
-        GearList gearItem = new GearList("Toilet Paper", "Hygiene", "Important for deuce dropping in the woods!", 0, new BigDecimal("2"), new BigDecimal("0"), false, "Danielson",1);
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        GearListDao dao = new GearListDao(mockJdbcTemplate);
 
-        GearList addedItem = gearListDao.addGearItem(gearItem);
+        GearList gearItem = new GearList(
+                5,
+                "Hiking Socks",
+                "Clothing",
+                "Warm wool socks",
+                0,
+                new BigDecimal("2.00"),
+                new BigDecimal("12.99"),
+                false,
+                "Daniel",
+                true,
+                1
+        );
 
-        assertEquals(gearItem.getItemName(), addedItem.getItemName());
+        String expectedSql = "INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, private_value, owner_username, need_to_purchase, backpack_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+        when(mockJdbcTemplate.update(
+                eq(expectedSql),
+                eq(gearItem.getItemName()),
+                eq(gearItem.getCategory()),
+                eq(gearItem.getDescription()),
+                eq(gearItem.getWeightLbs()),
+                eq(gearItem.getWeightOz()),
+                eq(gearItem.getPrice()),
+                eq(gearItem.getPrivateValue()),
+                eq(gearItem.getOwnerUsername()),
+                eq(gearItem.getNeedToPurchase()),
+                eq(gearItem.getBackpackId())
+        )).thenReturn(1);
+
+        GearList result = dao.addGearItem(gearItem);
+
+        assertNotNull(result);
+        assertEquals(gearItem, result);
+
+        verify(mockJdbcTemplate).update(
+                eq(expectedSql),
+                eq(gearItem.getItemName()),
+                eq(gearItem.getCategory()),
+                eq(gearItem.getDescription()),
+                eq(gearItem.getWeightLbs()),
+                eq(gearItem.getWeightOz()),
+                eq(gearItem.getPrice()),
+                eq(gearItem.getPrivateValue()),
+                eq(gearItem.getOwnerUsername()),
+                eq(gearItem.getNeedToPurchase()),
+                eq(gearItem.getBackpackId())
+        );
     }
 
-
     @Test
-    @Order(7)
-    @DisplayName("Delete gear item by its item_id; verify success")
+    @DisplayName("deleteGearItem returns 1 if successful deletion")
     void deleteGearItem() {
-        int rowsAffected = gearListDao.deleteGearItem(1);
-        assertEquals(1, rowsAffected);
-    }
+        JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
+        GearListDao dao = new GearListDao(mockJdbcTemplate);
 
-    @Test
-    @Order(8)
-    @DisplayName("Attempt to delete a gear item that doesn't exist.")
-    void deleteNonExistentGearItem() {
-        int rowsAffected = gearListDao.deleteGearItem(5001);
-        assertEquals(0, rowsAffected);
-    }
+        int itemId = 7;
+        String expectedSql = "DELETE FROM gear_lists WHERE item_id = ?;";
 
-    @AfterEach
-    void tearDown() {
-        jdbcTemplate.execute("DROP TABLE gear_lists");
+        when(mockJdbcTemplate.update(
+                eq(expectedSql),
+                eq(itemId)
+        )).thenReturn(1);
+
+        int result = dao.deleteGearItem(itemId);
+
+        assertEquals(1, result);
+
+        verify(mockJdbcTemplate).update(
+                eq(expectedSql),
+                eq(itemId)
+        );
     }
 }

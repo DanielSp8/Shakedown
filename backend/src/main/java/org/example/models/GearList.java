@@ -12,6 +12,7 @@ public class GearList {
     private BigDecimal price;
     private Boolean privateValue;
     private String ownerUsername;
+    private Boolean needToPurchase;
     private int backpackId;
 
 
@@ -27,6 +28,7 @@ public class GearList {
                     BigDecimal price,
                     Boolean privateValue,
                     String ownerUsername,
+                    Boolean needToPurchase,
                     int backpackId) {
         this.itemId = itemId;
         this.itemName = itemName;
@@ -37,6 +39,7 @@ public class GearList {
         this.price = price;
         this.privateValue = privateValue;
         this.ownerUsername = ownerUsername;
+        this.needToPurchase = needToPurchase;
         this.backpackId = backpackId;
     }
 
@@ -49,6 +52,7 @@ public class GearList {
                     BigDecimal price,
                     Boolean privateValue,
                     String ownerUsername,
+                    Boolean needToPurchase,
                     int backpackId) {
         this.itemName = itemName;
         this.category = category;
@@ -58,6 +62,7 @@ public class GearList {
         this.price = price;
         this.privateValue = privateValue;
         this.ownerUsername = ownerUsername;
+        this.needToPurchase = needToPurchase;
         this.backpackId = backpackId;
     }
 
@@ -139,5 +144,13 @@ public class GearList {
 
     public void setBackpackId(int backpackId) {
         this.backpackId = backpackId;
+    }
+
+    public Boolean getNeedToPurchase() {
+        return needToPurchase;
+    }
+
+    public void setNeedToPurchase(Boolean needToPurchase) {
+        this.needToPurchase = needToPurchase;
     }
 }

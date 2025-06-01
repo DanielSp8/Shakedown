@@ -19,10 +19,6 @@ export default function SearchForm() {
   const [selectedOption, setSelectedOption] = useState("ASC");
   const [displayTable, setDisplayTable] = useState(false);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     let url;

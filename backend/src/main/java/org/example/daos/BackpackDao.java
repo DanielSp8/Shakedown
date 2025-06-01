@@ -19,6 +19,10 @@ public class BackpackDao {
     @Autowired
     public BackpackDao(DataSource dataSource) {this.jdbcTemplate = new JdbcTemplate(dataSource);}
 
+    BackpackDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     /**
      *
      * @return All of backpacks stored
@@ -26,7 +30,6 @@ public class BackpackDao {
     public List<Backpack> getBackpacks() {
         return jdbcTemplate.query("SELECT * FROM backpacks ORDER BY backpack_id;", this::mapToBackpack);
     }
-
 
     /**
      *

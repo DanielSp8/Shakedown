@@ -43,16 +43,13 @@ public class BackpackController {
         return backpack;
     }
 
+
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
     public Backpack updateBackpack(@RequestBody Backpack backpack, Principal principal) {
         String username = principal.getName();
         return backpackDao.updateBackpack(backpack, username);
     }
-
-    /**
-     * Needed:  A method that updates ANY backpack (if the user's role is admin):
-     */
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)

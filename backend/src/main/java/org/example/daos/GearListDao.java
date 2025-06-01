@@ -25,6 +25,10 @@ public class GearListDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    GearListDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     /**
      *
      * @return List of all gear that matches the item_id
@@ -44,6 +48,7 @@ public class GearListDao {
                 "price",
                 "private_value",
                 "owner_username",
+                "need_to_purchase",
                 "backpack_id");
 
         List<String> allowedDirections = List.of("ASC", "DESC");
@@ -63,17 +68,41 @@ public class GearListDao {
         return jdbcTemplate.query(sql, this::mapToGearList, searchByValue);
     }
 
-    public List<GearList> searchThroughCategoryForWord(String word, String orderByField, String sortDirection) {
+    public List<GearList> searchThroughCategoryForWord(String columnToSearch, String word, String orderByField, String sortDirection) {
+        List<String> allowedColumns = List.of(
+                "item_name",
+                "category",
+                "description",
+                "owner_username");
+
+        // Verify the column to search is valid
+        if (!allowedColumns.contains(columnToSearch)) {
+            throw new IllegalArgumentException(("Invalid field name"));
+        }
+
         List<String> allowedDirections = List.of("ASC", "DESC");
 
         // Verify the sort direction is valid
         if (!allowedDirections.contains(sortDirection)) {
             throw new IllegalArgumentException("Invalid sort direction");
         }
-        String sql = String.format("SELECT * FROM gear_lists WHERE description LIKE ? ORDER BY %s %s", orderByField, sortDirection);
-        String wordWithWildCards = "%" + word + "%";
 
-        return jdbcTemplate.query(sql, this::mapToGearList, wordWithWildCards);
+        String sql = String.format("SELECT * FROM gear_lists WHERE %s LIKE ? ORDER BY %s %s", columnToSearch, orderByField, sortDirection);
+        String wordWithWildCardsToSearch = "%" + word + "%";
+
+        return jdbcTemplate.query(sql, this::mapToGearList, wordWithWildCardsToSearch);
+    }
+
+    public List<GearList> returnAllGearThroughSearch(String orderByField, String sortDirection) {
+        List<String> allowedDirections = List.of("ASC", "DESC");
+
+        // Verify the sort direction is valid
+        if (!allowedDirections.contains(sortDirection)) {
+            throw new IllegalArgumentException("Invalid sort direction");
+        }
+
+        String sql = String.format("SELECT * FROM gear_lists ORDER BY %s %s", orderByField, sortDirection);
+        return jdbcTemplate.query(sql, this::mapToGearList);
     }
 
     /**
@@ -110,7 +139,7 @@ public class GearListDao {
     public GearList updateGearItem (GearList gearItem){
         String sql = """
                 UPDATE gear_lists SET item_name = ?, category = ?, description = ?, weight_lbs = ?, weight_oz = ?, price = ?, backpack_id = ?,\s
-                private_value = ?, owner_username = ? WHERE item_id = ?;""";
+                private_value = ?, need_to_purchase = ?, owner_username = ? WHERE item_id = ?;""";
 
         int rowsAffected = jdbcTemplate.update(sql,
                 gearItem.getItemName(),
@@ -121,6 +150,7 @@ public class GearListDao {
                 gearItem.getPrice(),
                 gearItem.getBackpackId(),
                 gearItem.getPrivateValue(),
+                gearItem.getNeedToPurchase(),
                 gearItem.getOwnerUsername(),
                 gearItem.getItemId());
 
@@ -137,7 +167,7 @@ public class GearListDao {
      * @return null if no added gear item or the gearItem object passed in
      */
     public GearList addGearItem(GearList gearItem) {
-        String sql = "INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, private_value, owner_username, backpack_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO gear_lists (item_name, category, description, weight_lbs, weight_oz, price, private_value, owner_username, need_to_purchase, backpack_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         int rowsAffected = jdbcTemplate.update(sql,
                 gearItem.getItemName(),
                 gearItem.getCategory(),
@@ -147,6 +177,7 @@ public class GearListDao {
                 gearItem.getPrice(),
                 gearItem.getPrivateValue(),
                 gearItem.getOwnerUsername(),
+                gearItem.getNeedToPurchase(),
                 gearItem.getBackpackId());
 
         return (rowsAffected > 0) ? gearItem : null;
@@ -171,6 +202,7 @@ public class GearListDao {
                 resultSet.getBigDecimal("price"),
                 resultSet.getBoolean("private_value"),
                 resultSet.getString("owner_username"),
+                resultSet.getBoolean("need_to_purchase"),
                 resultSet.getInt("backpack_id")
         );
     }
