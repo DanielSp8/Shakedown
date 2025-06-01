@@ -6,8 +6,7 @@ import useUsername from "../../hooks/useUsername";
 import useBackpacksOfUser from "../../hooks/useBackpacksOfUser";
 import useGrabGearItemInfo from "../../hooks/useGrabGearItemInfo";
 
-// Add onSuccess functionality below...
-export default function GrabItemModal({ isOpen, onClose, itemId, onSuccess }) {
+export default function GrabItemModal({ isOpen, onClose, itemId }) {
   const { fetchData, data, loading, error } = useFetchAPi();
   const [selectedValue, setSelectedValue] = useState(0);
   const { backpacks } = useBackpacksOfUser();
@@ -33,11 +32,10 @@ export default function GrabItemModal({ isOpen, onClose, itemId, onSuccess }) {
     const movingGearData = {
       ...gearItemWithoutItemId,
       ownerUsername: username,
-      needToPurchase: true,
+      needToPurchase: true, // Default all items true in NeedToPurchase value when they are grabbed
       backpackId: parseInt(selectedValue, 10),
     };
 
-    console.log(movingGearData);
     const url = `/api/gearlists/add`;
     const method = "POST";
 
@@ -56,6 +54,7 @@ export default function GrabItemModal({ isOpen, onClose, itemId, onSuccess }) {
 
   if (error) return <div>Sorry, error received: {error}</div>;
 
+  // Check if user has any backpacks yet.  Notify them if they don't.
   if (backpacks.length === 0) {
     return (
       <div>
@@ -87,12 +86,18 @@ export default function GrabItemModal({ isOpen, onClose, itemId, onSuccess }) {
                 </option>
               ))}
             </select>
-            
+
             {/* This button will be used to insert the gear into the specific backpack: */}
-            <button className="btn btn-primary w-20 mt-4" onClick={onGrabGearClick}>
+            <button
+              className="btn btn-primary w-20 mt-4"
+              onClick={onGrabGearClick}
+            >
               Grab Gear
             </button>
-            <button className="btn btn-secondary w-20 mt-1" onClick={clearAndClose}>
+            <button
+              className="btn btn-secondary w-20 mt-1"
+              onClick={clearAndClose}
+            >
               Cancel
             </button>
           </div>

@@ -1,5 +1,3 @@
-create database if not exists test_db;
-
 create database if not exists flexpath_final;
 use flexpath_final;
 

@@ -4,6 +4,7 @@ import useUsername from "../../hooks/useUsername";
 import DeleteUserButton from "../buttons/DeleteUserButton";
 import useUserRoles from "../../hooks/useUserRoles";
 import "../../assets/css/card.css";
+import { isRouteErrorResponse } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 export default function UserCardElement({ otherUsername, onSuccess }) {
@@ -45,7 +46,12 @@ export default function UserCardElement({ otherUsername, onSuccess }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url = `/api/profile/change-password`;
+    let url = "";
+    if (username === otherUsername) {
+      url = `/api/profile/change-password`;
+    } else {
+      url = `/api/{otherUsername)/password`;
+    }
     const method = "PUT";
     const headerContent = "text/plain";
     const body = newPassword;

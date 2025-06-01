@@ -37,6 +37,7 @@ public class GearListDao {
         return jdbcTemplate.query("SELECT * FROM gear_lists ORDER BY item_id;", this::mapToGearList);
     }
 
+
     public List<GearList> searchForGear(String field, String searchByValue, String orderByField, String sortDirection) {
         List<String> allowedColumns = List.of(
                 "item_id",
